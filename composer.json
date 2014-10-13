@@ -1,0 +1,28 @@
+{
+	"name": "nailsapp/shop-checkout-skin-classic",
+	"keywords":
+	[
+		"Nails",
+		"Twitter Bootstrap",
+		"Bootstrap"
+	],
+	"homepage": "http://nailsapp.co.uk/shop/skin/checkout/classic",
+	"description": "The Classic \"Checkout\" skin for the Nails Shop module",
+	"license": "MIT",
+	"authors":
+	[
+		{
+			"name": "Pablo de la Pena",
+			"email": "p@shedcollective.org",
+			"homepage": "http://shedcollective.org",
+			"role": "Developer"
+		}
+	],
+	"support":
+	{
+		"email": "hello@shedcollective.org"
+	},
+	"require":
+	{
+	}
+}

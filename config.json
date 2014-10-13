@@ -1,0 +1,51 @@
+{
+	"name": "Classic",
+	"description": "This is a single page \"Checkout\" shop skin levereging Twitter Bootstrap.",
+	"keywords": ["Nails","Twitter Bootstrap","Bootstrap"],
+	"homepage": "http://nailsapp.co.uk/shop/skin/checkout/classic",
+	"license":"MIT",
+	"version": "0.1.0",
+	"authors": [
+		{
+			"name": "Pablo de la Pena",
+			"email": "p@shedcollective.org",
+			"homepage": "http://shedcollective.org",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"email": "hello@shedcollective.org"
+	},
+	"assets": [
+		"bower_components/skeuocard/styles/skeuocard.css",
+		"css/styles.css",
+		"bower_components/jquery-zoom/jquery.zoom.min.js",
+		"bower_components/skeuocard/javascripts/skeuocard.js",
+		["nails.api.min.js","NAILS"],
+		"js/shop.min.js"
+	],
+	"js_inline": [
+		"var _nails_api = new NAILS_API();",
+		"var _nails_skin_shop_checkout_classic = new _nails_skin_shop_checkout_classic();"
+	],
+	"settings": [
+		{
+			"key": "omit_variant_tax_pricing",
+			"label": "Omit Variant Tax Detail",
+			"tip": "Hides the small text beneath a variant's price which shows the price excluding/including tax.",
+			"type": "boolean"
+		},
+		{
+			"key": "thankyou_title",
+			"label": "\"Thanks for your Order\" title",
+			"tip": "This title is shown on the order processing page when an order is confirmed as paid.",
+			"type": "text"
+		},
+		{
+			"key": "thankyou_text",
+			"label": "\"Thanks for your Order\" text",
+			"tip": "This text is shown on the order processing page when an order is confirmed as paid.",
+			"type": "wysiwyg"
+		}
+	]
+}
