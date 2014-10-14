@@ -1,7 +1,7 @@
 <noscript>
 	 <style> .jsonly { display: none } </style>
 </noscript>
-<div class="nails-shop-skin-classic checkout">
+<div class="nails-shop-skin-checkout-classic checkout">
 	<?=form_open( NULL, 'id="checkout-form"')?>
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">

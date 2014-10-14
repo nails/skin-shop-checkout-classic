@@ -5,7 +5,7 @@
 		if ( ! empty( $order ) ) :
 
 			?>
-			<div class="nails-shop-skin-classic processing paid" id="processing-container" data-order-ref="<?=$order->ref?>">
+			<div class="nails-shop-skin-checkout-classic processing paid" id="processing-container" data-order-ref="<?=$order->ref?>">
 				<div class="row order-status">
 					<div class="col-sm-8">
 						<div class="panel panel-default">
@@ -212,7 +212,7 @@
 		else :
 
 			?>
-			<div class="nails-shop-skin-classic processing-no-order">
+			<div class="nails-shop-skin-checkout-classic processing-no-order">
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="panel panel-default">

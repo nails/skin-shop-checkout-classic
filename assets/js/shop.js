@@ -16,14 +16,14 @@ _nails_skin_shop_checkout_classic = function()
 	 */
 	this.__construct = function()
 	{
-		if ( $( '.nails-shop-skin-classic.checkout' ).length > 0 )
+		if ( $( '.nails-shop-skin-checkout-classic.checkout' ).length > 0 )
 		{
 			this._checkout_init();
 		}
 
 		// --------------------------------------------------------------------------
 
-		if ( $( '.nails-shop-skin-classic.processing' ).length > 0 )
+		if ( $( '.nails-shop-skin-checkout-classic.processing' ).length > 0 )
 		{
 			this._processing_init();
 		}

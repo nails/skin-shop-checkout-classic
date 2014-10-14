@@ -19,7 +19,6 @@
 	"assets": [
 		"bower_components/skeuocard/styles/skeuocard.css",
 		"css/styles.css",
-		"bower_components/jquery-zoom/jquery.zoom.min.js",
 		"bower_components/skeuocard/javascripts/skeuocard.js",
 		["nails.api.min.js","NAILS"],
 		"js/shop.min.js"
