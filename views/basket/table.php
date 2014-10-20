@@ -73,6 +73,19 @@
 
 										// --------------------------------------------------------------------------
 
+										//	To order?
+										if ( $item->variant->stock_status == 'TO_ORDER' ) :
+
+											echo '<p class="text-muted">';
+												echo '<small>';
+													echo '<em>Lead time: ' . $item->variant->lead_time . '</em>';
+												echo '</small>';
+											echo '</p>';
+
+										endif;
+
+										// --------------------------------------------------------------------------
+
 										//	Collection Only
 										if ( $item->variant->shipping->collection_only ) :
 
