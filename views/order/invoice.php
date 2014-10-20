@@ -153,6 +153,43 @@
 				color:#555;
 			}
 
+			.alert
+			{
+				padding: 7px;
+				font-size:0.9em;
+				margin: 0;
+				border: 1px solid transparent;
+				border-radius: 4px;
+			}
+
+			.alert.alert-success
+			{
+				color: #3c763d;
+				background-color: #dff0d8;
+				border-color: #d6e9c6;
+			}
+
+			.alert.alert-info
+			{
+				color: #31708f;
+				background-color: #d9edf7;
+				border-color: #bce8f1;
+			}
+
+			.alert.alert-warning
+			{
+				color: #8a6d3b;
+				background-color: #fcf8e3;
+				border-color: #faebcc;
+			}
+
+			.alert.alert-danger
+			{
+				color: #a94442;
+				background-color: #f2dede;
+				border-color: #ebccd1;
+			}
+
 		</style>
 	</head>
 	<body>
@@ -284,8 +321,19 @@
 							<?=$item->quantity?>
 						</td>
 						<td class="product">
-							<strong><?=$item->product_label?></strong>
-							<br><?=$item->variant_label?>
+						<?php
+
+							echo '<strong>' . $item->product_label . '</strong>';
+							echo '<br>' . $item->variant_label;
+							if ( ! empty( $item->extra_data['to_order']->is_to_order) ) :
+
+								echo '<div class="alert alert-warning" style="margin-top:1em;">';
+								echo 'This item is to order. Lead time: ' . $item->extra_data['to_order']->lead_time;
+								echo '</div>';
+
+							endif;
+
+						?>
 						</td>
 						<td class="unit-cost">
 							<?=$item->price->base_formatted->value?>
