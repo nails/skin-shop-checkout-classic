@@ -81,7 +81,7 @@
 							echo '<div class="panel panel-default invoice-actions">';
 								echo '<div class="panel-body">';
 									echo '<a href="#" onclick="window.print()" class="btn btn-primary"><b class="fa fa-print"></b> Print</a> ';
-									echo '<a href="' . $shop_url . 'checkout/invoice/' . $order->ref . '/' . md5($order->code) . '" class="btn btn-primary"><b class="fa fa-download"></b> Download</a> ';
+									echo '<a href="' . site_url( $shop_url . 'checkout/invoice/' . $order->ref . '/' . md5($order->code) ) . '" class="btn btn-primary"><b class="fa fa-download"></b> Download</a> ';
 								echo '</div>';
 							echo '</div>';
 
