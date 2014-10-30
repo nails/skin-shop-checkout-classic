@@ -336,7 +336,19 @@
 						?>
 						</td>
 						<td class="unit-cost">
-							<?=$item->price->base_formatted->value?>
+							<?php
+
+							if (isset($for_user) && $for_user == 'ADMIN') {
+
+								echo $item->price->base_formatted->value;
+
+							} else {
+
+								echo $item->price->user_formatted->value;
+
+							}
+
+							?>
 						</td>
 					</tr>
 					<?php
@@ -349,19 +361,75 @@
 				<tfoot>
 					<tr>
 						<th class="total-text" colspan="3" style="text-align:right;">Sub Total</th>
-						<th class="total-value"><?=$order->totals->base_formatted->item?></th>
+						<th class="total-value">
+							<?php
+
+							if (isset($for_user) && $for_user == 'ADMIN') {
+
+								echo $order->totals->base_formatted->item;
+
+							} else {
+
+								echo $order->totals->user_formatted->item;
+
+							}
+
+							?>
+						</th>
 					</tr>
 					<tr>
 						<th class="total-text" colspan="3" style="text-align:right;">Shipping</th>
-						<th class="total-value"><?=$order->totals->base_formatted->shipping?></th>
+						<th class="total-value">
+							<?php
+
+							if (isset($for_user) && $for_user == 'ADMIN') {
+
+								echo $order->totals->base_formatted->shipping;
+
+							} else {
+
+								echo $order->totals->user_formatted->shipping;
+
+							}
+
+							?>
+						</th>
 					</tr>
 					<tr>
 						<th class="total-text" colspan="3" style="text-align:right;">Tax</th>
-						<th class="total-value"><?=$order->totals->base_formatted->tax?></th>
+						<th class="total-value">
+							<?php
+
+							if (isset($for_user) && $for_user == 'ADMIN') {
+
+								echo $order->totals->base_formatted->tax;
+
+							} else {
+
+								echo $order->totals->user_formatted->tax;
+
+							}
+
+							?>
+						</th>
 					</tr>
 					<tr>
 						<th class="total-text" colspan="3" style="text-align:right;">Total</th>
-						<th class="total-value"><?=$order->totals->base_formatted->grand?></th>
+						<th class="total-value">
+							<?php
+
+							if (isset($for_user) && $for_user == 'ADMIN') {
+
+								echo $order->totals->base_formatted->grand;
+
+							} else {
+
+								echo $order->totals->user_formatted->grand;
+
+							}
+
+							?>
+						</th>
 					</tr>
 				</tfoot>
 
