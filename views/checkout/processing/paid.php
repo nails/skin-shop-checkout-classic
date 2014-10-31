@@ -103,7 +103,7 @@
 										</p>
 										<?php
 
-											$_avatar_size =150;
+											$_avatar_size = 100;
 
 											if ( $order->user->profile_img ) :
 
@@ -147,7 +147,7 @@
 											if ( $_address ) :
 
 												$_address = urlencode( $_address );
-												$_url = 'http://maps.google.com/maps/api/staticmap?markers=size:mid|color:black|' . $_address . '&size=150x150&sensor=FALSE';
+												$_url = 'http://maps.google.com/maps/api/staticmap?markers=size:mid|color:black|' . $_address . '&size=' . $_avatar_size . 'x' . $_avatar_size . '&sensor=FALSE';
 												echo img( array( 'src' => $_url, 'class' => 'img-thumbnail pull-right' ) );
 
 											endif;
@@ -179,7 +179,7 @@
 											if ( $_address ) :
 
 												$_address = urlencode( $_address );
-												$_url = 'http://maps.google.com/maps/api/staticmap?markers=size:mid|color:black|' . $_address . '&size=150x150&sensor=FALSE';
+												$_url = 'http://maps.google.com/maps/api/staticmap?markers=size:mid|color:black|' . $_address . '&size=' . $_avatar_size . 'x' . $_avatar_size . '&sensor=FALSE';
 												echo img( array( 'src' => $_url, 'class' => 'img-thumbnail pull-right' ) );
 
 											endif;

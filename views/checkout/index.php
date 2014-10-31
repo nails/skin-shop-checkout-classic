@@ -89,31 +89,37 @@
 							<div role="form">
 							<?php
 
-								$_options	= array();
-								$_options[] = array(
-									'key'	=> 'delivery_address_line_1',
-									'label'	=> 'Address Line 1'
+								$_options		= array();
+								$_options[]		= array(
+									'key'		=> 'delivery_address_line_1',
+									'label'		=> 'Address Line 1',
+									'required'	=> true
 								);
-								$_options[] = array(
-									'key'	=> 'delivery_address_line_2',
-									'label'	=> 'Address Line 2'
+								$_options[]		= array(
+									'key'		=> 'delivery_address_line_2',
+									'label'		=> 'Address Line 2',
+									'required'	=> false
 								);
-								$_options[] = array(
-									'key'	=> 'delivery_address_town',
-									'label'	=> 'City/Town'
+								$_options[]		= array(
+									'key'		=> 'delivery_address_town',
+									'label'		=> 'City/Town',
+									'required'	=> true
 								);
-								$_options[] = array(
-									'key'	=> 'delivery_address_state',
-									'label'	=> 'Region/State'
+								$_options[]		= array(
+									'key'		=> 'delivery_address_state',
+									'label'		=> 'Region/State',
+									'required'	=> false
 								);
-								$_options[] = array(
-									'key'	=> 'delivery_address_postcode',
-									'label'	=> 'Postal Code'
+								$_options[]		= array(
+									'key'		=> 'delivery_address_postcode',
+									'label'		=> 'Postal Code',
+									'required'	=> true
 								);
-								$_options[] = array(
-									'key'	=> 'delivery_address_country',
-									'label'	=> 'Country',
-									'select' => $countries_flat
+								$_options[]		= array(
+									'key'		=> 'delivery_address_country',
+									'label'		=> 'Country',
+									'required'	=> true,
+									'select'	=> $countries_flat
 								);
 
 								foreach ( $_options AS $opt ) :
@@ -121,13 +127,17 @@
 									$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
 									$_has_error			= $_error ? 'has-error' : '';
 									$_has_feedback		= $_error ? 'has-feedback' : '';
+									$_required			= $opt['required'] ? '*' : '';
 									$_feedback_hidden	= $_has_feedback ? '' : 'hidden';
 									$_active_user		= active_user( $opt['key'] );
 									$_active_user		= is_string( $_active_user ) ? $_active_user : '';
 									$_value				= set_value( $opt['key'], $_active_user );
 
 									echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
-										echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
+										echo '<label class="control-label" for="' . $opt['key'] . '">';
+											echo $opt['label'];
+											echo $_required;
+										echo '</label>';
 
 										if ( ! empty( $opt['select'] ) ) :
 
@@ -162,22 +172,26 @@
 							<div role="form">
 							<?php
 
-								$_options	= array();
-								$_options[] = array(
-									'key'	=> 'first_name',
-									'label'	=> 'First Name'
+								$_options		= array();
+								$_options[]		= array(
+									'key'		=> 'first_name',
+									'label'		=> 'First Name',
+									'required'	=> true
 								);
-								$_options[] = array(
-									'key'	=> 'last_name',
-									'label'	=> 'Surname'
+								$_options[]		= array(
+									'key'		=> 'last_name',
+									'label'		=> 'Surname',
+									'required'	=> true
 								);
-								$_options[] = array(
-									'key'	=> 'email',
-									'label'	=> 'Email address'
+								$_options[]		= array(
+									'key'		=> 'email',
+									'label'		=> 'Email address',
+									'required'	=> true
 								);
-								$_options[] = array(
-									'key'	=> 'telephone',
-									'label'	=> 'Telephone'
+								$_options[]		= array(
+									'key'		=> 'telephone',
+									'label'		=> 'Telephone',
+									'required'	=> false
 								);
 
 								foreach ( $_options AS $opt ) :
@@ -185,14 +199,19 @@
 									$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
 									$_has_error			= $_error ? 'has-error' : '';
 									$_has_feedback		= $_error ? 'has-feedback' : '';
+									$_required			= $opt['required'] ? '*' : '';
+									$_type				= $opt['key'] == 'email' ? 'email' : 'text';
 									$_feedback_hidden	= $_has_feedback ? '' : 'hidden';
 									$_active_user		= active_user( $opt['key'] );
 									$_active_user		= is_string( $_active_user ) ? $_active_user : '';
 									$_value				= set_value( $opt['key'], $_active_user );
 
 									echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
-										echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
-										echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
+										echo '<label class="control-label" for="' . $opt['key'] . '">';
+											echo $opt['label'];
+											echo $_required;
+										echo '</label>';
+										echo '<input name="' . $opt['key'] . '" type="' . $_type . '" class="form-control" id="' . $opt['key'] . '" value="' . $_value . '">';
 										echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $_feedback_hidden . '"></span>';
 										echo $_error;
 									echo '</div>';
@@ -232,31 +251,37 @@
 									<div role="form">
 									<?php
 
-										$_options	= array();
-										$_options[] = array(
-											'key'	=> 'billing_address_line_1',
-											'label'	=> 'Address Line 1'
+										$_options		= array();
+										$_options[]		= array(
+											'key'		=> 'billing_address_line_1',
+											'label'		=> 'Address Line 1',
+											'required'	=> true
 										);
-										$_options[] = array(
-											'key'	=> 'billing_address_line_2',
-											'label'	=> 'Address Line 2'
+										$_options[]		= array(
+											'key'		=> 'billing_address_line_2',
+											'label'		=> 'Address Line 2',
+											'required'	=> false
 										);
-										$_options[] = array(
-											'key'	=> 'billing_address_town',
-											'label'	=> 'City/Town'
+										$_options[]		= array(
+											'key'		=> 'billing_address_town',
+											'label'		=> 'City/Town',
+											'required'	=> true
 										);
-										$_options[] = array(
-											'key'	=> 'billing_address_state',
-											'label'	=> 'Region/State'
+										$_options[]		= array(
+											'key'		=> 'billing_address_state',
+											'label'		=> 'Region/State',
+											'required'	=> false
 										);
-										$_options[] = array(
-											'key'	=> 'billing_address_postcode',
-											'label'	=> 'Postal Code'
+										$_options[]		= array(
+											'key'		=> 'billing_address_postcode',
+											'label'		=> 'Postal Code',
+											'required'	=> true
 										);
-										$_options[] = array(
-											'key'	=> 'billing_address_country',
-											'label'	=> 'Country',
-											'select' => $countries_flat
+										$_options[]		= array(
+											'key'		=> 'billing_address_country',
+											'label'		=> 'Country',
+											'required'	=> true,
+											'select'	=> $countries_flat
 										);
 
 										foreach ( $_options AS $opt ) :
@@ -264,13 +289,17 @@
 											$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
 											$_has_error			= $_error ? 'has-error' : '';
 											$_has_feedback		= $_error ? 'has-feedback' : '';
+											$_required			= $opt['required'] ? '*' : '';
 											$_feedback_hidden	= $_has_feedback ? '' : 'hidden';
 											$_active_user		= active_user( $opt['key'] );
 											$_active_user		= is_string( $_active_user ) ? $_active_user : '';
 											$_value				= set_value( $opt['key'], $_active_user );
 
 											echo '<div class="form-group ' . $_has_error . ' ' . $_has_feedback . '">';
-												echo '<label class="control-label" for="' . $opt['key'] . '">' . $opt['label'] . '</label>';
+												echo '<label class="control-label" for="' . $opt['key'] . '">';
+													echo $opt['label'];
+													echo $_required;
+												echo '</label>';
 
 												if ( ! empty( $opt['select'] ) ) :
 
