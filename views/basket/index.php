@@ -10,28 +10,44 @@
 				?>
 				<hr />
 				<div class="row">
-					<div class="col-xs-12">
+					<div class="col-xs-6">
 						<div class="well well-sm">
-							<?=form_open( $shop_url . 'basket/add_voucher', 'class="add-voucher"' )?>
-							<div class="row">
-								<div class="col-sm-10">
-									<?=form_input( 'voucher', '', 'placeholder="Enter your promotional voucher, if you have one." class="form-control"' )?>
-								</div>
-								<div class="col-sm-2">
-									<button type="submit" class="btn btn-primary btn-block">
-										Add Voucher
-									</button>
-								</div>
-							</div>
+							<?=form_open($shop_url . 'basket/add_voucher', 'class="add-voucher"')?>
+								<div class="input-group">
+									<?=form_input('voucher', '', 'placeholder="Enter your promotional voucher, if you have one." class="form-control"')?>
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="submit">
+											Add Voucher
+										</button>
+									</span>
+								</div><!-- /input-group -->
+							<?=form_close()?>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="well well-sm">
+							<?=form_open($shop_url . 'basket/add_note', 'class="add-note"')?>
+								<div class="input-group">
+									<?=form_input('note', set_value('notes', $basket->note), 'placeholder="Enter any special instructions or notes about your order." class="form-control"')?>
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="submit">
+											Save
+										</button>
+									</span>
+								</div><!-- /input-group -->
 							<?=form_close()?>
 						</div>
 					</div>
 				</div>
 				<hr />
-				<p class="text-center">
-					<?=anchor( $continue_shopping_url, 'Continue Shopping', 'class="btn btn-lg btn-primary"' )?>
-					<?=anchor( $shop_url . 'checkout', 'Checkout Now', 'class="btn btn-lg btn-success"' )?>
-				</p>
+				<div class="row">
+					<div class="col-xs-9 col-sm-10">
+						<?=anchor( $continue_shopping_url, 'Continue Shopping', 'class="btn btn-lg btn-default"' )?>
+					</div>
+					<div class="col-xs-3 col-sm-2">
+						<?=anchor( $shop_url . 'checkout', 'Checkout Now', 'class="btn btn-lg btn-success btn-block"' )?>
+					</div>
+				</div>
 				<hr />
 				<?php
 

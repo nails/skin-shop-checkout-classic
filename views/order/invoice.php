@@ -246,6 +246,12 @@
 											?>
 											</td>
 										</tr>
+										<?php if (!empty($order->note)) { ?>
+										<tr>
+											<td class="head">Note</td>
+											<td class="note"><?=$order->note?></td>
+										</tr>
+										<?php } ?>
 									</tbody>
 								</table>
 							</td>

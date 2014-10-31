@@ -196,9 +196,31 @@
 						</div>
 					</div>
 				</div>
+				<?php if (!empty($order->note)) { ?>
+				<div class="row order-note">
+					<div class="col-xs-12">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<p>
+									<strong>
+										<b class="fa fa-pencil"></b>
+										Notes
+									</strong>
+								</p>
+								<?php
+
+									echo '<p>';
+									echo $order->note;
+									echo '</p>';
+
+								?>
+							</div>
+						</div>
+					</div>
+				</div>
+				<?php } ?>
 				<div class="row order-items">
 					<div class="col-xs-12">
-						<h4>Items in this order</h4>
 						<?php
 
 							$this->load->view( $skin_checkout->path . 'views/basket/table', array( 'items' => $order->items, 'totals' => $order->totals, 'readonly' => TRUE ) );
