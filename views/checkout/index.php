@@ -13,7 +13,7 @@
 			<div class="row">
 			<?php
 
-				echo  $this->user->is_logged_in() ? '<div class="col-md-12">' : '<div class="col-md-10">';
+				echo  '<div class="col-md-12">';
 
 					$_intro_text = cms_render_block( 'shop_checkout_intro' );
 
@@ -42,24 +42,11 @@
 
 				echo '</div>';
 
-				if ( ! $this->user->is_logged_in() ) :
-
-					?>
-					<div class="col-md-2 cta">
-						<div class="well well-sm">
-							<a href="#" class="btn btn-primary btn-sm btn-block">Login</a>
-							<a href="#" class="btn btn-primary btn-sm btn-block">Register</a>
-						</div>
-					</div>
-					<?php
-
-				endif;
-
 			?>
 			</div>
 
 			<noscript>
-				<hr />
+
 				<p class="alert alert-warning">
 					<strong><b class="fa fa-exclamation-triangle"></b> Please enable JavaScript</strong>
 					<br />The checkout procedure requires that you enable JavaScript.
@@ -452,6 +439,9 @@
 								</div>
 							</div>
 						</div>
+						<p class="text-center">
+                            By placing an order online, you declare that you have read and agree to our <a href="/terms-and-conditions" target="_blank">terms and conditions</a>.
+    					</p>
 					</div>
 					<div class="panel-footer">
 						<button class="btn action-back btn-primary btn-warning">Back</button>

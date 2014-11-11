@@ -10,7 +10,7 @@
 				?>
 				<hr />
 				<div class="row">
-					<div class="col-xs-6">
+					<div class="col-sm-6">
 						<div class="well well-sm">
 							<?=form_open($shop_url . 'basket/add_voucher', 'class="add-voucher"')?>
 								<div class="input-group">
@@ -24,7 +24,7 @@
 							<?=form_close()?>
 						</div>
 					</div>
-					<div class="col-xs-6">
+					<div class="col-sm-6">
 						<div class="well well-sm">
 							<?=form_open($shop_url . 'basket/add_note', 'class="add-note"')?>
 								<div class="input-group">
@@ -41,11 +41,11 @@
 				</div>
 				<hr />
 				<div class="row">
-					<div class="col-xs-9 col-sm-10">
+					<div class="col-xs-12 col-sm-6 hidden-xs">
 						<?=anchor( $continue_shopping_url, 'Continue Shopping', 'class="btn btn-lg btn-default"' )?>
 					</div>
-					<div class="col-xs-3 col-sm-2">
-						<?=anchor( $shop_url . 'checkout', 'Checkout Now', 'class="btn btn-lg btn-success btn-block"' )?>
+					<div class="col-xs-12 col-sm-6">
+						<?=anchor( $shop_url . 'checkout', 'Checkout Now', 'class="btn btn-lg btn-success pull-right"' )?>
 					</div>
 				</div>
 				<hr />
