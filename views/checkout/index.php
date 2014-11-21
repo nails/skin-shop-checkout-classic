@@ -178,7 +178,7 @@
 								$_options[]		= array(
 									'key'		=> 'telephone',
 									'label'		=> 'Telephone',
-									'required'	=> false
+									'required'	=> true
 								);
 
 								foreach ( $_options AS $opt ) :
@@ -439,9 +439,6 @@
 								</div>
 							</div>
 						</div>
-						<p class="text-center">
-                            By placing an order online, you declare that you have read and agree to our <a href="/terms-and-conditions" target="_blank">terms and conditions</a>.
-    					</p>
 					</div>
 					<div class="panel-footer">
 						<button class="btn action-back btn-primary btn-warning">Back</button>
@@ -449,7 +446,16 @@
 						<div class="clearfix"></div>
 					</div>
 				</div>
+				<?php
 
+				$footerText	= app_setting('checkout_footer', 'shop-' . $skin_checkout->slug);
+
+				if(!empty($footerText)) {
+
+					echo $footerText;
+				}
+
+				?>
 			</div>
 
 		</div>

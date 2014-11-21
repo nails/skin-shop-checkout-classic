@@ -430,6 +430,25 @@ _nails_skin_shop_checkout_classic = function()
 
 		// --------------------------------------------------------------------------
 
+		//	Telephone
+		_value = $( 'input[name=telephone]' ).val();
+		_value = $.trim( _value );
+
+		//	Reset
+		$( 'input[name=telephone]' ).closest( '.form-group' ).removeClass( 'has-error has-feedback' );
+		$( 'input[name=telephone]' ).next( '.help-block' ).remove();
+		$( 'input[name=telephone]' ).siblings( '.form-control-feedback' ).addClass( 'hidden' );
+
+		if ( _value.replace( /\s/g, '' ).length === 0 )
+		{
+			_valid = false;
+			$( 'input[name=telephone]' ).closest( '.form-group' ).addClass( 'has-error has-feedback' );
+			$( 'input[name=telephone]' ).after( '<p class="help-block">This field is required.</p>' );
+			$( 'input[name=telephone]' ).siblings( '.form-control-feedback' ).removeClass( 'hidden' );
+		}
+
+		// --------------------------------------------------------------------------
+
 		//	Email
 		_value = $( 'input[name=email]' ).val();
 		_value = $.trim( _value );

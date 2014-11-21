@@ -45,6 +45,12 @@
 			"label": "\"Thanks for your Order\" text",
 			"tip": "This text is shown on the order processing page when an order is confirmed as paid.",
 			"type": "wysiwyg"
+		},
+		{
+			"key": "checkout_footer",
+			"label": "Checkout Footer Text",
+			"tip": "This text is shown at the foot of the checkout form.",
+			"type": "wysiwyg"
 		}
 	]
 }
