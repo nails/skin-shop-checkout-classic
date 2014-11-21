@@ -23,7 +23,7 @@
 
 					else :
 
-						echo '<p>Simply complete the forms below and then click or tap the "Place Order &amp; Proceed to Payment" button.</p>';
+						echo '<p>Simply complete the forms below and then click or tap the "Place Order &amp; Pay" button.</p>';
 
 						if ( ! $this->user->is_logged_in() ) :
 
