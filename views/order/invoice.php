@@ -11,7 +11,7 @@
 			{
 				padding:0px;
 				margin:0px;
-				font-size:14px;
+				font-size:12px;
 			}
 
 			#container
@@ -208,6 +208,39 @@
 					</tbody>
 				</table>
 				<hr />
+				<?php
+
+					if ($order->delivery_type == 'COLLECT') {
+
+						$address   = array();
+						$address[] = app_setting('warehouse_addr_addressee', 'shop');
+						$address[] = app_setting('warehouse_addr_line1', 'shop');
+						$address[] = app_setting('warehouse_addr_line2', 'shop');
+						$address[] = app_setting('warehouse_addr_town', 'shop');
+						$address[] = app_setting('warehouse_addr_postcode', 'shop');
+						$address[] = app_setting('warehouse_addr_state', 'shop');
+						$address[] = app_setting('warehouse_addr_country', 'shop');
+
+						$address = array_filter($address);
+						$address = implode(', ', $address);
+
+						echo '<div class="alert alert-warning">';
+
+							echo '<strong>This order is for collection</strong>';
+
+							if ($address) {
+
+								$mapsUrl = 'http://maps.google.com/?q=' . urlencode($address);
+
+								echo '<br />Collection from: ' . $address . ' - ' . anchor($mapsUrl, 'Map');
+
+							}
+
+						echo '</div>';
+						echo '<hr />';
+					}
+
+				?>
 				<table width="100%">
 					<tbody>
 						<tr>
@@ -220,11 +253,11 @@
 										</tr>
 										<tr>
 											<td class="head">Dated</td>
-											<td><?=date ( 'jS M Y, H:i:s', strtotime( $order->created ) )?></td>
+											<td><?=date ('jS M Y, H:i:s', strtotime($order->created))?></td>
 										</tr>
 										<tr>
 											<td class="head">Status</td>
-											<td class="status <?=strtolower( $order->status )?>"><?=$order->status?></td>
+											<td class="status <?=strtolower($order->status)?>"><?=$order->status?></td>
 										</tr>
 										<tr>
 											<td class="head">To</td>
@@ -235,9 +268,9 @@
 
 												// --------------------------------------------------------------------------
 
-												$_shipping = $order->shipping_address;
-												$_shipping = array_filter( (array) $_shipping );
-												echo '<br />' . implode( '<br />', $_shipping );
+												$shipping = $order->shipping_address;
+												$shipping = array_filter((array) $shipping);
+												echo '<br />' . implode('<br />', $shipping);
 
 												// --------------------------------------------------------------------------
 
@@ -263,15 +296,15 @@
 											<td>
 											<?php
 
-												$_invoice_company		= app_setting( 'invoice_company',		'shop' );
-												$_invoice_address		= app_setting( 'invoice_address',		'shop' );
-												$_invoice_vat_no		= app_setting( 'invoice_vat_no',		'shop' );
-												$_invoice_company_no	= app_setting( 'invoice_company_no',	'shop' );
+												$invoiceCompany		= app_setting('invoice_company',		'shop');
+												$invoiceAddress		= app_setting('invoice_address',		'shop');
+												$invoiceVatNo		= app_setting('invoice_vat_no',		'shop');
+												$invoiceCompanyNo	= app_setting('invoice_company_no',	'shop');
 
-												echo $_invoice_company		? '<strong>' . $_invoice_company . '</strong>' : '<strong>' . APP_NAME . '</strong>';
-												echo $_invoice_address		? '<br />' . nl2br( $_invoice_address ) . '<br />' : '';
-												echo $_invoice_vat_no		? '<br />VAT No.: ' . $_invoice_vat_no : '';
-												echo $_invoice_company_no	? '<br />Company No.: ' . $_invoice_company_no : '';
+												echo $invoiceCompany	? '<strong>' . $invoiceCompany . '</strong>' : '<strong>' . APP_NAME . '</strong>';
+												echo $invoiceAddress	? '<br />' . nl2br($invoiceAddress) . '<br />' : '';
+												echo $invoiceVatNo		? '<br />VAT No.: ' . $invoiceVatNo : '';
+												echo $invoiceCompanyNo	? '<br />Company No.: ' . $invoiceCompanyNo : '';
 											?>
 											</td>
 										</tr>
@@ -298,20 +331,20 @@
 				<tbody>
 				<?php
 
-				foreach ( $order->items AS $item ) :
+				foreach ($order->items as $item) {
 
 					?>
 					<tr>
 						<td class="barcode">
 						<?php
 
-							if ( ! empty( $item->sku ) ) :
+							if (!empty($item->sku)) {
 
 								//	TODO: Get barcodes working
-								//	echo img( array( 'src' => 'barcode/' . $item->sku, 'class' => 'barcode' ) );
+								//	echo img(array('src' => 'barcode/' . $item->sku, 'class' => 'barcode'));
 								echo $item->sku;
 
-							else :
+							} else {
 
 								?>
 								<span class="fa-stack fa-lg">
@@ -319,8 +352,7 @@
 									<i class="fa fa-ban fa-stack-2x text-danger" style="opacity: 0.5"></i>
 								</span>
 								<?php
-
-							endif;
+							}
 						?>
 						</td>
 						<td class="quantity">
@@ -331,13 +363,12 @@
 
 							echo '<strong>' . $item->product_label . '</strong>';
 							echo '<br>' . $item->variant_label;
-							if ( ! empty( $item->extra_data['to_order']->is_to_order) ) :
+							if (!empty($item->extra_data['to_order']->is_to_order)) {
 
 								echo '<div class="alert alert-warning" style="margin-top:1em;">';
 								echo 'This item is to order. Lead time: ' . $item->extra_data['to_order']->lead_time;
 								echo '</div>';
-
-							endif;
+							}
 
 						?>
 						</td>
@@ -359,7 +390,7 @@
 					</tr>
 					<?php
 
-				endforeach;
+				}
 
 				?>
 				</tbody>
@@ -377,7 +408,6 @@
 							} else {
 
 								echo $order->totals->user_formatted->item;
-
 							}
 
 							?>
@@ -390,12 +420,23 @@
 
 							if (isset($for_user) && $for_user == 'ADMIN') {
 
-								echo $order->totals->base_formatted->shipping;
+								if ($order->totals->base->shipping) {
+
+									echo $order->totals->base_formatted->shipping;
+								} else {
+
+									echo 'Free';
+								}
 
 							} else {
 
-								echo $order->totals->user_formatted->shipping;
+								if ($order->totals->user->shipping) {
 
+									echo $order->totals->user_formatted->shipping;
+								} else {
+
+									echo 'Free';
+								}
 							}
 
 							?>
@@ -413,7 +454,6 @@
 							} else {
 
 								echo $order->totals->user_formatted->tax;
-
 							}
 
 							?>
@@ -431,7 +471,6 @@
 							} else {
 
 								echo $order->totals->user_formatted->grand;
-
 							}
 
 							?>
@@ -442,13 +481,12 @@
 			</table>
 			<?php
 
-				if ( app_setting( 'invoice_footer', 'shop' ) ) :
+				if (app_setting('invoice_footer', 'shop')) {
 
 					echo '<p id="invoice-footer">';
-						echo app_setting( 'invoice_footer', 'shop' );
+						echo app_setting('invoice_footer', 'shop');
 					echo '</p>';
-
-				endif;
+				}
 
 			?>
 		</div>

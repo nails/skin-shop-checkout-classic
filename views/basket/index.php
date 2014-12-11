@@ -5,7 +5,12 @@
 
 			if ( ! empty( $basket->items ) ) :
 
-				$this->load->view( $skin_checkout->path . 'views/basket/table', array( 'items' => $basket->items, 'totals' => $basket->totals ) );
+				$tableData					= array();
+				$tableData['items']			= $basket->items;
+				$tableData['totals']		= $basket->totals;
+				$tableData['shippingType']	= $basket->shipping->type;
+
+				$this->load->view($skin_checkout->path . 'views/basket/table', $tableData);
 
 				?>
 				<hr />
@@ -57,6 +62,8 @@
 				<div class="basket-empty well well-default">
 					<h3 class="text-center">
 						Your basket is empty
+						<br /><br />
+						<?=anchor($shop_url, 'Go Shopping', 'class="btn btn-primary btn-sm"')?>
 					</h3>
 				</div>
 				<?php

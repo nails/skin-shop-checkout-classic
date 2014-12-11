@@ -223,7 +223,13 @@
 					<div class="col-xs-12">
 						<?php
 
-							$this->load->view( $skin_checkout->path . 'views/basket/table', array( 'items' => $order->items, 'totals' => $order->totals, 'readonly' => TRUE ) );
+							$tableData					= array();
+							$tableData['items']			= $order->items;
+							$tableData['totals']		= $order->totals;
+							$tableData['shippingType']	= $order->delivery_type;
+							$tableData['readonly']		= true;
+
+							$this->load->view( $skin_checkout->path . 'views/basket/table', $tableData );
 
 						?>
 					</div>
