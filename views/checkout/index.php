@@ -130,7 +130,7 @@
 
 											echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
 											echo '<option value="">Please Choose...</option>';
-											foreach( $opt['select'] AS $value => $label ) :
+											foreach ( $opt['select'] AS $value => $label ) :
 
 												$_selected = $value == $_value ? 'selected="selected"' : '';
 												echo '<option value="' . $value . '" ' . $_selected . '>' . $label .'</option>';
@@ -292,7 +292,7 @@
 
 													echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
 													echo '<option value="">Please Choose...</option>';
-													foreach( $opt['select'] AS $value => $label ) :
+													foreach ( $opt['select'] AS $value => $label ) :
 
 														$_selected = $value == $_value ? 'selected="selected"' : '';
 														echo '<option value="' . $value . '" ' . $_selected . '>' . $label .'</option>';
@@ -348,7 +348,7 @@
 									<ul class="list-unstyled">
 									<?php
 
-										foreach( $payment_gateways AS $gateway ) :
+										foreach ( $payment_gateways AS $gateway ) :
 
 											//	Forgive me Gods of CSS.
 											?>

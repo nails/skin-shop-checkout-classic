@@ -83,7 +83,7 @@
 	<div class="row product-browser">
 	<?php
 
-		foreach( $recently_viewed AS $product ) :
+		foreach ( $recently_viewed AS $product ) :
 
 			echo '<div class="product col-sm-2">';
 

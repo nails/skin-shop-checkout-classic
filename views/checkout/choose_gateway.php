@@ -6,7 +6,7 @@
 		<ul>
 		<?php
 
-			foreach( $payment_gateways AS $gateway ) :
+			foreach ( $payment_gateways AS $gateway ) :
 
 				echo '<li>';
 					echo anchor( $shop_url . 'checkout/payment/' . $order_ref . '/' . $order_code . '/' . $gateway, $gateway );
