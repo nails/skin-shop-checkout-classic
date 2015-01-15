@@ -10,7 +10,7 @@
 		<tbody>
 		<?php
 
-			foreach ( $items AS $item ) :
+			foreach ( $items as $item ) :
 
 				?>
 				<tr class="basket-item">

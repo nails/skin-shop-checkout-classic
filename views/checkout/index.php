@@ -109,7 +109,7 @@
 									'select'	=> $countries_flat
 								);
 
-								foreach ( $_options AS $opt ) :
+								foreach ( $_options as $opt ) :
 
 									$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
 									$_has_error			= $_error ? 'has-error' : '';
@@ -130,7 +130,7 @@
 
 											echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
 											echo '<option value="">Please Choose...</option>';
-											foreach ( $opt['select'] AS $value => $label ) :
+											foreach ( $opt['select'] as $value => $label ) :
 
 												$_selected = $value == $_value ? 'selected="selected"' : '';
 												echo '<option value="' . $value . '" ' . $_selected . '>' . $label .'</option>';
@@ -181,7 +181,7 @@
 									'required'	=> true
 								);
 
-								foreach ( $_options AS $opt ) :
+								foreach ( $_options as $opt ) :
 
 									$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
 									$_has_error			= $_error ? 'has-error' : '';
@@ -271,7 +271,7 @@
 											'select'	=> $countries_flat
 										);
 
-										foreach ( $_options AS $opt ) :
+										foreach ( $_options as $opt ) :
 
 											$_error				= form_error( $opt['key'], '<p class="help-block">', '</p>' );
 											$_has_error			= $_error ? 'has-error' : '';
@@ -292,7 +292,7 @@
 
 													echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
 													echo '<option value="">Please Choose...</option>';
-													foreach ( $opt['select'] AS $value => $label ) :
+													foreach ( $opt['select'] as $value => $label ) :
 
 														$_selected = $value == $_value ? 'selected="selected"' : '';
 														echo '<option value="' . $value . '" ' . $_selected . '>' . $label .'</option>';
@@ -348,7 +348,7 @@
 									<ul class="list-unstyled">
 									<?php
 
-										foreach ( $payment_gateways AS $gateway ) :
+										foreach ( $payment_gateways as $gateway ) :
 
 											//	Forgive me Gods of CSS.
 											?>
