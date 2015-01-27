@@ -1,3 +1,3 @@
 <?php
 
-	$this->load->view( $skin_checkout->path . 'views/checkout/processing/paid' );
+    $this->load->view($skin->path . 'views/checkout/processing/paid');

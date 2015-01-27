@@ -1,335 +1,320 @@
 <div class="table-responsive">
-	<table class="table table-bordered table-striped order-summary">
-		<thead>
-			<tr>
-				<th class="col-xs-6 col-sm-8">Product</th>
-				<th class="col-xs-3 col-sm-2 text-center">Quantity</th>
-				<th class="col-xs-3 col-sm-2 text-center">Unit Price</th>
-			</tr>
-		</thead>
-		<tbody>
-		<?php
+    <table class="table table-bordered table-striped order-summary">
+        <thead>
+            <tr>
+                <th class="col-xs-6 col-sm-8">Product</th>
+                <th class="col-xs-3 col-sm-2 text-center">Quantity</th>
+                <th class="col-xs-3 col-sm-2 text-center">Unit Price</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
 
-			foreach ( $items as $item ) :
+            foreach ($items as $item) {
 
-				?>
-				<tr class="basket-item">
-					<td class="vertical-align-middle">
-					<?php
+                ?>
+                <tr class="basket-item">
+                    <td class="vertical-align-middle">
+                    <?php
 
-						if ( ! empty( $item->variant->featured_img ) ) :
+                        if (!empty($item->variant->featured_img)) {
 
-							$_featured_img = $item->variant->featured_img;
+                            $featuredImg = $item->variant->featured_img;
 
-						elseif ( ! empty( $item->product->featured_img ) ) :
+                        } elseif (!empty($item->product->featured_img)) {
 
-							$_featured_img = $item->product->featured_img;
+                            $featuredImg = $item->product->featured_img;
 
-						else :
+                        } else {
 
-							$_featured_img = FALSE;
+                            $featuredImg = FALSE;
+                        }
 
-						endif;
+                        if ($featuredImg) {
 
-						if ( $_featured_img ) :
+                            echo '<div class="col-xs-2 hidden-xs hidden-sm">';
 
-							echo '<div class="col-xs-2 hidden-xs hidden-sm">';
+                                $url = cdn_thumb($featuredImg, 175, 175);
+                                echo img(array('src' => $url, 'class' => 'img-thumbnail'));
 
-								$_url = cdn_thumb( $_featured_img, 175, 175 );
-								echo img( array( 'src' => $_url, 'class' => 'img-thumbnail' ) );
+                            echo '</div>';
+                            echo '<div class="col-sm-12 col-md-10">';
 
-							echo '</div>';
-							echo '<div class="col-sm-12 col-md-10">';
+                        } else {
 
-						else :
+                            echo '<div class="col-sm-12">';
+                        }
 
-							echo '<div class="col-sm-12">';
+                        // --------------------------------------------------------------------------
 
-						endif;
+                        //  Label
+                        echo anchor($item->product->url, '<strong>' . $item->product->label . '</strong>');
 
-						// --------------------------------------------------------------------------
+                        if ($item->variant->label !== $item->product->label) {
 
-						//	Label
-						echo anchor( $item->product->url, '<strong>' . $item->product->label . '</strong>' );
+                            echo '<br />';
+                            echo '<em>' . $item->variant->label . '</em>';
+                        }
 
-						if ( $item->variant->label !== $item->product->label ) :
+                        // --------------------------------------------------------------------------
 
-							echo '<br />';
-							echo '<em>' . $item->variant->label . '</em>';
+                        //  SKU
+                        if (!empty($item->variant->sku)) {
 
-						endif;
+                            echo '<br />';
+                            echo '<small class="text-muted">';
+                                echo '<em>' . $item->variant->sku . '</em>';
+                            echo '</small>';
+                        }
 
-						// --------------------------------------------------------------------------
+                        // --------------------------------------------------------------------------
 
-						//	SKU
-						if ( ! empty( $item->variant->sku ) ) :
+                        //  To order?
+                        if ($item->variant->stock_status == 'TO_ORDER') {
 
-							echo '<br />';
-							echo '<small class="text-muted">';
-								echo '<em>' . $item->variant->sku . '</em>';
-							echo '</small>';
+                            echo '<p class="text-muted">';
+                                echo '<small>';
+                                    echo '<em>Lead time: ' . $item->variant->lead_time . '</em>';
+                                echo '</small>';
+                            echo '</p>';
+                        }
 
-						endif;
+                        // --------------------------------------------------------------------------
 
-						// --------------------------------------------------------------------------
+                        //  Collection Only
+                        if ($item->variant->shipping->collection_only) {
 
-						//	To order?
-						if ( $item->variant->stock_status == 'TO_ORDER' ) :
+                            echo '<div class="alert alert-warning">';
+                                echo '<strong>Note:</strong> This item is collection only.';
+                            echo '</div>';
+                        }
 
-							echo '<p class="text-muted">';
-								echo '<small>';
-									echo '<em>Lead time: ' . $item->variant->lead_time . '</em>';
-								echo '</small>';
-							echo '</p>';
+                        // --------------------------------------------------------------------------
 
-						endif;
+                        if ($featuredImg) {
 
-						// --------------------------------------------------------------------------
+                            echo '</div>';
+                        }
 
-						//	Collection Only
-						if ( $item->variant->shipping->collection_only ) :
+                    ?>
+                    </td>
+                    <td class="vertical-align-middle text-center">
+                        <div class="row">
+                        <?php
+
+                            if (empty($readonly)) {
+
+                                echo '<div class="col-xs-4">';
+                                echo anchor($shop_url . 'basket/decrement?variant_id=' . $item->variant->id, '<span class="fa fa-minus-circle fa-lg text-muted"></span>', 'class="pull-right"');
+                                echo '</div>';
+
+                                echo '<div class="col-xs-4">';
+                            }
+
+                            echo '<span class="variant-quantity-' . $item->variant->id . '">';
+                                echo number_format($item->quantity);
+                            echo '</span>';
+
+                            if (empty($readonly)) {
+
+                                echo '</div>';
+
+                                echo '<div class="col-xs-4">';
+                                echo anchor($shop_url . 'basket/increment?variant_id=' . $item->variant->id, '<span class="fa fa-plus-circle fa-lg text-muted"></span>', 'class="pull-left"');
+                                echo '</div>';
+                            }
+
+                        ?>
+                        </div>
+                    </td>
+                    <td class="vertical-align-middle text-center">
+                    <?php
+
+                        if (app_setting('price_exclude_tax', 'shop')) {
 
-							echo '<div class="alert alert-warning">';
-								echo '<strong>Note:</strong> This item is collection only.';
-							echo '</div>';
+                            echo '<span class="variant-unit-price-ex-tax-' . $item->variant->id . '">';
+                                echo $item->variant->price->price->user_formatted->value_ex_tax;
+                            echo '</span>';
 
-						endif;
+                            if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $item->variant->price->price->user->value_tax > 0) {
 
-						// --------------------------------------------------------------------------
+                                echo '<br />';
+                                echo '<small class="text-muted">';
+                                    echo '<span class="variant-unit-price-inc-tax-' . $item->variant->id . '">';
+                                        echo $item->variant->price->price->user_formatted->value_inc_tax;
+                                    echo '</span>';
+                                    echo ' inc. tax';
+                                echo '</small>';
+                            }
 
-						if ( $_featured_img ) :
+                        } else {
 
-							echo '</div>';
+                            echo '<span class="variant-unit-price-inc-tax-' . $item->variant->id . '">';
+                                echo $item->variant->price->price->user_formatted->value_inc_tax;
+                            echo '</span>';
 
-						endif;
+                            if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $item->variant->price->price->user->value_tax > 0) {
 
-					?>
-					</td>
-					<td class="vertical-align-middle text-center">
-						<div class="row">
-						<?php
+                                echo '<br />';
+                                echo '<small class="text-muted">';
+                                    echo '<span class="variant-unit-price-ex-tax-' . $item->variant->id . '">';
+                                        echo $item->variant->price->price->user_formatted->value_ex_tax;
+                                    echo '</span>';
+                                    echo ' ex. tax';
+                                echo '</small>';
+                            }
+                        }
 
-							if ( empty( $readonly ) ) :
+                    ?>
+                    </td>
+                </tr>
+                <?php
+            }
+        ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th colspan="3"></th>
+            </tr>
 
-								echo '<div class="col-xs-4">';
-								echo anchor( $shop_url . 'basket/decrement?variant_id=' . $item->variant->id, '<span class="fa fa-minus-circle fa-lg text-muted"></span>', 'class="pull-right"' );
-								echo '</div>';
+            <!-- Item Total -->
+            <tr class="basket-total-item">
+                <th colspan="2" class="text-right">
+                    Sub Total
+                </th>
+                <th class="text-center value">
+                    <?=$totals->user_formatted->item?>
+                </th>
+            </tr>
 
-								echo '<div class="col-xs-4">';
+            <!-- Shipping Total -->
+            <tr class="basket-total-shipping">
+                <th colspan="2" class="text-right">
+                    <?php
 
-							endif;
+                        if (app_setting('warehouse_collection_enabled', 'shop')) {
 
-							echo '<span class="variant-quantity-' . $item->variant->id . '">';
-								echo number_format( $item->quantity );
-							echo '</span>';
+                            if ($shippingType === 'DELIVER') {
 
-							if ( empty( $readonly ) ) :
+                                echo 'Shipping';
 
-								echo '</div>';
+                                if (empty($readonly)) {
 
-								echo '<div class="col-xs-4">';
-								echo anchor( $shop_url . 'basket/increment?variant_id=' . $item->variant->id, '<span class="fa fa-plus-circle fa-lg text-muted"></span>', 'class="pull-left"' );
-								echo '</div>';
+                                    echo '<small>';
+                                    echo anchor($shop_url . 'basket/set_as_collection', 'Click here to collect your order');
+                                    echo '</small>';
+                                }
 
-							endif;
+                            } else {
 
-						?>
-						</div>
-					</td>
-					<td class="vertical-align-middle text-center">
-					<?php
+                                echo 'You will collect your order ';
 
-						if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
+                                if (empty($readonly)) {
 
-							echo '<span class="variant-unit-price-ex-tax-' . $item->variant->id . '">';
-								echo $item->variant->price->price->user_formatted->value_ex_tax;
-							echo '</span>';
+                                    echo '<small>';
+                                        echo anchor($shop_url . 'basket/set_as_delivery', 'Click here to have your order delivered');
+                                    echo '</small>';
+                                }
 
-							if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin_checkout->slug ) && $item->variant->price->price->user->value_tax > 0 ) :
+                                $address   = array();
+                                $address[] = app_setting('warehouse_addr_addressee', 'shop');
+                                $address[] = app_setting('warehouse_addr_line1', 'shop');
+                                $address[] = app_setting('warehouse_addr_line2', 'shop');
+                                $address[] = app_setting('warehouse_addr_town', 'shop');
+                                $address[] = app_setting('warehouse_addr_postcode', 'shop');
+                                $address[] = app_setting('warehouse_addr_state', 'shop');
+                                $address[] = app_setting('warehouse_addr_country', 'shop');
 
-								echo '<br />';
-								echo '<small class="text-muted">';
-									echo '<span class="variant-unit-price-inc-tax-' . $item->variant->id . '">';
-										echo $item->variant->price->price->user_formatted->value_inc_tax;
-									echo '</span>';
-									echo ' inc. tax';
-								echo '</small>';
+                                if (!empty($address[0])) {
 
-							endif;
+                                    $addressLabel = $address[0];
 
-						else :
+                                } elseif (!empty($address[0])) {
 
-							echo '<span class="variant-unit-price-inc-tax-' . $item->variant->id . '">';
-								echo $item->variant->price->price->user_formatted->value_inc_tax;
-							echo '</span>';
+                                    $addressLabel = $address[1];
 
-							if ( ! app_setting( 'omit_variant_tax_pricing', 'shop-' . $skin_checkout->slug ) && $item->variant->price->price->user->value_tax > 0 ) :
+                                } else {
 
-								echo '<br />';
-								echo '<small class="text-muted">';
-									echo '<span class="variant-unit-price-ex-tax-' . $item->variant->id . '">';
-										echo $item->variant->price->price->user_formatted->value_ex_tax;
-									echo '</span>';
-									echo ' ex. tax';
-								echo '</small>';
+                                    $addressLabel = APP_NAME;
 
-							endif;
+                                }
 
-						endif;
+                                $address = array_filter($address);
+                                $address = implode(', ', $address);
 
-					?>
-					</td>
-				</tr>
-				<?php
+                                echo '<small>';
+                                    if ($address && $addressLabel) {
 
-			endforeach;
+                                        $mapsUrl = 'http://maps.google.com/?q=' . urlencode($address);
 
-		?>
-		</tbody>
-		<tfoot>
-			<tr>
-				<th colspan="3"></th>
-			</tr>
+                                        echo 'Collection from: ';
+                                        echo anchor($mapsUrl, $addressLabel, 'target="_blank"');
 
-			<!-- Item Total -->
-			<tr class="basket-total-item">
-				<th colspan="2" class="text-right">
-					Sub Total
-				</th>
-				<th class="text-center value">
-					<?=$totals->user_formatted->item?>
-				</th>
-			</tr>
+                                    } elseif ($addressLabel) {
 
-			<!-- Shipping Total -->
-			<tr class="basket-total-shipping">
-				<th colspan="2" class="text-right">
-					<?php
+                                        echo 'Collection from:';
+                                        echo $addressLabel;
+                                    }
+                                echo '</small>';
+                            }
 
-						if (app_setting('warehouse_collection_enabled', 'shop')) {
+                        } else {
 
-							if ($shippingType === 'DELIVER') {
+                            echo 'Shipping';
+                        }
 
-								echo 'Shipping';
+                    ?>
+                </th>
+                <th class="text-center value">
+                    <?php
 
-								if (empty($readonly)) {
+                        if ($totals->user->shipping) {
 
-									echo '<small>';
-									echo anchor($shop_url . 'basket/set_as_collection', 'Click here to collect your order');
-									echo '</small>';
-								}
+                            echo $totals->user_formatted->shipping;
 
-							} else {
+                        } else {
 
-								echo 'You will collect your order ';
+                            echo 'Free';
+                        }
 
-								if (empty($readonly)) {
+                    ?>
+                </th>
+            </tr>
 
-									echo '<small>';
-										echo anchor($shop_url . 'basket/set_as_delivery', 'Click here to have your order delivered');
-									echo '</small>';
-								}
+            <!-- Tax Total -->
+            <tr class="basket-total-tax">
+                <th colspan="2" class="text-right">
+                <?php
 
-								$address   = array();
-								$address[] = app_setting('warehouse_addr_addressee', 'shop');
-								$address[] = app_setting('warehouse_addr_line1', 'shop');
-								$address[] = app_setting('warehouse_addr_line2', 'shop');
-								$address[] = app_setting('warehouse_addr_town', 'shop');
-								$address[] = app_setting('warehouse_addr_postcode', 'shop');
-								$address[] = app_setting('warehouse_addr_state', 'shop');
-								$address[] = app_setting('warehouse_addr_country', 'shop');
+                    if (app_setting('price_exclude_tax', 'shop')) {
 
-								if (!empty($address[0])) {
+                        echo 'Tax';
 
-									$addressLabel = $address[0];
+                    } else {
 
-								} elseif (!empty($address[0])) {
+                        echo 'Tax (included)';
+                    }
 
-									$addressLabel = $address[1];
+                ?>
+                </th>
+                <th class="text-center value">
+                <?php
 
-								} else {
+                    echo $totals->user_formatted->tax;
 
-									$addressLabel = APP_NAME;
+                ?>
+                </th>
+            </tr>
 
-								}
-
-								$address = array_filter($address);
-								$address = implode(', ', $address);
-
-								echo '<small>';
-									if ($address && $addressLabel) {
-
-										$mapsUrl = 'http://maps.google.com/?q=' . urlencode($address);
-
-										echo 'Collection from: ';
-										echo anchor($mapsUrl, $addressLabel, 'target="_blank"');
-
-									} elseif ($addressLabel) {
-
-										echo 'Collection from:';
-										echo $addressLabel;
-									}
-								echo '</small>';
-							}
-
-						} else {
-
-							echo 'Shipping';
-						}
-
-					?>
-				</th>
-				<th class="text-center value">
-					<?php
-
-						if ($totals->user->shipping) {
-
-							echo $totals->user_formatted->shipping;
-
-						} else {
-
-							echo 'Free';
-						}
-
-					?>
-				</th>
-			</tr>
-
-			<!-- Tax Total -->
-			<tr class="basket-total-tax">
-				<th colspan="2" class="text-right">
-				<?php
-
-					if ( app_setting( 'price_exclude_tax', 'shop' ) ) :
-
-						echo 'Tax';
-
-					else :
-
-						echo 'Tax (included)';
-
-					endif;
-
-				?>
-				</th>
-				<th class="text-center value">
-				<?php
-
-					echo $totals->user_formatted->tax;
-
-				?>
-				</th>
-			</tr>
-
-			<!-- Grand Total -->
-			<tr class="basket-total-grand">
-				<th colspan="2" class="text-right">
-					Total
-				</th>
-				<th class="text-center value">
-					<?=$totals->user_formatted->grand?>
-				</th>
-			</tr>
-		</tfoot>
-	</table>
+            <!-- Grand Total -->
+            <tr class="basket-total-grand">
+                <th colspan="2" class="text-right">
+                    Total
+                </th>
+                <th class="text-center value">
+                    <?=$totals->user_formatted->grand?>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
 </div>
