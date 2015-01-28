@@ -30,7 +30,7 @@
         "nails" :
         {
             "type": "skin",
-            "subtype": "shop-checkout"
+            "subType": "shop-checkout"
         }
     }
 }
