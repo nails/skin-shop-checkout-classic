@@ -14,7 +14,7 @@
                                     Order: <?=$order->ref?>
                                     <small class="text-muted">
                                         This order was received on the
-                                        <?=date('jS \o\f F Y \a\t H:i:s', strtotime(user_mysql_datetime($order->created)))?>
+                                        <?=date('jS \o\f F Y \a\t H:i:s', strtotime(userMysqlDatetime($order->created)))?>
                                     </small>
                                 </p>
                             </div>
