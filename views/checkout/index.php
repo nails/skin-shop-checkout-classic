@@ -31,7 +31,7 @@
 
                 echo  '<div class="col-md-12">';
 
-                    $introText = cms_render_block('shop_checkout_intro');
+                    $introText = cmsBlock('shop_checkout_intro');
 
                     if (!empty($introText)) {
 
