@@ -180,7 +180,7 @@
                                             if ($address) {
 
                                                 $address = urlencode($address);
-                                                $url = 'http://maps.google.com/maps/api/staticmap?markers=size:mid|color:black|' . $address . '&size=' . $avatar_size . 'x' . $avatar_size . '&sensor=FALSE';
+                                                $url = 'http://maps.google.com/maps/api/staticmap?markers=size:mid|color:black|' . $address . '&size=' . $avatarSize . 'x' . $avatarSize . '&sensor=FALSE';
                                                 echo img(array('src' => $url, 'class' => 'img-thumbnail pull-right'));
                                             }
 
