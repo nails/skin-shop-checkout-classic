@@ -41,14 +41,14 @@
 
                         echo '<p>Simply complete the forms below and then click or tap the "Place Order &amp; Pay" button.</p>';
 
-                        if (!$this->user_model->is_logged_in()) {
+                        if (!$this->user_model->isLoggedIn()) {
 
                             echo '<p>You are welcome to checkout as a guest, however we recommend creating an account so that you can track your order and have a quicker checkout experience next time.</p>';
 
                         } else {
 
                             echo '<p>';
-                                echo 'You are currently logged in as: <strong>' . active_user('first_name,last_name') . ' (' . active_user('email') . ')</strong>. ';
+                                echo 'You are currently logged in as: <strong>' . activeUser('first_name,last_name') . ' (' . activeUser('email') . ')</strong>. ';
                                 echo anchor('auth/logout', 'Not you?');
                             echo '</p>';
                         }
@@ -130,9 +130,9 @@
                                     $has_feedback    = $error ? 'has-feedback' : '';
                                     $required        = $opt['required'] ? '*' : '';
                                     $feedback_hidden = $has_feedback ? '' : 'hidden';
-                                    $active_user     = active_user($opt['key']);
-                                    $active_user     = is_string($active_user) ? $active_user : '';
-                                    $value           = set_value($opt['key'], $active_user);
+                                    $activeUser     = activeUser($opt['key']);
+                                    $activeUser     = is_string($activeUser) ? $activeUser : '';
+                                    $value           = set_value($opt['key'], $activeUser);
 
                                     echo '<div class="form-group ' . $has_error . ' ' . $has_feedback . '">';
                                         echo '<label class="control-label" for="' . $opt['key'] . '">';
@@ -200,9 +200,9 @@
                                     $required          = $opt['required'] ? '*' : '';
                                     $type              = $opt['key'] == 'email' ? 'email' : 'text';
                                     $feedback_hidden   = $has_feedback ? '' : 'hidden';
-                                    $active_user       = active_user($opt['key']);
-                                    $active_user       = is_string($active_user) ? $active_user : '';
-                                    $value             = set_value($opt['key'], $active_user);
+                                    $activeUser       = activeUser($opt['key']);
+                                    $activeUser       = is_string($activeUser) ? $activeUser : '';
+                                    $value             = set_value($opt['key'], $activeUser);
 
                                     echo '<div class="form-group ' . $has_error . ' ' . $has_feedback . '">';
                                         echo '<label class="control-label" for="' . $opt['key'] . '">';
@@ -292,9 +292,9 @@
                                             $has_feedback    = $error ? 'has-feedback' : '';
                                             $required        = $opt['required'] ? '*' : '';
                                             $feedback_hidden = $has_feedback ? '' : 'hidden';
-                                            $active_user     = active_user($opt['key']);
-                                            $active_user     = is_string($active_user) ? $active_user : '';
-                                            $value           = set_value($opt['key'], $active_user);
+                                            $activeUser     = activeUser($opt['key']);
+                                            $activeUser     = is_string($activeUser) ? $activeUser : '';
+                                            $value           = set_value($opt['key'], $activeUser);
 
                                             echo '<div class="form-group ' . $has_error . ' ' . $has_feedback . '">';
                                                 echo '<label class="control-label" for="' . $opt['key'] . '">';
