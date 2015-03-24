@@ -675,8 +675,8 @@ _nails_skin_shop_checkout_classic = function()
 
 		//	Send request to shop's API
 		var _call = {
-			'controller'	: 'shop',
-			'method'		: 'order/status',
+			'controller'	: 'shop/order',
+			'method'		: 'status',
 			'data'			:
 			{
 				'ref': _order_ref
