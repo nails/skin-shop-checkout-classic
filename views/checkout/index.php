@@ -416,7 +416,7 @@
 
                                         if ($chosen_gateway) {
 
-                                            if ($this->shop_payment_gateway_model->is_redirect($chosen_gateway)) {
+                                            if ($this->shop_payment_gateway_model->isRedirect($chosen_gateway)) {
 
                                                 $active = '';
 
