@@ -194,15 +194,16 @@
 
                                 foreach ($options as $opt) {
 
-                                    $error             = form_error($opt['key'], '<p class="help-block">', '</p>');
-                                    $has_error         = $error ? 'has-error' : '';
-                                    $has_feedback      = $error ? 'has-feedback' : '';
-                                    $required          = $opt['required'] ? '*' : '';
-                                    $type              = $opt['key'] == 'email' ? 'email' : 'text';
-                                    $feedback_hidden   = $has_feedback ? '' : 'hidden';
-                                    $activeUser       = activeUser($opt['key']);
-                                    $activeUser       = is_string($activeUser) ? $activeUser : '';
-                                    $value             = set_value($opt['key'], $activeUser);
+                                    $error           = form_error($opt['key'], '<p class="help-block">', '</p>');
+                                    $has_error       = $error ? 'has-error' : '';
+                                    $has_feedback    = $error ? 'has-feedback' : '';
+                                    $required        = $opt['required'] ? '*' : '';
+                                    $type            = $opt['key'] == 'email' ? 'email' : 'text';
+                                    $type            = $opt['key'] == 'telephone' ? 'tel' : $type;
+                                    $feedback_hidden = $has_feedback ? '' : 'hidden';
+                                    $activeUser      = activeUser($opt['key']);
+                                    $activeUser      = is_string($activeUser) ? $activeUser : '';
+                                    $value           = set_value($opt['key'], $activeUser);
 
                                     echo '<div class="form-group ' . $has_error . ' ' . $has_feedback . '">';
                                         echo '<label class="control-label" for="' . $opt['key'] . '">';

@@ -105,7 +105,7 @@
                             if (empty($readonly)) {
 
                                 echo '<div class="col-xs-4">';
-                                echo anchor($shop_url . 'basket/decrement?variant_id=' . $item->variant->id, '<span class="fa fa-minus-circle fa-lg text-muted"></span>', 'class="pull-right"');
+                                echo anchor($shop_url . 'basket/decrement?variant_id=' . $item->variant->id, '<span class="glyphicon glyphicon-minus-sign text-muted"></span>', 'class="pull-right"');
                                 echo '</div>';
 
                                 echo '<div class="col-xs-4">';
@@ -120,7 +120,7 @@
                                 echo '</div>';
 
                                 echo '<div class="col-xs-4">';
-                                echo anchor($shop_url . 'basket/increment?variant_id=' . $item->variant->id, '<span class="fa fa-plus-circle fa-lg text-muted"></span>', 'class="pull-left"');
+                                echo anchor($shop_url . 'basket/increment?variant_id=' . $item->variant->id, '<span class="glyphicon glyphicon-plus-sign text-muted"></span>', 'class="pull-left"');
                                 echo '</div>';
                             }
 
