@@ -127,6 +127,8 @@
 
             table.styled.products thead th.unit-cost,
             table.styled.products tbody td.unit-cost,
+            table.styled.products thead th.unit-tax,
+            table.styled.products tbody td.unit-tax,
             table.styled.products tfoot th.total-value
             {
                 text-align:center;
@@ -389,6 +391,8 @@
                         <th class="quantity">Quantity</th>
                         <th class="product">Product</th>
                         <th class="unit-cost">Unit Cost</th>
+                        <th class="unit-tax">Tax Per Unit</th>
+                        <th class="total">Total</th>
                     </tr>
                 </thead>
 
@@ -450,11 +454,41 @@
 
                             if (isset($for_user) && $for_user == 'ADMIN') {
 
-                                echo $item->price->base_formatted->value;
+                                echo $item->price->base_formatted->value_ex_tax;
 
                             } else {
 
-                                echo $item->price->user_formatted->value;
+                                echo $item->price->user_formatted->value_ex_tax;
+
+                            }
+
+                            ?>
+                        </td>
+                        <td class="unit-tax">
+                            <?php
+
+                            if (isset($for_user) && $for_user == 'ADMIN') {
+
+                                echo $item->price->base_formatted->value_tax;
+
+                            } else {
+
+                                echo $item->price->user_formatted->value_tax;
+
+                            }
+
+                            ?>
+                        </td>
+                        <td class="unit-tax">
+                            <?php
+
+                            if (isset($for_user) && $for_user == 'ADMIN') {
+
+                                echo $item->price->base_formatted->value_total;
+
+                            } else {
+
+                                echo $item->price->user_formatted->value_total;
 
                             }
 
@@ -470,7 +504,7 @@
 
                 <tfoot>
                     <tr>
-                        <th class="total-text" colspan="3" style="text-align:right;">Sub Total</th>
+                        <th class="total-text" colspan="5" style="text-align:right;">Sub Total</th>
                         <th class="total-value">
                             <?php
 
@@ -487,7 +521,7 @@
                         </th>
                     </tr>
                     <tr>
-                        <th class="total-text" colspan="3" style="text-align:right;">Shipping</th>
+                        <th class="total-text" colspan="5" style="text-align:right;">Shipping</th>
                         <th class="total-value">
                             <?php
 
@@ -516,7 +550,7 @@
                         </th>
                     </tr>
                     <tr>
-                        <th class="total-text" colspan="3" style="text-align:right;">Tax</th>
+                        <th class="total-text" colspan="5" style="text-align:right;">Tax</th>
                         <th class="total-value">
                             <?php
 
@@ -533,7 +567,7 @@
                         </th>
                     </tr>
                     <tr>
-                        <th class="total-text" colspan="3" style="text-align:right;">Total</th>
+                        <th class="total-text" colspan="5" style="text-align:right;">Total</th>
                         <th class="total-value">
                             <?php
 

@@ -80,7 +80,7 @@
                         <h3 class="panel-title">
                             Step <?=$curStep?> of <?=$numSteps?>: Contact &amp; Delivery Details
                             <b class="validate-ok glyphicon glyphicon-ok-sign pull-right text-success hidden"></b>
-                            <b class="validate-fail glyphicon glyphicon-remove-sign pull-right text-danger"></b>
+                            <b class="validate-fail glyphicon glyphicon-remove-sign pull-right text-danger hidden"></b>
                         </h3>
                     </div>
                     <div class="panel-body">
