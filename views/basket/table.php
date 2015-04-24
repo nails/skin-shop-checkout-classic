@@ -188,7 +188,12 @@
             </tr>
 
             <!-- Shipping Total -->
-            <tr class="basket-total-shipping">
+            <?php
+
+                $rowContext = $shippingType === 'DELIVER_COLLECT' || $shippingType === 'COLLECT' ? 'warning' : '';
+
+            ?>
+            <tr class="basket-total-shipping <?=$rowContext?>">
                 <th colspan="2" class="text-right">
                     <?php
 
@@ -201,18 +206,26 @@
                                 if (empty($readonly)) {
 
                                     echo '<small>';
-                                    echo anchor($shop_url . 'basket/set_as_collection', 'Click here to collect your order');
+                                    echo '<br />' . anchor($shop_url . 'basket/set_as_collection', 'Click here to collect your order');
                                     echo '</small>';
                                 }
+
+                            } elseif ($shippingType === 'DELIVER_COLLECT') {
+
+                                echo 'Your order will only be partially shipped';
+                                echo '<small>';
+                                    echo 'Your order contains items which are collect only<br />These items will not be shipped';
+                                    echo '<br /><br />' . anchor($shop_url . 'basket/set_as_collection', 'Click here to collect your entire order');
+                                echo '</small>';
 
                             } else {
 
                                 echo 'You will collect your order ';
 
-                                if (empty($readonly)) {
+                                if (empty($readonly) && $basket->shipping->isDeliverable) {
 
                                     echo '<small>';
-                                        echo anchor($shop_url . 'basket/set_as_delivery', 'Click here to have your order delivered');
+                                        echo '<br />' . anchor($shop_url . 'basket/set_as_delivery', 'Click here to have your order delivered');
                                     echo '</small>';
                                 }
 
@@ -224,38 +237,18 @@
                                 $address[] = app_setting('warehouse_addr_postcode', 'shop');
                                 $address[] = app_setting('warehouse_addr_state', 'shop');
                                 $address[] = app_setting('warehouse_addr_country', 'shop');
+                                $address   = array_filter($address);
 
-                                if (!empty($address[0])) {
+                                if ($address) {
 
-                                    $addressLabel = $address[0];
+                                    $mapsUrl = 'http://maps.google.com/?q=' . urlencode(implode(', ', $address));
 
-                                } elseif (!empty($address[0])) {
-
-                                    $addressLabel = $address[1];
-
-                                } else {
-
-                                    $addressLabel = APP_NAME;
-
+                                    echo '<small>';
+                                        echo '<br /><strong>Collection from:</strong>';
+                                        echo '<br />' . implode('<br />', $address) . '<br />';
+                                        echo anchor($mapsUrl, 'Map', 'target="_blank"');
+                                    echo '</small>';
                                 }
-
-                                $address = array_filter($address);
-                                $address = implode(', ', $address);
-
-                                echo '<small>';
-                                    if ($address && $addressLabel) {
-
-                                        $mapsUrl = 'http://maps.google.com/?q=' . urlencode($address);
-
-                                        echo 'Collection from: ';
-                                        echo anchor($mapsUrl, $addressLabel, 'target="_blank"');
-
-                                    } elseif ($addressLabel) {
-
-                                        echo 'Collection from:';
-                                        echo $addressLabel;
-                                    }
-                                echo '</small>';
                             }
 
                         } else {

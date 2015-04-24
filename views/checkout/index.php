@@ -61,7 +61,7 @@
             <noscript>
 
                 <p class="alert alert-warning">
-                    <strong><b class="fa fa-exclamation-triangle"></b> Please enable JavaScript</strong>
+                    <strong><b class="glyphicon glyphicon-exclamation-sign"></b> Please enable JavaScript</strong>
                     <br />The checkout procedure requires that you enable JavaScript.
                 </p>
             </noscript>
@@ -79,8 +79,8 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             Step <?=$curStep?> of <?=$numSteps?>: Contact &amp; Delivery Details
-                            <b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
-                            <b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
+                            <b class="validate-ok glyphicon glyphicon-ok-sign pull-right text-success hidden"></b>
+                            <b class="validate-fail glyphicon glyphicon-remove-sign pull-right text-danger"></b>
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -234,8 +234,8 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             Step <?=$curStep?> of <?=$numSteps?>: Billing Details
-                            <b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
-                            <b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
+                            <b class="validate-ok glyphicon glyphicon-ok-sign pull-right text-success hidden"></b>
+                            <b class="validate-fail glyphicon glyphicon-remove-sign pull-right text-danger hidden"></b>
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -346,8 +346,8 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             Step <?=$curStep?> of <?=$numSteps?>: Payment Details
-                            <b class="validate-ok fa fa-check-circle fa-lg pull-right text-success hidden"></b>
-                            <b class="validate-fail fa fa-times-circle fa-lg pull-right text-danger hidden"></b>
+                            <b class="validate-ok glyphicon glyphicon-ok-sign pull-right text-success hidden"></b>
+                            <b class="validate-fail glyphicon glyphicon-remove-sign pull-right text-danger hidden"></b>
                         </h3>
                     </div>
                     <div class="panel-body">

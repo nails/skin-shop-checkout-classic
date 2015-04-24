@@ -5,10 +5,11 @@
 
             if (!empty($basket->items)) {
 
-                $tableData                 = array();
-                $tableData['items']        = $basket->items;
-                $tableData['totals']       = $basket->totals;
-                $tableData['shippingType'] = $basket->shipping->type;
+                $tableData                     = array();
+                $tableData['items']            = $basket->items;
+                $tableData['totals']           = $basket->totals;
+                $tableData['shippingType']     = $basket->shipping->type;
+                $tableData['shippingTypeUser'] = $basket->shipping->user;
 
                 $this->load->view($skin->path . 'views/basket/table', $tableData);
 

@@ -6,6 +6,10 @@
 
             ?>
             <div class="nails-shop-skin-checkout-classic processing paid" id="processing-container" data-order-ref="<?=$order->ref?>">
+                <div class="alert alert-danger" id="processing-error" style="display: none;">
+                    <strong>An error occurred.</strong>
+                    <br /><span></span>
+                </div>
                 <div class="row order-status">
                     <div class="col-sm-8">
                         <div class="panel panel-default">
@@ -26,37 +30,37 @@
                                 <p class="text-center">
 
                                     <span class="order-status-feedback-text processing">
-                                        <b class="fa fa-spin fa-cog"></b>
+                                        <b class="glyphicon glyphicon-cog spin"></b>
                                         <small>Please wait, processing</small>
                                     </span>
 
                                     <span class="order-status-feedback-text unpaid">
-                                        <b class="fa fa-exclamation-triangle"></b>
+                                        <b class="glyphicon glyphicon-exclamation-sign"></b>
                                         <small>Unpaid</small>
                                     </span>
 
                                     <span class="order-status-feedback-text paid">
-                                        <b class="fa fa-check-circle-o"></b>
+                                        <b class="glyphicon glyphicon-ok-sign"></b>
                                         <small>Paid, thank you</small>
                                     </span>
 
                                     <span class="order-status-feedback-text abandoned">
-                                        <b class="fa fa-times-circle"></b>
+                                        <b class="glyphicon glyphicon-remove-sign"></b>
                                         <small>Abandoned</small>
                                     </span>
 
                                     <span class="order-status-feedback-text cancelled">
-                                        <b class="fa fa-times-circle"></b>
+                                        <b class="glyphicon glyphicon-remove-sign"></b>
                                         <small>Cancelled</small>
                                     </span>
 
                                     <span class="order-status-feedback-text failed">
-                                        <b class="fa fa-exclamation-triangle"></b>
+                                        <b class="glyphicon glyphicon-exclamation-sign"></b>
                                         <small>Failed</small>
                                     </span>
 
                                     <span class="order-status-feedback-text pending">
-                                        <b class="fa fa-clock-o fa-spin"></b>
+                                        <b class="glyphicon glyphicon-time"></b>
                                         <small>Pending</small>
                                     </span>
 
@@ -83,8 +87,12 @@
 
                             echo '<div class="panel panel-default invoice-actions">';
                                 echo '<div class="panel-body">';
-                                    echo '<a href="#" onclick="window.print()" class="btn btn-primary"><b class="fa fa-print"></b> Print</a> ';
-                                    echo '<a href="' . site_url($shop_url . 'checkout/invoice/' . $order->ref . '/' . md5($order->code)) . '" class="btn btn-primary"><b class="fa fa-download"></b> Download</a> ';
+                                    echo '<a href="#" onclick="window.print()" class="btn btn-primary">';
+                                        echo '<b class="glyphicon glyphicon-print"></b> Print';
+                                    echo '</a> ';
+                                    echo '<a href="' . site_url($shop_url . 'checkout/invoice/' . $order->ref . '/' . md5($order->code)) . '" class="btn btn-primary">';
+                                        echo '<b class="glyphicon glyphicon-cloud-download"></b> Download';
+                                    echo '</a>';
                                 echo '</div>';
                             echo '</div>';
 
@@ -100,7 +108,7 @@
                                     <div class="panel-body">
                                         <p>
                                             <strong>
-                                                <b class="fa fa-user"></b>
+                                                <b class="glyphicon glyphicon-user"></b>
                                                 Customer
                                             </strong>
                                         </p>
@@ -124,7 +132,13 @@
                                                 echo $order->user->first_name . ' ' . $order->user->last_name;
                                             echo '</li>';
                                             echo '<li>' . mailto($order->user->email) . '</li>';
-                                            echo $order->user->telephone ? '<li><a href="tel:' . $order->user->telephone . '">' . $order->user->telephone . '</a></li>' : '';
+                                                if ($order->user->telephone) {
+
+                                                    echo '<li>';
+                                                        echo tel($order->user->telephone);
+                                                    echo '<li>';
+
+                                                }
                                             echo '</ul>';
 
                                         ?>
@@ -136,25 +150,31 @@
                                     <div class="panel-body">
                                         <p>
                                             <strong>
-                                                <b class="fa fa-home"></b>
+                                                <b class="glyphicon glyphicon-home"></b>
                                                 Delivery Address
                                             </strong>
                                         </p>
                                         <?php
 
-                                            $order->shipping_address = array_filter((array) $order->shipping_address);
+                                            $address = array(
+                                                $order->shipping_address->line_1,
+                                                $order->shipping_address->line_2,
+                                                $order->shipping_address->town,
+                                                $order->shipping_address->state,
+                                                $order->shipping_address->postcode,
+                                                $order->shipping_address->country->label
+                                            );
 
-                                            $address = implode(',', $order->shipping_address);
+                                            $address = array_filter($address);
 
                                             if ($address) {
 
-                                                $address = urlencode($address);
-                                                $url = 'http://maps.google.com/maps/api/staticmap?markers=size:mid|color:black|' . $address . '&size=' . $avatarSize . 'x' . $avatarSize . '&sensor=FALSE';
+                                                $url = 'http://maps.google.com/maps/api/staticmap?markers=size:mid|color:black|' . urlencode(implode(', ', $address)) . '&size=' . $avatarSize . 'x' . $avatarSize . '&sensor=FALSE';
                                                 echo img(array('src' => $url, 'class' => 'img-thumbnail pull-right'));
                                             }
 
                                             echo '<ul class="list-unstyled">';
-                                            echo '<li>' . implode('</li><li>', $order->shipping_address) . '</li>';
+                                                echo '<li>' . implode('</li><li>', $address) . '</li>';
                                             echo '</ul>';
 
                                         ?>
@@ -166,26 +186,32 @@
                                     <div class="panel-body">
                                         <p>
                                             <strong>
-                                                <b class="fa fa-home"></b>
+                                                <b class="glyphicon glyphicon-home"></b>
                                                 Billing Address
                                             </strong>
                                         </p>
                                         <ul class="list-unstyled">
                                         <?php
 
-                                            $order->billing_address = array_filter((array) $order->billing_address);
+                                            $address = array(
+                                                $order->billing_address->line_1,
+                                                $order->billing_address->line_2,
+                                                $order->billing_address->town,
+                                                $order->billing_address->state,
+                                                $order->billing_address->postcode,
+                                                $order->billing_address->country->label
+                                            );
 
-                                            $address = implode(',', $order->billing_address);
+                                            $address = array_filter($address);
 
                                             if ($address) {
 
-                                                $address = urlencode($address);
-                                                $url = 'http://maps.google.com/maps/api/staticmap?markers=size:mid|color:black|' . $address . '&size=' . $avatarSize . 'x' . $avatarSize . '&sensor=FALSE';
+                                                $url = 'http://maps.google.com/maps/api/staticmap?markers=size:mid|color:black|' . urlencode(implode(', ', $address)) . '&size=' . $avatarSize . 'x' . $avatarSize . '&sensor=FALSE';
                                                 echo img(array('src' => $url, 'class' => 'img-thumbnail pull-right'));
                                             }
 
                                             echo '<ul class="list-unstyled">';
-                                            echo '<li>' . implode('</li><li>', $order->billing_address) . '</li>';
+                                                echo '<li>' . implode('</li><li>', $address) . '</li>';
                                             echo '</ul>';
 
                                         ?>
@@ -203,7 +229,7 @@
                             <div class="panel-body">
                                 <p>
                                     <strong>
-                                        <b class="fa fa-pencil"></b>
+                                        <b class="glyphicon glyphicon-pencil"></b>
                                         Notes
                                     </strong>
                                 </p>
