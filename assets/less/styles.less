@@ -4,6 +4,12 @@
 
 .nails-shop-skin-checkout-classic {
     &.basket {
+        .items-adjusted,
+        .items-removed {
+            ul {
+                margin-top: 0.75em;
+            }
+        }
         .basket-item {
             td {
                 .alert {
@@ -147,7 +153,6 @@
             }
         }
     }
-
     &.processing {
         .order-status {
             font-weight: bold;
@@ -253,7 +258,6 @@
             animation: checkout-spin 2s infinite linear;
         }
     }
-
     table.order-summary {
         tfoot {
             th {

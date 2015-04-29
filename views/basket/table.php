@@ -119,9 +119,21 @@
 
                                 echo '</div>';
 
-                                echo '<div class="col-xs-4">';
-                                echo anchor($shop_url . 'basket/increment?variant_id=' . $item->variant->id, '<span class="glyphicon glyphicon-plus-sign text-muted"></span>', 'class="pull-left"');
-                                echo '</div>';
+                                /**
+                                 * Determine whether the user can increment the product. In order to be incrementable there must:
+                                 * - Be sufficient stock (or unlimited)
+                                 * - not exceed any limit imposed by the product type
+                                 */
+
+                                $sufficient = empty($item->variant->quantity_available) || $item->quantity < $item->variant->quantity_available;
+                                $notExceed  = empty($item->product->type->max_per_order) || $item->quantity < $item->product->type->max_per_order;
+
+                                if ($sufficient && $notExceed) {
+
+                                    echo '<div class="col-xs-4">';
+                                    echo anchor($shop_url . 'basket/increment?variant_id=' . $item->variant->id, '<span class="glyphicon glyphicon-plus-sign text-muted"></span>', 'class="pull-left"');
+                                    echo '</div>';
+                                }
                             }
 
                         ?>

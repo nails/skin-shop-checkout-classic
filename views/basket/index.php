@@ -3,6 +3,58 @@
         <div class="col-xs-12">
         <?php
 
+            if (!empty($basket->itemsRemoved)) {
+
+                ?>
+                <div class="row items-removed">
+                    <div class="col-sm-12">
+                        <div class="alert alert-warning">
+                            <strong>Some items in your basket have been automatically removed</strong>
+                            <br />The items listed below have been removed from your basket because they are no longer available:
+                            <ul>
+                            <?php
+
+                            foreach ($basket->itemsRemoved as $item) {
+
+                                echo '<li>';
+                                    echo $item;
+                                echo '</li>';
+                            }
+
+                            ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+
+            if (!empty($basket->itemsAdjusted)) {
+
+                ?>
+                <div class="row items-adjusted">
+                    <div class="col-sm-12">
+                        <div class="alert alert-warning">
+                            <strong>Some items in your basket have been automatically adjusted</strong>
+                            <br />The quantity you can purchase for following items has been adjusted due to stock availability:
+                            <ul>
+                            <?php
+
+                            foreach ($basket->itemsAdjusted as $item) {
+
+                                echo '<li>';
+                                    echo $item;
+                                echo '</li>';
+                            }
+
+                            ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+
             if (!empty($basket->items)) {
 
                 $tableData                     = array();
