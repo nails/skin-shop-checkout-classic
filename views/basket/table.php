@@ -105,7 +105,11 @@
                             if (empty($readonly)) {
 
                                 echo '<div class="col-xs-4">';
-                                echo anchor($shop_url . 'basket/decrement?variant_id=' . $item->variant->id, '<span class="glyphicon glyphicon-minus-sign text-muted"></span>', 'class="pull-right"');
+                                    echo anchor(
+                                        $shop_url . 'basket/decrement?variant_id=' . $item->variant->id,
+                                        '<span class="glyphicon glyphicon-minus-sign text-muted"></span>',
+                                        'class="pull-right"'
+                                    );
                                 echo '</div>';
 
                                 echo '<div class="col-xs-4">';
@@ -120,18 +124,50 @@
                                 echo '</div>';
 
                                 /**
-                                 * Determine whether the user can increment the product. In order to be incrementable there must:
+                                 * Determine whether the user can increment the product. In order to be 
+                                 * incrementable there must:
                                  * - Be sufficient stock (or unlimited)
                                  * - not exceed any limit imposed by the product type
                                  */
+                                
+                                if (is_null($item->variant->quantity_available)) {
 
-                                $sufficient = empty($item->variant->quantity_available) || $item->quantity < $item->variant->quantity_available;
-                                $notExceed  = empty($item->product->type->max_per_order) || $item->quantity < $item->product->type->max_per_order;
+                                    //  Unlimited quantity
+                                    $sufficient = true;
+
+                                } else if ($item->quantity < $item->variant->quantity_available) {
+
+                                    //  Fewer than the quantity available, user can increment
+                                    $sufficient = true;
+
+                                } else {
+
+                                    $sufficient = false;
+                                }
+
+                                if (empty($item->product->type->max_per_order)) {
+
+                                    //  Unlimited additions allowed
+                                    $notExceed = true;
+
+                                } else if ($item->quantity < $item->product->type->max_per_order) {
+
+                                    //  Not exceeded the maximum per order, user can increment
+                                    $notExceed = true;
+
+                                } else {
+
+                                    $notExceed = false;
+                                }
 
                                 if ($sufficient && $notExceed) {
 
                                     echo '<div class="col-xs-4">';
-                                    echo anchor($shop_url . 'basket/increment?variant_id=' . $item->variant->id, '<span class="glyphicon glyphicon-plus-sign text-muted"></span>', 'class="pull-left"');
+                                        echo anchor(
+                                            $shop_url . 'basket/increment?variant_id=' . $item->variant->id,
+                                            '<span class="glyphicon glyphicon-plus-sign text-muted"></span>',
+                                            'class="pull-left"'
+                                        );
                                     echo '</div>';
                                 }
                             }
@@ -142,13 +178,15 @@
                     <td class="vertical-align-middle text-center">
                     <?php
 
+                        $omitVariantTaxPricing = app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug);
+
                         if (app_setting('price_exclude_tax', 'shop')) {
 
                             echo '<span class="variant-unit-price-ex-tax-' . $item->variant->id . '">';
                                 echo $item->variant->price->price->user_formatted->value_ex_tax;
                             echo '</span>';
 
-                            if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $item->variant->price->price->user->value_tax > 0) {
+                            if (!$omitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
 
                                 echo '<br />';
                                 echo '<small class="text-muted">';
@@ -165,7 +203,7 @@
                                 echo $item->variant->price->price->user_formatted->value_inc_tax;
                             echo '</span>';
 
-                            if (!app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug) && $item->variant->price->price->user->value_tax > 0) {
+                            if (!$omitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
 
                                 echo '<br />';
                                 echo '<small class="text-muted">';
@@ -218,7 +256,11 @@
                                 if (empty($readonly)) {
 
                                     echo '<small>';
-                                    echo '<br />' . anchor($shop_url . 'basket/set_as_collection', 'Click here to collect your order');
+                                    echo '<br />';
+                                    echo anchor(
+                                        $shop_url . 'basket/set_as_collection',
+                                        'Click here to collect your order'
+                                    );
                                     echo '</small>';
                                 }
 
@@ -227,7 +269,11 @@
                                 echo 'Your order will only be partially shipped';
                                 echo '<small>';
                                     echo 'Your order contains items which are collect only<br />These items will not be shipped';
-                                    echo '<br /><br />' . anchor($shop_url . 'basket/set_as_collection', 'Click here to collect your entire order');
+                                    echo '<br /><br />';
+                                    echo anchor(
+                                        $shop_url . 'basket/set_as_collection',
+                                        'Click here to collect your entire order'
+                                    );
                                 echo '</small>';
 
                             } else {
@@ -237,7 +283,11 @@
                                 if (empty($readonly) && $basket->shipping->isDeliverable) {
 
                                     echo '<small>';
-                                        echo '<br />' . anchor($shop_url . 'basket/set_as_delivery', 'Click here to have your order delivered');
+                                        echo '<br />';
+                                        echo anchor(
+                                            $shop_url . 'basket/set_as_delivery',
+                                            'Click here to have your order delivered'
+                                        );
                                     echo '</small>';
                                 }
 
