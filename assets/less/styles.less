@@ -3,7 +3,31 @@
  */
 
 .nails-shop-skin-checkout-classic {
+    @color-success: #dff0d8;
+    @color-warning: #fcf8e3;
+    @color-info: #d9edf7;
+    @color-danger: #f2dede;
     &.basket {
+        .shipping-driver-promo {
+            border: 1px solid;
+            padding: 1em;
+            margin: 0 0 1.5em 0;
+            border-radius: 0.25em;
+            background-color: @color-info;
+            border-color: darken(@color-info, 35%);
+            color: darken(@color-info, 55%);
+            &.shipping-driver-promo-applied {
+                background-color: @color-success;
+                border-color: darken(@color-success, 35%);
+                color: darken(@color-success, 55%);
+            }
+            h4 {
+                margin: 0 0 0.5em 0;
+            }
+            p {
+                margin: 0;
+            }
+        }
         .items-adjusted,
         .items-removed {
             ul {
@@ -58,8 +82,8 @@
         }
 
         table.checkout-payment-gateway-layout {
-            border: 1px solid #EFEFEF;
-            background: lighten( #EFEFEF, 5%);
+            border: 1px solid #efefef;
+            background: lighten(#efefef, 5%);
             margin-bottom: 0.5em;
             border-radius: 3px;
             display: inline-block;
@@ -122,15 +146,15 @@
 
                     .flip-tab {
                         &.warn {
-                            background-color: #FA7B00;
+                            background-color: #fa7b00;
                         }
                     }
                 }
 
                 &.no-js {
-                    border: 1px solid #CCCCCC;
+                    border: 1px solid #cccccc;
                     border-radius: 3px;
-                    background: #EFEFEF;
+                    background: #efefef;
                     padding: 1em;
 
                     label {
@@ -176,8 +200,8 @@
                 }
 
                 &.unpaid {
-                    background-color: #F2DEDE;
-                    color: #A94442;
+                    background-color: @color-danger;
+                    color: darken(@color-danger, 55%);
 
                     .order-status-feedback-text.unpaid {
                         display: block;
@@ -185,8 +209,8 @@
                 }
 
                 &.paid {
-                    background-color: #D6E9C6;
-                    color: #3C763D;
+                    background-color: @color-success;
+                    color: darken(@color-success, 55%);
 
                     .order-status-feedback-text.paid {
                         display: block;
@@ -194,8 +218,8 @@
                 }
 
                 &.abandoned {
-                    background-color: #F2DEDE;
-                    color: #A94442;
+                    background-color: @color-danger;
+                    color: darken(@color-danger, 55%);
 
                     .order-status-feedback-text.abandoned {
                         display: block;
@@ -203,8 +227,8 @@
                 }
 
                 &.cancelled {
-                    background-color: #F2DEDE;
-                    color: #A94442;
+                    background-color: @color-danger;
+                    color: darken(@color-danger, 55%);
 
                     .order-status-feedback-text.cancelled {
                         display: block;
@@ -212,8 +236,8 @@
                 }
 
                 &.failed {
-                    background-color: #F2DEDE;
-                    color: #A94442;
+                    background-color: @color-danger;
+                    color: darken(@color-danger, 55%);
 
                     .order-status-feedback-text.failed {
                         display: block;
@@ -221,8 +245,8 @@
                 }
 
                 &.pending {
-                    background-color: #D9EDF7;
-                    color: #31708F;
+                    background-color: @color-info;
+                    color: darken(@color-info, 55%);
 
                     .order-status-feedback-text.pending {
                         display: block;
@@ -244,7 +268,7 @@
                 display: block;
                 padding-bottom: 0.5em;
                 margin-bottom: 1em;
-                border-bottom: 1px solid #EFEFEF;
+                border-bottom: 1px solid #efefef;
             }
             .img-thumbnail {
                 margin-left: 0.5em;

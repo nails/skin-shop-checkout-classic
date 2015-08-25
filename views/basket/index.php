@@ -1,4 +1,21 @@
 <div class="nails-shop-skin-checkout-classic basket">
+    <?php if (!empty($shippingDriverPromo->title) || !empty($shippingDriverPromo->body)) { ?>
+    <div class="row">
+        <div class="col-md-12">
+        <?php
+
+        $appliedClass = !empty($shippingDriverPromo->applied) ? ' shipping-driver-promo-applied' : '';
+        echo '<div class="shipping-driver-promo' . $appliedClass . ' ">';
+
+        echo !empty($shippingDriverPromo->title) ? '<h4>' . $shippingDriverPromo->title . '</h4>' : '';
+        echo !empty($shippingDriverPromo->body) ? '<p>' . $shippingDriverPromo->body . '</p>' : '';
+
+        echo '</div>';
+
+        ?>
+        </div>
+    </div>
+    <?php } ?>
     <div class="row">
         <div class="col-xs-12">
         <?php
