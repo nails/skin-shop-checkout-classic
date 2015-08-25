@@ -1,4 +1,19 @@
 <div class="nails-shop-skin-checkout-classic basket">
+    <?php
+
+    $headerText = app_setting('basket_header', 'shop-' . $skin->slug);
+
+    if (!empty($headerText)) {
+
+        echo '<div class="row">';
+            echo '<div class="col-md-12">';
+                echo $headerText;
+                echo '<hr/>';
+            echo '</div>';
+        echo '</div>';
+    }
+
+    ?>
     <div class="row">
         <div class="col-xs-12">
         <?php
@@ -125,6 +140,18 @@
         </div>
     </div>
     <?php
+
+    $footerText = app_setting('basket_footer', 'shop-' . $skin->slug);
+
+    if (!empty($footerText)) {
+
+        echo '<div class="row">';
+            echo '<div class="col-md-12">';
+                echo $footerText;
+                echo '<hr/>';
+            echo '</div>';
+        echo '</div>';
+    }
 
     if (!empty($recently_viewed)) {
 
