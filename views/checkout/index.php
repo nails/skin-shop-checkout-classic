@@ -26,6 +26,21 @@
                     <h1>Checkout</h1>
                 </div>
             </div>
+            <?php
+
+            $headerText = app_setting('checkout_header', 'shop-' . $skin->slug);
+
+            if (!empty($headerText)) {
+
+                echo '<div class="row">';
+                    echo '<div class="col-md-12">';
+                        echo $headerText;
+                        echo '<hr/>';
+                    echo '</div>';
+                echo '</div>';
+            }
+
+            ?>
             <div class="row">
             <?php
 
@@ -479,20 +494,22 @@
                         <div class="clearfix"></div>
                     </div>
                 </div>
-                <?php
-
-                $footerText = app_setting('checkout_footer', 'shop-' . $skin->slug);
-
-                if (!empty($footerText)) {
-
-                    echo $footerText;
-                }
-
-                ?>
             </div>
+            <?php
 
+            $footerText = app_setting('checkout_footer', 'shop-' . $skin->slug);
+
+            if (!empty($footerText)) {
+
+                echo '<div class="row">';
+                    echo '<div class="col-md-12">';
+                        echo $footerText;
+                    echo '</div>';
+                echo '</div>';
+            }
+
+            ?>
         </div>
-
     </div>
     <?=form_close()?>
 </div>
