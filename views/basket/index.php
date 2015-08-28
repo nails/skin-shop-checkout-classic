@@ -100,6 +100,8 @@
 
                 $this->load->view($skin->path . 'views/basket/table', $tableData);
 
+                $this->load->view($skin->path . 'views/basket/mobile');
+
                 ?>
                 <hr />
                 <div class="row">

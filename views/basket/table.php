@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="hidden-xs hidden-sm table-responsive">
     <table class="table table-bordered table-striped order-summary">
         <thead>
             <tr>
@@ -54,17 +54,6 @@
 
                             echo '<br />';
                             echo '<em>' . $item->variant->label . '</em>';
-                        }
-
-                        // --------------------------------------------------------------------------
-
-                        //  SKU
-                        if (!empty($item->variant->sku)) {
-
-                            echo '<br />';
-                            echo '<small class="text-muted">';
-                                echo '<em>' . $item->variant->sku . '</em>';
-                            echo '</small>';
                         }
 
                         // --------------------------------------------------------------------------
