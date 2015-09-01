@@ -210,10 +210,12 @@
         <div class="row padded-row">
             <div class="col-xs-12">
                 <div class="pull-left">Sub Total</div>
-                <div class="pull-right"><b><?=$totals->user_formatted->item?></b></div>
+                <div class="pull-right">
+                    <b><?=$totals->user_formatted->item?></b>
+                </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row padded-row">
             <div class="col-xs-12">
 
                 <?php
@@ -224,7 +226,10 @@
 
                 if ($totals->user->shipping) {
 
-                    echo $totals->user_formatted->shipping;
+                    echo '<div class="pull-right"><select id="selectDeliveryOption" class="form-control bump-up">
+                    <option>Standard delivery - ' . $totals->user_formatted->shipping .'</option>
+                    <option data-url="basket/set_as_collection">Collection - Free</option>
+                    </select></div>';
 
                 } else {
 
@@ -254,7 +259,7 @@
                     } else {
                         echo '<select id="selectDeliveryOption" class="form-control bump-up">
                         <option>Collection - Free</option>
-                        <option data-url="basket/set_as_delivery">Standard delivery - Free</option>
+                        <option data-url="basket/set_as_delivery">Standard delivery</option>
                         </select>';
                     }
 
@@ -264,7 +269,7 @@
                 if (app_setting('warehouse_collection_enabled', 'shop')) {
 
                     if ($shippingType === 'DELIVER') {
-
+                        echo '<div class="pull-left">Shipping</div>';
 
                     } elseif ($shippingType === 'DELIVER_COLLECT') {
 
@@ -296,8 +301,8 @@
 
                             $mapsUrl = 'http://maps.google.com/?q=' . urlencode(implode(', ', $address));
 
+                            echo 'You will collect your order from:';
                             echo '<small>';
-                                echo '<strong>Collection from:</strong>';
                                 echo '<br />' . implode('<br />', $address) . '<br />';
                                 echo anchor($mapsUrl, 'Map', 'target="_blank"');
                             echo '</small>';
