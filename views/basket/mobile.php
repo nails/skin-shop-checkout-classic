@@ -235,8 +235,6 @@
 
                     if ($shippingType === 'DELIVER') {
 
-                        echo 'Shipping';
-
                         if (empty($readonly)) {
 
                             echo '<select id="selectDeliveryOption" class="form-control bump-up">
@@ -267,7 +265,6 @@
 
                     if ($shippingType === 'DELIVER') {
 
-                        echo 'Shipping';
 
                     } elseif ($shippingType === 'DELIVER_COLLECT') {
 
@@ -309,9 +306,6 @@
                         echo '</div>';
                     }
 
-                } else {
-
-                    echo 'Shipping';
                 }
 
                 ?>
