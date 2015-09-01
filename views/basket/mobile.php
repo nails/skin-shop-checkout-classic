@@ -1,10 +1,10 @@
 <div class="visible-xs visible-sm">
-    <h2>Your Basket</h2>
+    <h1>Your Basket</h1>
     <?php
 
     foreach ($items as $item) { ?>
 
-        <div class="row basket-row">
+        <div class="row bordered-row">
 
             <?php
 
@@ -33,23 +33,52 @@
 
             } else {
 
-                echo '<div class="col-sm-12">';
+                echo '<div class="col-xs-12">';
 
             }
 
             ?>
 
             <div class="col-xs-7">
-                <?= anchor($item->product->url, '<strong>' . $item->product->label . '</strong>'); ?>
+
                 <?php
+
+                // --------------------------------------------------------------------------
+
+                //  Label
+                echo anchor($item->product->url, '<strong>' . $item->product->label . '</strong>');
+
                 if ($item->variant->label !== $item->product->label) {
 
                     echo '<br />';
                     echo '<em>' . $item->variant->label . '</em>';
                 }
+
+                // --------------------------------------------------------------------------
+
+                //  To order?
+                if ($item->variant->stock_status == 'TO_ORDER') {
+
+                    echo '<p class="text-muted">';
+                        echo '<small>';
+                            echo '<em>Lead time: ' . $item->variant->lead_time . '</em>';
+                        echo '</small>';
+                    echo '</p>';
+                }
+
+                // --------------------------------------------------------------------------
+
+                //  Collection Only
+                if ($item->variant->shipping->collection_only) {
+
+                    echo '<div class="alert alert-warning alert-mini">';
+                        echo '<strong>Note:</strong> Collection only.';
+                    echo '</div>';
+                }
+     
                 ?>
 
-                <div>
+            <div>
 
                 <?php
 
@@ -177,8 +206,8 @@
 
     ?>
 
-    <div class="basket-row">
-        <div class="row">
+    <div class="bordered-row">
+        <div class="row padded-row">
             <div class="col-xs-12">
                 <div class="pull-left">Sub Total</div>
                 <div class="pull-right"><b><?=$totals->user_formatted->item?></b></div>
@@ -186,14 +215,23 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                <!-- Shipping Total -->
+
                 <?php
+
+                // Shipping total
 
                 $rowContext = $shippingType === 'DELIVER_COLLECT' || $shippingType === 'COLLECT' ? 'warning' : '';
 
-                if (app_setting('warehouse_collection_enabled', 'shop')) {
+                if ($totals->user->shipping) {
 
-                    echo '<div class="alert alert-warning">';
+                    echo $totals->user_formatted->shipping;
+
+                } else {
+
+                    echo '<div class="row padded-row">
+                    <div class="col-xs-12"><div class="pull-left">Shipping</div>';
+
+                    echo '<div class="pull-right">';
 
                     if ($shippingType === 'DELIVER') {
 
@@ -201,41 +239,51 @@
 
                         if (empty($readonly)) {
 
-                            echo '<small>';
-                            echo '<br />';
-                            echo anchor(
-                                $shop_url . 'basket/set_as_collection',
-                                'Click here to collect your order'
-                            );
-                            echo '</small>';
+                            echo '<select id="selectDeliveryOption" class="form-control bump-up">
+                        <option>Standard delivery  - Free</option>
+                        <option data-url="basket/set_as_collection">Collection - Free</option>
+                        </select>';
+
                         }
 
                     } elseif ($shippingType === 'DELIVER_COLLECT') {
 
+                        echo '<select id="selectDeliveryOption" class="form-control bump-up">
+                        <option>Standard delivery  - Free</option>
+                        <option data-url="basket/set_as_collection">Collection - Free</option>
+                        </select>';
+
+                    } else {
+                        echo '<select id="selectDeliveryOption" class="form-control bump-up">
+                        <option>Collection - Free</option>
+                        <option data-url="basket/set_as_delivery">Standard delivery - Free</option>
+                        </select>';
+                    }
+
+                    echo '</div></div></div>';
+                }
+
+                if (app_setting('warehouse_collection_enabled', 'shop')) {
+
+                    if ($shippingType === 'DELIVER') {
+
+                        echo 'Shipping';
+
+                    } elseif ($shippingType === 'DELIVER_COLLECT') {
+
+                        echo '<div class="alert alert-warning alert-margin">';
+
                         echo 'Your order will only be partially shipped';
                         echo '<div><small>';
-                            echo 'Your order contains items which are collect only<br />These items will not be shipped';
-                            echo '<br /><br />';
-                            echo anchor(
-                                $shop_url . 'basket/set_as_collection',
-                                'Click here to collect your entire order'
-                            );
+                            echo 'Your order contains items which are collect only<br />
+                            These items will not be shipped';
                             echo '</small></div>';
+
+                            echo '</div>';
 
                     } else {
 
-                        echo 'You will collect your order ';
-
-                        if (empty($readonly) && $basket->shipping->isDeliverable) {
-
-                            echo '<small>';
-                                echo '<br />';
-                                echo anchor(
-                                    $shop_url . 'basket/set_as_delivery',
-                                    'Click here to have your order delivered'
-                                );
-                                echo '</small>';
-                        }
+                        echo '<div class="alert alert-warning alert-margin">';
 
                         $address   = array();
                         $address[] = app_setting('warehouse_addr_addressee', 'shop');
@@ -252,29 +300,18 @@
                             $mapsUrl = 'http://maps.google.com/?q=' . urlencode(implode(', ', $address));
 
                             echo '<small>';
-                                echo '<br /><strong>Collection from:</strong>';
+                                echo '<strong>Collection from:</strong>';
                                 echo '<br />' . implode('<br />', $address) . '<br />';
                                 echo anchor($mapsUrl, 'Map', 'target="_blank"');
                             echo '</small>';
                         }
-                    }
 
-                    echo '</div>';
+                        echo '</div>';
+                    }
 
                 } else {
 
                     echo 'Shipping';
-                }
-
-
-
-                if ($totals->user->shipping) {
-
-                    echo $totals->user_formatted->shipping;
-
-                } else {
-
-                    echo 'Free';
                 }
 
                 ?>
@@ -282,7 +319,7 @@
             </div>
             
         </div>
-        <div class="row">
+        <div class="row padded-row">
             <div class="col-xs-12">
                 <div class="pull-left">
                     <?php
@@ -299,11 +336,11 @@
                     ?>
                 </div>
                 <div class="pull-right">
-                    <?= $totals->user_formatted->tax; ?>
+                    <b><?= $totals->user_formatted->tax; ?></b>
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row padded-row shaded-row">
             <div class="col-xs-12">
                 <div class="pull-left">
                     Total

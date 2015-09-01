@@ -112,7 +112,7 @@
                                     <?=form_input('voucher', '', 'placeholder="Enter your promotional voucher, if you have one." class="form-control"')?>
                                     <span class="input-group-btn">
                                         <button class="btn btn-default" type="submit">
-                                            Add Voucher
+                                            Apply
                                         </button>
                                     </span>
                                 </div><!-- /input-group -->

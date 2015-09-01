@@ -16,6 +16,21 @@ _nails_skin_shop_checkout_classic = function()
      */
     this.__construct = function()
     {
+
+        var breakpoint;
+
+        breakpoint = this.bsCurrentBreakpoint();
+
+        if ($('.nails-shop-skin-checkout-classic.basket').length > 0)
+        {
+            //  Mobile JS
+            if (breakpoint === 'xs' || breakpoint === 'sm') {
+                this._basket_init();
+            }
+        }
+
+        // --------------------------------------------------------------------------
+
         if ($('.nails-shop-skin-checkout-classic.checkout').length > 0)
         {
             this._checkout_init();
@@ -27,6 +42,16 @@ _nails_skin_shop_checkout_classic = function()
         {
             this._processing_init();
         }
+    };
+
+    // --------------------------------------------------------------------------
+
+    this._basket_init = function()
+    {
+        $('#selectDeliveryOption').on('change', function(){
+            var url = $(this).find(':selected').data('url');
+            window.location = url;
+        });
     };
 
     // --------------------------------------------------------------------------
@@ -771,6 +796,37 @@ _nails_skin_shop_checkout_classic = function()
             .find('span')
             .text(error);
     };
+
+    // --------------------------------------------------------------------------
+
+    /**
+     * Gets the current Bootstrap environment.
+     * Hat-tip: http://stackoverflow.com/a/24884634/789224
+     * @return string
+     */
+    this.bsCurrentBreakpoint = function()
+    {
+        var envs = ["xs", "sm", "md", "lg"],
+            doc = window.document,
+            temp = doc.createElement("div");
+
+        doc.body.appendChild(temp);
+
+        for (var i = envs.length - 1; i >= 0; i--) {
+
+            var env = envs[i];
+
+            temp.className = "hidden-" + env;
+
+            if (temp.offsetParent === null) {
+
+                doc.body.removeChild(temp);
+                return env;
+            }
+        }
+        return "";
+    };
+
     // --------------------------------------------------------------------------
 
     return this.__construct();
