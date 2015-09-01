@@ -19,8 +19,7 @@ _nails_skin_shop_checkout_classic = function() {
 
         breakpoint = this.bsCurrentBreakpoint();
 
-        if ($('.nails-shop-skin-checkout-classic.basket').length > 0)
-        {
+        if ($('.nails-shop-skin-checkout-classic.basket').length > 0) {
             //  Mobile JS
             if (breakpoint === 'xs' || breakpoint === 'sm') {
                 this._basket_init();
@@ -29,15 +28,13 @@ _nails_skin_shop_checkout_classic = function() {
 
         // --------------------------------------------------------------------------
 
-        if ($('.nails-shop-skin-checkout-classic.checkout').length > 0)
-        {
+        if ($('.nails-shop-skin-checkout-classic.checkout').length > 0) {
             this._checkout_init();
         }
 
         // --------------------------------------------------------------------------
 
-        if ($('.nails-shop-skin-checkout-classic.processing').length > 0)
-        {
+        if ($('.nails-shop-skin-checkout-classic.processing').length > 0) {
             this._processing_init();
         }
     };
@@ -49,7 +46,7 @@ _nails_skin_shop_checkout_classic = function() {
          * Switch pages depending on delivery option selected
          * Options are standard delivery and collection
         */
-        $('#selectDeliveryOption').on('change', function(){
+        $('#selectDeliveryOption').on('change', function() {
             var url = $(this).find(':selected').data('url');
             window.location = url;
         });
@@ -697,8 +694,7 @@ _nails_skin_shop_checkout_classic = function() {
             .removeClass('unpaid paid abandoned cancelled failed pending')
             .addClass('processing');
 
-        switch(data.order.status)
-        {
+        switch(data.order.status) {
             case 'UNPAID' :
 
                 $('#thankyou-text').slideUp();
