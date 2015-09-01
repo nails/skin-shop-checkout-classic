@@ -335,7 +335,7 @@
                     ?>
                 </div>
                 <div class="pull-right">
-                    <b><?= $totals->user_formatted->tax; ?></b>
+                    <b><?=$totals->user_formatted->tax;?></b>
                 </div>
             </div>
         </div>
@@ -345,7 +345,7 @@
                     Total
                 </div>
                 <div class="pull-right">
-                    <b><?= $totals->user_formatted->grand ?></b>
+                    <b><?=$totals->user_formatted->grand;?></b>
                 </div>
             </div>
         </div>
