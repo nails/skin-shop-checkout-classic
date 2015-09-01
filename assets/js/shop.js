@@ -3,8 +3,7 @@
  */
 
 var _nails_skin_shop_checkout_classic;
-_nails_skin_shop_checkout_classic = function()
-{
+_nails_skin_shop_checkout_classic = function() {
     this._checkout_skeuocard = null;
 
     // --------------------------------------------------------------------------
@@ -14,8 +13,7 @@ _nails_skin_shop_checkout_classic = function()
      * actively viewed page.
      * @return void
      */
-    this.__construct = function()
-    {
+    this.__construct = function() {
 
         var breakpoint;
 
@@ -46,8 +44,11 @@ _nails_skin_shop_checkout_classic = function()
 
     // --------------------------------------------------------------------------
 
-    this._basket_init = function()
-    {
+    this._basket_init = function() {
+        /*
+         * Switch pages depending on delivery option selected
+         * Options are standard delivery and collection
+        */
         $('#selectDeliveryOption').on('change', function(){
             var url = $(this).find(':selected').data('url');
             window.location = url;
@@ -56,8 +57,7 @@ _nails_skin_shop_checkout_classic = function()
 
     // --------------------------------------------------------------------------
 
-    this._checkout_init = function()
-    {
+    this._checkout_init = function() {
         //  Show hidden elements, as JS is enabled
         $('#checkout-step-1 .panel-footer').removeClass('hidden');
         $('#checkout-step-2 .panel-body').hide();
@@ -75,18 +75,15 @@ _nails_skin_shop_checkout_classic = function()
          * is checked, hide the billing address fields
          */
 
-        if ($('#same-billing-address').prop('checked'))
-        {
+        if ($('#same-billing-address').prop('checked')) {
             $('#billing-address').hide();
         }
-        else
-        {
+        else {
             $('#billing-address').show();
         }
 
         //  Skeumorphic card entry
-        this._checkout_skeuocard = new Skeuocard($('#skeuocard'),
-        {
+        this._checkout_skeuocard = new Skeuocard($('#skeuocard'), {
             dontFocus: true
         });
 
@@ -96,8 +93,7 @@ _nails_skin_shop_checkout_classic = function()
         var _this = this;
 
         //  Step 1
-        $('#checkout-step-1 .panel-footer .action-continue').on('click', function()
-        {
+        $('#checkout-step-1 .panel-footer .action-continue').on('click', function() {
             if (_this._checkout_validate_step_1())
             {
                 $('#checkout-step-1 .panel-body').slideUp();
@@ -119,8 +115,7 @@ _nails_skin_shop_checkout_classic = function()
         // --------------------------------------------------------------------------
 
         //  Step 2
-        $('#checkout-step-2 .panel-footer .action-continue').on('click', function()
-        {
+        $('#checkout-step-2 .panel-footer .action-continue').on('click', function() {
             if (_this._checkout_validate_step_2())
             {
                 $('#checkout-step-2 .panel-body').slideUp();
@@ -138,8 +133,7 @@ _nails_skin_shop_checkout_classic = function()
             return false;
         });
 
-        $('#checkout-step-2 .panel-footer .action-back').on('click', function()
-        {
+        $('#checkout-step-2 .panel-footer .action-back').on('click', function() {
             $('#checkout-step-1 .panel-body').slideDown();
             $('#checkout-step-1 .panel-footer').slideDown();
 
@@ -159,14 +153,11 @@ _nails_skin_shop_checkout_classic = function()
         });
 
         //  Billing address checkbox
-        $('#same-billing-address').on('change', function()
-        {
-            if ($(this).prop('checked'))
-            {
+        $('#same-billing-address').on('change', function() {
+            if ($(this).prop('checked')) {
                 $('#billing-address').slideUp();
             }
-            else
-            {
+            else {
                 $('#billing-address').slideDown();
             }
         });
@@ -174,10 +165,8 @@ _nails_skin_shop_checkout_classic = function()
         // --------------------------------------------------------------------------
 
         //  Step 3
-        $('#checkout-step-3 .panel-footer .action-continue').on('click', function()
-        {
-            if (_this._checkout_validate_step_3())
-            {
+        $('#checkout-step-3 .panel-footer .action-continue').on('click', function() {
+            if (_this._checkout_validate_step_3()) {
                 $('#progress-bar .progress-bar')
                     .attr('data-originaltext', $('#progress-bar .progress-bar').text())
                     .text('Please wait while we get things started...')
@@ -185,11 +174,9 @@ _nails_skin_shop_checkout_classic = function()
 
                 $('#progress-bar').addClass('please-wait');
                 $('#checkout-step-3 .panel-body').slideUp();
-                $('#checkout-step-3 .panel-footer').slideUp(function()
-                {
+                $('#checkout-step-3 .panel-footer').slideUp(function() {
                     // Different payment gateways handle things differently
-                    switch ($('input[name=payment_gateway]:checked').val().toLowerCase())
-                    {
+                    switch ($('input[name=payment_gateway]:checked').val().toLowerCase()) {
                         case 'stripe' :
 
                             var _publishableKey = window.NAILS.SHOP_Checkout_Stripe_publishableKey;
@@ -200,10 +187,8 @@ _nails_skin_shop_checkout_classic = function()
                                 cvc:        $('#card-form input[name=cc_cvc]').val(),
                                 exp_month:  $('#card-form input[name=cc_exp_month]').val(),
                                 exp_year:   $('#card-form input[name=cc_exp_year]').val()
-                            }, function(status, response)
-                            {
-                                if (response.error)
-                                {
+                            }, function(status, response) {
+                                if (response.error) {
                                     //  Show the form again
                                     $('#checkout-step-3 .panel-body').slideDown();
                                     $('#checkout-step-3 .panel-footer').slideDown();
@@ -220,16 +205,14 @@ _nails_skin_shop_checkout_classic = function()
                                         .find('span')
                                         .text(response.error.message);
                                 }
-                                else
-                                {
+                                else {
                                     // response contains id and card, which contains additional card details
                                     var token = response.id;
 
                                     // Insert the token into the form so it gets submitted to the server
                                     var _hidden = $('#stripe-hidden-token');
 
-                                    if (_hidden.length === 0)
-                                    {
+                                    if (_hidden.length === 0) {
                                         var _input = $('<input>')
                                             .attr('type', 'hidden')
                                             .attr('name', 'stripe_token')
@@ -270,8 +253,7 @@ _nails_skin_shop_checkout_classic = function()
             return false;
         });
 
-        $('#checkout-step-3 .panel-footer .action-back').on('click', function()
-        {
+        $('#checkout-step-3 .panel-footer .action-back').on('click', function() {
             $('#checkout-step-2 .panel-body').slideDown();
             $('#checkout-step-2 .panel-footer').slideDown();
 
@@ -290,17 +272,14 @@ _nails_skin_shop_checkout_classic = function()
 
         });
 
-        $('table.checkout-payment-gateway-layout input').on('click', function(e)
-        {
+        $('table.checkout-payment-gateway-layout input').on('click', function(e) {
             //  Allows for the inputs themselves to behave as expected when clicked
             e.stopPropagation();
 
-            if ($(this).data('is-redirect'))
-            {
+            if ($(this).data('is-redirect')) {
                 $('#card-form').removeClass('active');
             }
-            else
-            {
+            else {
                 $('#card-form').addClass('active');
             }
         });
@@ -316,8 +295,7 @@ _nails_skin_shop_checkout_classic = function()
      * @param  {int} step The step to go to
      * @return {void}
      */
-    this._checkout_set_progress = function(step)
-    {
+    this._checkout_set_progress = function(step) {
         var _steps  = 3;
         var _text   = 'Step ' + step + ' of ' + _steps;
         var _width  = 100/_steps*step;
@@ -331,8 +309,7 @@ _nails_skin_shop_checkout_classic = function()
      * Validates the data entered in step 1
      * @return {boolean}
      */
-    this._checkout_validate_step_1 = function()
-    {
+    this._checkout_validate_step_1 = function() {
         var _valid  = true;
         var _value  = '';
 
@@ -347,8 +324,7 @@ _nails_skin_shop_checkout_classic = function()
         $('input[name=delivery_address_line_1]').next('.help-block').remove();
         $('input[name=delivery_address_line_1]').siblings('.form-control-feedback').addClass('hidden');
 
-        if (_value.replace(/\s/g, '').length === 0)
-        {
+        if (_value.replace(/\s/g, '').length === 0) {
             _valid = false;
             $('input[name=delivery_address_line_1]').closest('.form-group').addClass('has-error has-feedback');
 
@@ -367,8 +343,7 @@ _nails_skin_shop_checkout_classic = function()
         $('input[name=delivery_address_town]').next('.help-block').remove();
         $('input[name=delivery_address_town]').siblings('.form-control-feedback').addClass('hidden');
 
-        if (_value.replace(/\s/g, '').length === 0)
-        {
+        if (_value.replace(/\s/g, '').length === 0) {
             _valid = false;
             $('input[name=delivery_address_town]').closest('.form-group').addClass('has-error has-feedback');
             $('input[name=delivery_address_town]').after('<p class="help-block">This field is required.</p>');
@@ -386,8 +361,7 @@ _nails_skin_shop_checkout_classic = function()
         $('input[name=delivery_address_postcode]').next('.help-block').remove();
         $('input[name=delivery_address_postcode]').siblings('.form-control-feedback').addClass('hidden');
 
-        if (_value.replace(/\s/g, '').length === 0)
-        {
+        if (_value.replace(/\s/g, '').length === 0) {
             _valid = false;
             $('input[name=delivery_address_postcode]').closest('.form-group').addClass('has-error has-feedback');
             $('input[name=delivery_address_postcode]').after('<p class="help-block">This field is required.</p>');
@@ -405,8 +379,7 @@ _nails_skin_shop_checkout_classic = function()
         $('select[name=delivery_address_country]').next('.help-block').remove();
         $('select[name=delivery_address_country]').siblings('.form-control-feedback').addClass('hidden');
 
-        if (_value.replace(/\s/g, '').length === 0)
-        {
+        if (_value.replace(/\s/g, '').length === 0) {
             _valid = false;
             $('select[name=delivery_address_country]').closest('.form-group').addClass('has-error has-feedback');
             $('select[name=delivery_address_country]').after('<p class="help-block">This field is required.</p>');
@@ -424,8 +397,7 @@ _nails_skin_shop_checkout_classic = function()
         $('input[name=first_name]').next('.help-block').remove();
         $('input[name=first_name]').siblings('.form-control-feedback').addClass('hidden');
 
-        if (_value.replace(/\s/g, '').length === 0)
-        {
+        if (_value.replace(/\s/g, '').length === 0) {
             _valid = false;
             $('input[name=first_name]').closest('.form-group').addClass('has-error has-feedback');
             $('input[name=first_name]').after('<p class="help-block">This field is required.</p>');
@@ -443,8 +415,7 @@ _nails_skin_shop_checkout_classic = function()
         $('input[name=last_name]').next('.help-block').remove();
         $('input[name=last_name]').siblings('.form-control-feedback').addClass('hidden');
 
-        if (_value.replace(/\s/g, '').length === 0)
-        {
+        if (_value.replace(/\s/g, '').length === 0) {
             _valid = false;
             $('input[name=last_name]').closest('.form-group').addClass('has-error has-feedback');
             $('input[name=last_name]').after('<p class="help-block">This field is required.</p>');
@@ -462,8 +433,7 @@ _nails_skin_shop_checkout_classic = function()
         $('input[name=telephone]').next('.help-block').remove();
         $('input[name=telephone]').siblings('.form-control-feedback').addClass('hidden');
 
-        if (_value.replace(/\s/g, '').length === 0)
-        {
+        if (_value.replace(/\s/g, '').length === 0) {
             _valid = false;
             $('input[name=telephone]').closest('.form-group').addClass('has-error has-feedback');
             $('input[name=telephone]').after('<p class="help-block">This field is required.</p>');
@@ -481,19 +451,16 @@ _nails_skin_shop_checkout_classic = function()
         $('input[name=email]').next('.help-block').remove();
         $('input[name=email]').siblings('.form-control-feedback').addClass('hidden');
 
-        if (_value.replace(/\s/g, '').length === 0)
-        {
+        if (_value.replace(/\s/g, '').length === 0) {
             _valid = false;
             $('input[name=email]').closest('.form-group').addClass('has-error has-feedback');
             $('input[name=email]').after('<p class="help-block">This field is required.</p>');
             $('input[name=email]').siblings('.form-control-feedback').removeClass('hidden');
         }
-        else
-        {
+        else {
             var _regex = /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/i;
 
-            if (_regex.test(_value) === false)
-            {
+            if (_regex.test(_value) === false) {
                 _valid = false;
                 $('input[name=email]').closest('.form-group').addClass('has-error has-feedback');
                 $('input[name=email]').after('<p class="help-block">A valid email must be given.</p>');
@@ -504,13 +471,11 @@ _nails_skin_shop_checkout_classic = function()
         // --------------------------------------------------------------------------
 
         //  Visual feedback
-        if (_valid === true)
-        {
+        if (_valid === true) {
             $('#checkout-step-1 .panel-heading .validate-ok').removeClass('hidden');
             $('#checkout-step-1 .panel-heading .validate-fail').addClass('hidden');
         }
-        else
-        {
+        else {
             $('#checkout-step-1 .panel-heading .validate-ok').addClass('hidden');
             $('#checkout-step-1 .panel-heading .validate-fail').removeClass('hidden');
         }
@@ -526,15 +491,13 @@ _nails_skin_shop_checkout_classic = function()
      * Validates the data entered in step 2
      * @return {boolean}
      */
-    this._checkout_validate_step_2 = function()
-    {
+    this._checkout_validate_step_2 = function() {
         var _valid  = true;
         var _value  = '';
 
         // --------------------------------------------------------------------------
 
-        if ($('#same-billing-address').prop('checked') === false)
-        {
+        if ($('#same-billing-address').prop('checked') === false) {
             //  Address Line 1
             _value = $('input[name=billing_address_line_1]').val();
             _value = $.trim(_value);
@@ -544,8 +507,7 @@ _nails_skin_shop_checkout_classic = function()
             $('input[name=billing_address_line_1]').next('.help-block').remove();
             $('input[name=billing_address_line_1]').siblings('.form-control-feedback').addClass('hidden');
 
-            if (_value.replace(/\s/g, '').length === 0)
-            {
+            if (_value.replace(/\s/g, '').length === 0) {
                 _valid = false;
                 $('input[name=billing_address_line_1]').closest('.form-group').addClass('has-error has-feedback');
 
@@ -564,8 +526,7 @@ _nails_skin_shop_checkout_classic = function()
             $('input[name=billing_address_town]').next('.help-block').remove();
             $('input[name=billing_address_town]').siblings('.form-control-feedback').addClass('hidden');
 
-            if (_value.replace(/\s/g, '').length === 0)
-            {
+            if (_value.replace(/\s/g, '').length === 0) {
                 _valid = false;
                 $('input[name=billing_address_town]').closest('.form-group').addClass('has-error has-feedback');
                 $('input[name=billing_address_town]').after('<p class="help-block">This field is required.</p>');
@@ -583,8 +544,7 @@ _nails_skin_shop_checkout_classic = function()
             $('input[name=billing_address_postcode]').next('.help-block').remove();
             $('input[name=billing_address_postcode]').siblings('.form-control-feedback').addClass('hidden');
 
-            if (_value.replace(/\s/g, '').length === 0)
-            {
+            if (_value.replace(/\s/g, '').length === 0) {
                 _valid = false;
                 $('input[name=billing_address_postcode]').closest('.form-group').addClass('has-error has-feedback');
                 $('input[name=billing_address_postcode]').after('<p class="help-block">This field is required.</p>');
@@ -602,8 +562,7 @@ _nails_skin_shop_checkout_classic = function()
             $('select[name=billing_address_country]').next('.help-block').remove();
             $('select[name=billing_address_country]').siblings('.form-control-feedback').addClass('hidden');
 
-            if (_value.replace(/\s/g, '').length === 0)
-            {
+            if (_value.replace(/\s/g, '').length === 0) {
                 _valid = false;
                 $('select[name=billing_address_country]').closest('.form-group').addClass('has-error has-feedback');
                 $('select[name=billing_address_country]').after('<p class="help-block">This field is required.</p>');
@@ -614,13 +573,11 @@ _nails_skin_shop_checkout_classic = function()
 
         // --------------------------------------------------------------------------
 
-        if (_valid === true)
-        {
+        if (_valid === true) {
             $('#checkout-step-2 .panel-heading .validate-ok').removeClass('hidden');
             $('#checkout-step-2 .panel-heading .validate-fail').addClass('hidden');
         }
-        else
-        {
+        else {
             $('#checkout-step-2 .panel-heading .validate-ok').addClass('hidden');
             $('#checkout-step-2 .panel-heading .validate-fail').removeClass('hidden');
         }
@@ -634,8 +591,7 @@ _nails_skin_shop_checkout_classic = function()
      * Validates the data entered in step 3
      * @return {boolean}
      */
-    this._checkout_validate_step_3 = function()
-    {
+    this._checkout_validate_step_3 = function() {
         var _valid  = true;
         var _value  = '';
 
@@ -649,16 +605,13 @@ _nails_skin_shop_checkout_classic = function()
         $('#payment-gateway-choose-error').addClass('hidden');
         $('#payment-card-error').addClass('hidden');
 
-        if (_value.replace(/\s/g, '').length === 0)
-        {
+        if (_value.replace(/\s/g, '').length === 0) {
             _valid = false;
             $('#payment-gateway-choose-error').removeClass('hidden');
         }
-        else
-        {
+        else {
             //  Card
-            if (!$('input[name="payment_gateway"]:checked').data('is-redirect') && !this._checkout_skeuocard.isValid())
-            {
+            if (!$('input[name="payment_gateway"]:checked').data('is-redirect') && !this._checkout_skeuocard.isValid()) {
                 _valid = false;
                 $('#payment-card-error').removeClass('hidden');
             }
@@ -667,13 +620,11 @@ _nails_skin_shop_checkout_classic = function()
         // --------------------------------------------------------------------------
 
         //  Visual feedback
-        if (_valid === true)
-        {
+        if (_valid === true) {
             $('#checkout-step-3 .panel-heading .validate-ok').removeClass('hidden');
             $('#checkout-step-3 .panel-heading .validate-fail').addClass('hidden');
         }
-        else
-        {
+        else {
             $('#checkout-step-3 .panel-heading .validate-ok').addClass('hidden');
             $('#checkout-step-3 .panel-heading .validate-fail').removeClass('hidden');
         }
@@ -685,16 +636,14 @@ _nails_skin_shop_checkout_classic = function()
 
     // --------------------------------------------------------------------------
 
-    this._processing_init = function()
-    {
+    this._processing_init = function() {
         var _this = this;
         setTimeout(function() { _this._processing_get_status(); }, 250);
     };
 
     // --------------------------------------------------------------------------
 
-    this._processing_get_status = function()
-    {
+    this._processing_get_status = function() {
         var _order_ref = $('#processing-container').data('order-ref');
         var _this = this;
 
@@ -741,8 +690,7 @@ _nails_skin_shop_checkout_classic = function()
 
     // --------------------------------------------------------------------------
 
-    this._processing_get_status_ok = function(data)
-    {
+    this._processing_get_status_ok = function(data) {
         var _this = this;
 
         $('.order-status-feedback')
@@ -789,8 +737,7 @@ _nails_skin_shop_checkout_classic = function()
 
     // --------------------------------------------------------------------------
 
-    this._processing_get_status_fail = function(error)
-    {
+    this._processing_get_status_fail = function(error) {
         $('#processing-error')
             .show()
             .find('span')
@@ -804,8 +751,7 @@ _nails_skin_shop_checkout_classic = function()
      * Hat-tip: http://stackoverflow.com/a/24884634/789224
      * @return string
      */
-    this.bsCurrentBreakpoint = function()
-    {
+    this.bsCurrentBreakpoint = function() {
         var envs = ["xs", "sm", "md", "lg"],
             doc = window.document,
             temp = doc.createElement("div");
