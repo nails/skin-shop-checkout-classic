@@ -19,7 +19,7 @@ _nails_skin_shop_checkout_classic = function() {
 
         breakpoint = this.bsCurrentBreakpoint();
 
-        if ($('.nails-shop-skin-checkout-classic.basket').length > 0) {
+        if ($('.nails-shop-skin-checkout-classic.basket').length) {
             //  Mobile JS
             if (breakpoint === 'xs' || breakpoint === 'sm') {
                 this._basket_init();
@@ -28,13 +28,13 @@ _nails_skin_shop_checkout_classic = function() {
 
         // --------------------------------------------------------------------------
 
-        if ($('.nails-shop-skin-checkout-classic.checkout').length > 0) {
+        if ($('.nails-shop-skin-checkout-classic.checkout').length) {
             this._checkout_init();
         }
 
         // --------------------------------------------------------------------------
 
-        if ($('.nails-shop-skin-checkout-classic.processing').length > 0) {
+        if ($('.nails-shop-skin-checkout-classic.processing').length) {
             this._processing_init();
         }
     };
