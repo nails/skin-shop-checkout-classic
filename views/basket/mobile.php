@@ -243,9 +243,9 @@
                         if (empty($readonly)) {
 
                             echo '<select id="selectDeliveryOption" class="form-control bump-up">
-                        <option>Standard delivery  - Free</option>
-                        <option data-url="basket/set_as_collection">Collection - Free</option>
-                        </select>';
+                            <option>Standard delivery  - Free</option>
+                            <option data-url="basket/set_as_collection">Collection - Free</option>
+                            </select>';
 
                         }
 
