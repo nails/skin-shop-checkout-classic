@@ -161,8 +161,7 @@
                                             echo '<option value="">Please Choose...</option>';
                                             foreach ($opt['select'] as $value => $label) {
 
-                                                $selected = $value == $value ? 'selected="selected"' : '';
-                                                echo '<option value="' . $value . '" ' . $selected . '>' . $label .'</option>';
+                                                echo '<option value="' . $value . '">' . $label .'</option>';
                                             }
                                             echo '</select>';
 
@@ -324,8 +323,7 @@
                                                     echo '<option value="">Please Choose...</option>';
                                                     foreach ($opt['select'] as $value => $label) {
 
-                                                        $selected = $value == $value ? 'selected="selected"' : '';
-                                                        echo '<option value="' . $value . '" ' . $selected . '>' . $label .'</option>';
+                                                        echo '<option value="' . $value . '">' . $label .'</option>';
                                                     }
                                                     echo '</select>';
 
