@@ -93,14 +93,19 @@ _nails_skin_shop_checkout_classic = function() {
         $('#checkout-step-1 .panel-footer .action-continue').on('click', function() {
             if (_this._checkout_validate_step_1())
             {
-                $('#checkout-step-1 .panel-body').slideUp();
-                $('#checkout-step-1 .panel-footer').slideUp();
-
-                $('#checkout-step-2 .panel-body').slideDown();
-                $('#checkout-step-2 .panel-footer').slideDown();
 
                 _this._checkout_set_progress(2);
 
+                $('#checkout-step-2 .panel-body').show();
+                $('#checkout-step-2 .panel-footer').show();
+
+                $('#checkout-step-1 .panel-body').hide();
+                $('#checkout-step-1 .panel-footer').hide();
+
+                // Jump to next checkout step
+
+                $('html, body').scrollTop($('#checkout-step-2').offset().top);
+                
             } else {
 
 
@@ -115,13 +120,18 @@ _nails_skin_shop_checkout_classic = function() {
         $('#checkout-step-2 .panel-footer .action-continue').on('click', function() {
             if (_this._checkout_validate_step_2())
             {
-                $('#checkout-step-2 .panel-body').slideUp();
-                $('#checkout-step-2 .panel-footer').slideUp();
-
-                $('#checkout-step-3 .panel-body').slideDown();
-                $('#checkout-step-3 .panel-footer').slideDown();
 
                 _this._checkout_set_progress(3);
+
+                $('#checkout-step-3 .panel-body').show();
+                $('#checkout-step-3 .panel-footer').show();
+
+                $('#checkout-step-2 .panel-body').hide();
+                $('#checkout-step-2 .panel-footer').hide();
+
+                // Jump to next checkout step
+
+                $('html, body').scrollTop($('#checkout-step-3').offset().top);
 
             } else {
 
@@ -131,17 +141,19 @@ _nails_skin_shop_checkout_classic = function() {
         });
 
         $('#checkout-step-2 .panel-footer .action-back').on('click', function() {
-            $('#checkout-step-1 .panel-body').slideDown();
-            $('#checkout-step-1 .panel-footer').slideDown();
+            $('#checkout-step-1 .panel-body').show();
+            $('#checkout-step-1 .panel-footer').show();
 
-            $('#checkout-step-2 .panel-body').slideUp();
-            $('#checkout-step-2 .panel-footer').slideUp();
+            $('#checkout-step-2 .panel-body').hide();
+            $('#checkout-step-2 .panel-footer').hide();
 
             $('#checkout-step-1 .panel-heading .validate-ok').addClass('hidden');
             $('#checkout-step-1 .panel-heading .validate-fail').addClass('hidden');
 
             $('#checkout-step-2 .panel-heading .validate-ok').addClass('hidden');
             $('#checkout-step-2 .panel-heading .validate-fail').addClass('hidden');
+
+            $('html, body').scrollTop($('#checkout-step-1').offset().top);
 
             _this._checkout_set_progress(1);
 
@@ -152,10 +164,10 @@ _nails_skin_shop_checkout_classic = function() {
         //  Billing address checkbox
         $('#same-billing-address').on('change', function() {
             if ($(this).prop('checked')) {
-                $('#billing-address').slideUp();
+                $('#billing-address').hide();
             }
             else {
-                $('#billing-address').slideDown();
+                $('#billing-address').show();
             }
         });
 
@@ -170,8 +182,8 @@ _nails_skin_shop_checkout_classic = function() {
                     .addClass('active');
 
                 $('#progress-bar').addClass('please-wait');
-                $('#checkout-step-3 .panel-body').slideUp();
-                $('#checkout-step-3 .panel-footer').slideUp(function() {
+                $('#checkout-step-3 .panel-body').hide();
+                $('#checkout-step-3 .panel-footer').show(function() {
                     // Different payment gateways handle things differently
                     switch ($('input[name=payment_gateway]:checked').val().toLowerCase()) {
                         case 'stripe' :
@@ -187,8 +199,8 @@ _nails_skin_shop_checkout_classic = function() {
                             }, function(status, response) {
                                 if (response.error) {
                                     //  Show the form again
-                                    $('#checkout-step-3 .panel-body').slideDown();
-                                    $('#checkout-step-3 .panel-footer').slideDown();
+                                    $('#checkout-step-3 .panel-body').show();
+                                    $('#checkout-step-3 .panel-footer').show();
 
                                     //  Reset the status bar
                                     $('#progress-bar').removeClass('please-wait');
@@ -251,17 +263,19 @@ _nails_skin_shop_checkout_classic = function() {
         });
 
         $('#checkout-step-3 .panel-footer .action-back').on('click', function() {
-            $('#checkout-step-2 .panel-body').slideDown();
-            $('#checkout-step-2 .panel-footer').slideDown();
+            $('#checkout-step-2 .panel-body').show();
+            $('#checkout-step-2 .panel-footer').show();
 
-            $('#checkout-step-3 .panel-body').slideUp();
-            $('#checkout-step-3 .panel-footer').slideUp();
+            $('#checkout-step-3 .panel-body').hide();
+            $('#checkout-step-3 .panel-footer').hide();
 
             $('#checkout-step-2 .panel-heading .validate-ok').addClass('hidden');
             $('#checkout-step-2 .panel-heading .validate-fail').addClass('hidden');
 
             $('#checkout-step-3 .panel-heading .validate-ok').addClass('hidden');
             $('#checkout-step-3 .panel-heading .validate-fail').addClass('hidden');
+
+            $('html, body').scrollTop($('#checkout-step-2').offset().top);
 
             _this._checkout_set_progress(2);
 
