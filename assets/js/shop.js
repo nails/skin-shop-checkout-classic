@@ -711,7 +711,7 @@ _nails_skin_shop_checkout_classic = function() {
         switch(data.order.status) {
             case 'UNPAID' :
 
-                $('#thankyou-text').slideUp();
+                $('#thankyou-text').hide();
 
                 if (data.order.is_recent)
                 {
@@ -729,7 +729,7 @@ _nails_skin_shop_checkout_classic = function() {
 
                 $('.order-status-feedback').removeClass('processing');
                 $('.order-status-feedback').addClass(data.order.status.toLowerCase());
-                $('#thankyou-text').slideDown();
+                $('#thankyou-text').show();
 
             break;
             case 'ABANDONED' :
@@ -737,7 +737,7 @@ _nails_skin_shop_checkout_classic = function() {
             case 'FAILED' :
             case 'PENDING' :
 
-                $('#thankyou-text').slideUp();
+                $('#thankyou-text').hide();
                 $('.order-status-feedback').removeClass('processing');
                 $('.order-status-feedback').addClass(data.order.status.toLowerCase());
 
