@@ -118,7 +118,7 @@
 
                                             if ($order->user->profile_img) {
 
-                                                $avatar = cdn_thumb($order->user->profile_img, $avatarSize, $avatarSize);
+                                                $avatar = cdnCrop($order->user->profile_img, $avatarSize, $avatarSize);
 
                                             } else {
 

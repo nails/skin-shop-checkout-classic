@@ -34,7 +34,7 @@
 
                             echo '<div class="col-xs-2 hidden-xs hidden-sm">';
 
-                                $url = cdn_thumb($featuredImg, 175, 175);
+                                $url = cdnCrop($featuredImg, 175, 175);
                                 echo img(array('src' => $url, 'class' => 'img-thumbnail'));
 
                             echo '</div>';

@@ -403,7 +403,7 @@
                                                             <td class="pg-img">
                                                             <?php
 
-                                                                echo $gateway->img ? img(array('src' => cdn_serve($gateway->img), 'class' => 'img-responsive')) : '';
+                                                                echo $gateway->img ? img(array('src' => cdnServe($gateway->img), 'class' => 'img-responsive')) : '';
 
                                                             ?>
                                                             </td>
