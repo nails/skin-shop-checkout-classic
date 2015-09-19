@@ -106,10 +106,11 @@
                 <hr />
                 <div class="row">
                     <div class="col-sm-6">
+                        <label class="visible-xs visible-sm" for="voucher">Promotional voucher</label>
                         <div class="well well-sm">
                             <?=form_open($shop_url . 'basket/add_voucher', 'class="add-voucher"')?>
                                 <div class="input-group">
-                                    <?=form_input('voucher', '', 'placeholder="Enter your promotional voucher, if you have one." class="form-control"')?>
+                                    <?=form_input('voucher', '', 'placeholder="Enter your promotional voucher, if you have one." class="form-control" id="voucher"')?>
                                     <span class="input-group-btn">
                                         <button class="btn btn-default" type="submit">
                                             Apply
@@ -120,10 +121,11 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
+                        <label class="visible-xs visible-sm" for="notes">Special instructions</label>
                         <div class="well well-sm">
                             <?=form_open($shop_url . 'basket/add_note', 'class="add-note"')?>
                                 <div class="input-group">
-                                    <?=form_input('note', set_value('notes', $basket->note), 'placeholder="Enter any special instructions or notes about your order." class="form-control"')?>
+                                    <?=form_input('note', set_value('notes', $basket->note), 'placeholder="Enter any special instructions or notes about your order." class="form-control" id="notes"')?>
                                     <span class="input-group-btn">
                                         <button class="btn btn-default" type="submit">
                                             Save
