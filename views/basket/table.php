@@ -113,12 +113,12 @@
                                 echo '</div>';
 
                                 /**
-                                 * Determine whether the user can increment the product. In order to be 
+                                 * Determine whether the user can increment the product. In order to be
                                  * incrementable there must:
                                  * - Be sufficient stock (or unlimited)
                                  * - not exceed any limit imposed by the product type
                                  */
-                                
+
                                 if (is_null($item->variant->quantity_available)) {
 
                                     //  Unlimited quantity
@@ -349,6 +349,26 @@
                 ?>
                 </th>
             </tr>
+
+            <!-- Discount Total -->
+            <?php
+
+            if (!empty($totals->base->grand_discount)) {
+
+                ?>
+                <tr class="basket-total-discount">
+                    <th colspan="2" class="text-right">
+                        Discount
+                    </th>
+                    <th class="text-center value">
+                        <?=$totals->user_formatted->grand_discount?>
+                    </th>
+                </tr>
+                <?php
+
+            }
+
+            ?>
 
             <!-- Grand Total -->
             <tr class="basket-total-grand">

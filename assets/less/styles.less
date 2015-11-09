@@ -3,10 +3,10 @@
  */
 
 .nails-shop-skin-checkout-classic {
-    @color-success: #dff0d8;
-    @color-warning: #fcf8e3;
-    @color-info: #d9edf7;
-    @color-danger: #f2dede;
+    @color-success: #DFF0D8;
+    @color-warning: #FCF8E3;
+    @color-info: #D9EDF7;
+    @color-danger: #F2DEDE;
     &.basket {
         .shipping-driver-promo {
             border: 1px solid;
@@ -26,6 +26,19 @@
             }
             p {
                 margin: 0;
+            }
+        }
+        .panel- {
+            &voucher,
+            &note {
+                margin: 0;
+                margin-top: 1em;
+                > a {
+                    font-size: 0.8em;
+                    position: relative;
+                    top: 0.5em;
+                    right: 0.5em;
+                }
             }
         }
         .items-adjusted,
@@ -56,7 +69,7 @@
             margin: 10px 0 25px;
         }
         .bordered-row {
-            border-top: solid 1px #eee;
+            border-top: solid 1px #EEEEEE;
             padding: 15px 0;
         }
         .padded-row {
@@ -78,7 +91,7 @@
             margin-top: -5px;
         }
         .shaded-row {
-            background: #eee;
+            background: #EEEEEE;
             padding: 15px 0;
         }
         .basket-incrementer {
@@ -113,8 +126,8 @@
         }
 
         table.checkout-payment-gateway-layout {
-            border: 1px solid #efefef;
-            background: lighten(#efefef, 5%);
+            border: 1px solid #EFEFEF;
+            background: lighten(#EFEFEF, 5%);
             margin-bottom: 0.5em;
             border-radius: 3px;
             display: inline-block;
@@ -177,15 +190,15 @@
 
                     .flip-tab {
                         &.warn {
-                            background-color: #fa7b00;
+                            background-color: #FA7B00;
                         }
                     }
                 }
 
                 &.no-js {
-                    border: 1px solid #cccccc;
+                    border: 1px solid #CCCCCC;
                     border-radius: 3px;
-                    background: #efefef;
+                    background: #EFEFEF;
                     padding: 1em;
 
                     label {
@@ -299,7 +312,7 @@
                 display: block;
                 padding-bottom: 0.5em;
                 margin-bottom: 1em;
-                border-bottom: 1px solid #efefef;
+                border-bottom: 1px solid #EFEFEF;
             }
             .img-thumbnail {
                 margin-left: 0.5em;

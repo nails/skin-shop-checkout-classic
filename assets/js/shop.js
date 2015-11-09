@@ -1,7 +1,4 @@
-/**
- * Javascript for the "Classic" shop skin
- */
-
+/* globals Skeuocard, Stripe, _nails_api */
 var _nails_skin_shop_checkout_classic;
 _nails_skin_shop_checkout_classic = function() {
     this._checkout_skeuocard = null;
@@ -105,7 +102,7 @@ _nails_skin_shop_checkout_classic = function() {
                 // Jump to next checkout step
 
                 $('html, body').scrollTop($('#checkout-step-2').offset().top);
-                
+
             } else {
 
 

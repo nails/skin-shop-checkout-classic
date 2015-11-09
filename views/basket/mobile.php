@@ -2,10 +2,10 @@
     <h1>Your Basket</h1>
     <?php
 
-    foreach ($items as $item) { ?>
+    foreach ($items as $item) {
 
+        ?>
         <div class="row bordered-row">
-
             <?php
 
             if (!empty($item->variant->featured_img)) {
@@ -21,7 +21,6 @@
                 $featuredImg = false;
             }
 
-
             if ($featuredImg) {
 
                 echo '<div class="col-xs-3">';
@@ -30,17 +29,15 @@
                     echo img(array('src' => $url, 'class' => 'img-thumbnail'));
 
                 echo '</div>';
+                $mainColWidth = 7;
 
             } else {
 
-                echo '<div class="col-xs-12">';
-
+                $mainColWidth = 10;
             }
 
             ?>
-
-            <div class="col-xs-7">
-
+            <div class="col-xs-<?=$mainColWidth?>">
                 <?php
 
                 // --------------------------------------------------------------------------
@@ -75,11 +72,9 @@
                         echo '<strong>Note:</strong> Collection only.';
                     echo '</div>';
                 }
-     
+
                 ?>
-
                 <div>
-
                 <?php
 
                 $omitVariantTaxPricing = app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug);
@@ -120,13 +115,9 @@
                 }
 
                 ?>
-
                 </div>
-
             </div>
-
             <div class="col-xs-2 text-center">
- 
             <?php
 
             if (empty($readonly)) {
@@ -137,7 +128,7 @@
                  * - Be sufficient stock (or unlimited)
                  * - not exceed any limit imposed by the product type
                  */
-                
+
                 if (is_null($item->variant->quantity_available)) {
 
                     //  Unlimited quantity
@@ -194,18 +185,14 @@
                 );
             }
 
-
             ?>
             </div>
-
         </div>
-
     <?php
 
     }
 
     ?>
-
     <div class="bordered-row">
         <div class="row padded-row">
             <div class="col-xs-12">
@@ -217,7 +204,6 @@
         </div>
         <div class="row padded-row">
             <div class="col-xs-12">
-
                 <?php
 
                 // Shipping total
@@ -314,9 +300,7 @@
                 }
 
                 ?>
-
             </div>
-            
         </div>
         <div class="row padded-row">
             <div class="col-xs-12">
