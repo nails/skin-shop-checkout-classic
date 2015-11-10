@@ -113,7 +113,7 @@
                     <div class="well well-sm">
                         <?=form_open($shop_url . 'basket/add_voucher', 'class="add-voucher"')?>
                             <div class="input-group">
-                                <?=form_input('voucher', '', 'placeholder="Enter your promotional voucher, if you have one." class="form-control" id="voucher"')?>
+                                <?=form_input('voucher', '', 'placeholder="Enter your voucher code, if you have one." class="form-control" id="voucher"')?>
                                 <span class="input-group-btn">
                                     <button class="btn btn-primary" type="submit">
                                         Apply
@@ -183,11 +183,19 @@
             </div>
             <hr />
             <div class="row">
-                <div class="col-xs-12 col-sm-6 hidden-xs">
-                    <?=anchor($continue_shopping_url, 'Continue Shopping', 'class="btn btn-lg btn-default"')?>
+                <div class="col-xs-12 col-sm-4 hidden-xs">
+                    <?=anchor(
+                        $continue_shopping_url,
+                        'Continue Shopping',
+                        'class="btn btn-block btn-lg btn-default"'
+                    )?>
                 </div>
-                <div class="col-xs-12 col-sm-6">
-                    <?=anchor($shop_url . 'checkout', 'Checkout Now', 'class="btn btn-lg btn-success pull-right"')?>
+                <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+                    <?=anchor(
+                        $shop_url . 'checkout',
+                        'Checkout Now',
+                        'class="btn btn-block btn-lg btn-success pull-right"'
+                    )?>
                 </div>
             </div>
             <hr />

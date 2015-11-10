@@ -215,7 +215,6 @@
             <tr>
                 <th colspan="3"></th>
             </tr>
-
             <!-- Item Total -->
             <tr class="basket-total-item">
                 <th colspan="2" class="text-right">
@@ -225,131 +224,161 @@
                     <?=$totals->user_formatted->item?>
                 </th>
             </tr>
-
             <!-- Shipping Total -->
             <?php
 
-                $rowContext = $shippingType === 'DELIVER_COLLECT' || $shippingType === 'COLLECT' ? 'warning' : '';
+            if ($shippingType === 'DELIVER_COLLECT') {
+
+                $rowContext = 'warning';
+
+            } else if ($shippingType === 'COLLECT') {
+
+                $rowContext = 'info';
+
+            } else {
+
+                $rowContext = '';
+            }
 
             ?>
             <tr class="basket-total-shipping <?=$rowContext?>">
                 <th colspan="2" class="text-right">
                     <?php
 
-                        if (app_setting('warehouse_collection_enabled', 'shop')) {
+                    if (app_setting('warehouse_collection_enabled', 'shop')) {
 
-                            if ($shippingType === 'DELIVER') {
+                        $address   = array();
+                        $address[] = app_setting('warehouse_addr_addressee', 'shop');
+                        $address[] = app_setting('warehouse_addr_line1', 'shop');
+                        $address[] = app_setting('warehouse_addr_line2', 'shop');
+                        $address[] = app_setting('warehouse_addr_town', 'shop');
+                        $address[] = app_setting('warehouse_addr_postcode', 'shop');
+                        $address[] = app_setting('warehouse_addr_state', 'shop');
+                        $address[] = app_setting('warehouse_addr_country', 'shop');
+                        $address   = array_filter($address);
+                        $mapsUrl   = 'http://maps.google.com/?q=' . urlencode(implode(', ', $address));
 
-                                echo 'Shipping';
+                        if ($shippingType === 'DELIVER') {
 
-                                if (empty($readonly)) {
+                            echo 'Shipping';
 
-                                    echo '<small>';
-                                    echo '<br />';
-                                    echo anchor(
-                                        $shop_url . 'basket/set_as_collection',
-                                        'Click here to collect your order'
-                                    );
-                                    echo '</small>';
-                                }
+                            if (empty($readonly)) {
 
-                            } elseif ($shippingType === 'DELIVER_COLLECT') {
-
-                                echo 'Your order will only be partially shipped';
                                 echo '<small>';
-                                    echo 'Your order contains items which are collect only<br />These items will not be shipped';
-                                    echo '<br /><br />';
+                                echo '<br />';
+                                echo anchor(
+                                    $shop_url . 'basket/set_as_collection',
+                                    'Click here to collect your order',
+                                    'class="btn btn-default btn-xs"'
+                                );
+                                echo '</small>';
+                            }
+
+                        } elseif ($shippingType === 'DELIVER_COLLECT') {
+
+                            echo 'We will only partially deliver this order';
+                            echo '<small>';
+                                echo 'Your order contains items which are collect only';
+                            echo '</small>';
+
+                            if ($address) {
+
+                                echo '<small>';
+                                    echo '<br /><strong>Collection from:</strong>';
+                                    echo '<br />' . implode('<br />', $address) . '<br />';
                                     echo anchor(
-                                        $shop_url . 'basket/set_as_collection',
-                                        'Click here to collect your entire order'
+                                        $mapsUrl,
+                                        '<b class="glyphicon glyphicon-map-marker"></b> Map',
+                                        'class="btn btn-xs btn-default" target="_blank"'
                                     );
                                 echo '</small>';
-
-                            } else {
-
-                                echo 'You will collect your order ';
-
-                                if (empty($readonly) && $basket->shipping->isDeliverable) {
-
-                                    echo '<small>';
-                                        echo '<br />';
-                                        echo anchor(
-                                            $shop_url . 'basket/set_as_delivery',
-                                            'Click here to have your order delivered'
-                                        );
-                                    echo '</small>';
-                                }
-
-                                $address   = array();
-                                $address[] = app_setting('warehouse_addr_addressee', 'shop');
-                                $address[] = app_setting('warehouse_addr_line1', 'shop');
-                                $address[] = app_setting('warehouse_addr_line2', 'shop');
-                                $address[] = app_setting('warehouse_addr_town', 'shop');
-                                $address[] = app_setting('warehouse_addr_postcode', 'shop');
-                                $address[] = app_setting('warehouse_addr_state', 'shop');
-                                $address[] = app_setting('warehouse_addr_country', 'shop');
-                                $address   = array_filter($address);
-
-                                if ($address) {
-
-                                    $mapsUrl = 'http://maps.google.com/?q=' . urlencode(implode(', ', $address));
-
-                                    echo '<small>';
-                                        echo '<br /><strong>Collection from:</strong>';
-                                        echo '<br />' . implode('<br />', $address) . '<br />';
-                                        echo anchor($mapsUrl, 'Map', 'target="_blank"');
-                                    echo '</small>';
-                                }
                             }
+
+                            echo '<small>';
+                                echo '<br />';
+                                echo anchor(
+                                    $shop_url . 'basket/set_as_collection',
+                                    'Click here to collect your entire order',
+                                    'class="btn btn-default btn-xs"'
+                                );
+                            echo '</small>';
 
                         } else {
 
-                            echo 'Shipping';
+                            echo 'You will collect your order ';
+
+                            if ($address) {
+
+                                echo '<small>';
+                                    echo '<br /><strong>Collection from:</strong>';
+                                    echo '<br />' . implode('<br />', $address) . '<br />';
+                                    echo anchor(
+                                        $mapsUrl,
+                                        '<b class="glyphicon glyphicon-map-marker"></b> Map',
+                                        'class="btn btn-xs btn-default" target="_blank"'
+                                    );
+                                echo '</small>';
+                            }
+
+                            if (empty($readonly) && $basket->shipping->isDeliverable) {
+
+                                echo '<small>';
+                                    echo '<br />';
+                                    echo anchor(
+                                        $shop_url . 'basket/set_as_delivery',
+                                        'Click here to have your order delivered',
+                                        'class="btn btn-default btn-xs"'
+                                    );
+                                echo '</small>';
+                            }
                         }
+
+                    } else {
+
+                        echo 'Shipping';
+                    }
 
                     ?>
                 </th>
                 <th class="text-center value">
                     <?php
 
-                        if ($totals->user->shipping) {
+                    if ($totals->user->shipping) {
 
-                            echo $totals->user_formatted->shipping;
+                        echo $totals->user_formatted->shipping;
 
-                        } else {
+                    } else {
 
-                            echo 'Free';
-                        }
+                        echo 'Free';
+                    }
 
                     ?>
                 </th>
             </tr>
-
             <!-- Tax Total -->
             <tr class="basket-total-tax">
                 <th colspan="2" class="text-right">
                 <?php
 
-                    if (app_setting('price_exclude_tax', 'shop')) {
+                if (app_setting('price_exclude_tax', 'shop')) {
 
-                        echo 'Tax';
+                    echo 'Tax';
 
-                    } else {
+                } else {
 
-                        echo 'Tax (included)';
-                    }
+                    echo 'Tax <small class="text-muted">(Included)</small>';
+                }
 
                 ?>
                 </th>
                 <th class="text-center value">
                 <?php
 
-                    echo $totals->user_formatted->tax;
+                echo $totals->user_formatted->tax;
 
                 ?>
                 </th>
             </tr>
-
             <!-- Discount Total -->
             <?php
 
@@ -369,7 +398,6 @@
             }
 
             ?>
-
             <!-- Grand Total -->
             <tr class="basket-total-grand">
                 <th colspan="2" class="text-right">
