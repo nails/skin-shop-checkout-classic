@@ -10,205 +10,226 @@
         <tbody>
         <?php
 
-            foreach ($items as $item) {
+        $bPriceExcludeTax       = app_setting('price_exclude_tax', 'shop');
+        $bOmitVariantTaxPricing = app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug);
+
+        foreach ($items as $item) {
+
+            $bIsDiscounted = $item->variant->price->price->user->discount_item > 0;
+
+            ?>
+            <tr class="basket-item <?=$bIsDiscounted ? 'is-discounted' : ''?>">
+                <td class="vertical-align-middle">
+                <?php
+
+                if (!empty($item->variant->featured_img)) {
+
+                    $featuredImg = $item->variant->featured_img;
+
+                } elseif (!empty($item->product->featured_img)) {
+
+                    $featuredImg = $item->product->featured_img;
+
+                } else {
+
+                    $featuredImg = false;
+                }
+
+                if ($featuredImg) {
+
+                    echo '<div class="col-xs-2 hidden-xs hidden-sm">';
+
+                        $url = cdnCrop($featuredImg, 175, 175);
+                        echo img(array('src' => $url, 'class' => 'img-thumbnail'));
+
+                    echo '</div>';
+                    echo '<div class="col-sm-12 col-md-10">';
+
+                } else {
+
+                    echo '<div class="col-sm-12">';
+                }
+
+                // --------------------------------------------------------------------------
+
+                //  Label
+                echo anchor($item->product->url, '<strong>' . $item->product->label . '</strong>');
+
+                if ($item->variant->label !== $item->product->label) {
+
+                    echo '<br />';
+                    echo '<em>' . $item->variant->label . '</em>';
+                }
+
+                // --------------------------------------------------------------------------
+
+                //  To order?
+                if ($item->variant->stock_status == 'TO_ORDER') {
+
+                    ?>
+                    <p class="text-muted">
+                        <small>
+                            <em>
+                                Lead time: <?=$item->variant->lead_time?>
+                            </em>
+                        </small>
+                    </p>
+                    <?php
+                }
+
+                // --------------------------------------------------------------------------
+
+                //  Collection Only
+                if ($item->variant->shipping->collection_only) {
+
+                    ?>
+                    <div class="alert alert-warning">
+                        <strong>Note:</strong> This item is collection only.
+                    </div>
+                    <?php
+                }
+
+                // --------------------------------------------------------------------------
+
+                if ($featuredImg) {
+
+                    echo '</div>';
+                }
 
                 ?>
-                <tr class="basket-item">
-                    <td class="vertical-align-middle">
-                    <?php
-
-                        if (!empty($item->variant->featured_img)) {
-
-                            $featuredImg = $item->variant->featured_img;
-
-                        } elseif (!empty($item->product->featured_img)) {
-
-                            $featuredImg = $item->product->featured_img;
-
-                        } else {
-
-                            $featuredImg = FALSE;
-                        }
-
-                        if ($featuredImg) {
-
-                            echo '<div class="col-xs-2 hidden-xs hidden-sm">';
-
-                                $url = cdnCrop($featuredImg, 175, 175);
-                                echo img(array('src' => $url, 'class' => 'img-thumbnail'));
-
-                            echo '</div>';
-                            echo '<div class="col-sm-12 col-md-10">';
-
-                        } else {
-
-                            echo '<div class="col-sm-12">';
-                        }
-
-                        // --------------------------------------------------------------------------
-
-                        //  Label
-                        echo anchor($item->product->url, '<strong>' . $item->product->label . '</strong>');
-
-                        if ($item->variant->label !== $item->product->label) {
-
-                            echo '<br />';
-                            echo '<em>' . $item->variant->label . '</em>';
-                        }
-
-                        // --------------------------------------------------------------------------
-
-                        //  To order?
-                        if ($item->variant->stock_status == 'TO_ORDER') {
-
-                            echo '<p class="text-muted">';
-                                echo '<small>';
-                                    echo '<em>Lead time: ' . $item->variant->lead_time . '</em>';
-                                echo '</small>';
-                            echo '</p>';
-                        }
-
-                        // --------------------------------------------------------------------------
-
-                        //  Collection Only
-                        if ($item->variant->shipping->collection_only) {
-
-                            echo '<div class="alert alert-warning">';
-                                echo '<strong>Note:</strong> This item is collection only.';
-                            echo '</div>';
-                        }
-
-                        // --------------------------------------------------------------------------
-
-                        if ($featuredImg) {
-
-                            echo '</div>';
-                        }
-
-                    ?>
-                    </td>
-                    <td class="vertical-align-middle text-center">
-                        <div class="row">
+                </td>
+                <td class="vertical-align-middle text-center">
+                    <div class="row">
                         <?php
 
-                            if (empty($readonly)) {
+                        if (empty($readonly)) {
+
+                            ?>
+                            <div class="col-xs-4">
+                                <?php
+
+                                echo anchor(
+                                    $shop_url . 'basket/decrement?variant_id=' . $item->variant->id,
+                                    '<span class="glyphicon glyphicon-minus-sign text-muted"></span>',
+                                    'class="pull-right"'
+                                );
+
+                                ?>
+                            </div>
+
+                            <div class="col-xs-4">
+                            <?php
+                        }
+
+                        echo '<span class="variant-quantity-' . $item->variant->id . '">';
+                            echo number_format($item->quantity);
+                        echo '</span>';
+
+                        if (empty($readonly)) {
+
+                            echo '</div>';
+
+                            /**
+                             * Determine whether the user can increment the product. In order to be
+                             * incrementable there must:
+                             * - Be sufficient stock (or unlimited)
+                             * - not exceed any limit imposed by the product type
+                             */
+
+                            if (is_null($item->variant->quantity_available)) {
+
+                                //  Unlimited quantity
+                                $sufficient = true;
+
+                            } elseif ($item->quantity < $item->variant->quantity_available) {
+
+                                //  Fewer than the quantity available, user can increment
+                                $sufficient = true;
+
+                            } else {
+
+                                $sufficient = false;
+                            }
+
+                            if (empty($item->product->type->max_per_order)) {
+
+                                //  Unlimited additions allowed
+                                $notExceed = true;
+
+                            } elseif ($item->quantity < $item->product->type->max_per_order) {
+
+                                //  Not exceeded the maximum per order, user can increment
+                                $notExceed = true;
+
+                            } else {
+
+                                $notExceed = false;
+                            }
+
+                            if ($sufficient && $notExceed) {
 
                                 echo '<div class="col-xs-4">';
-                                    echo anchor(
-                                        $shop_url . 'basket/decrement?variant_id=' . $item->variant->id,
-                                        '<span class="glyphicon glyphicon-minus-sign text-muted"></span>',
-                                        'class="pull-right"'
-                                    );
+                                echo anchor(
+                                    $shop_url . 'basket/increment?variant_id=' . $item->variant->id,
+                                    '<span class="glyphicon glyphicon-plus-sign text-muted"></span>',
+                                    'class="pull-left"'
+                                );
                                 echo '</div>';
-
-                                echo '<div class="col-xs-4">';
-                            }
-
-                            echo '<span class="variant-quantity-' . $item->variant->id . '">';
-                                echo number_format($item->quantity);
-                            echo '</span>';
-
-                            if (empty($readonly)) {
-
-                                echo '</div>';
-
-                                /**
-                                 * Determine whether the user can increment the product. In order to be
-                                 * incrementable there must:
-                                 * - Be sufficient stock (or unlimited)
-                                 * - not exceed any limit imposed by the product type
-                                 */
-
-                                if (is_null($item->variant->quantity_available)) {
-
-                                    //  Unlimited quantity
-                                    $sufficient = true;
-
-                                } else if ($item->quantity < $item->variant->quantity_available) {
-
-                                    //  Fewer than the quantity available, user can increment
-                                    $sufficient = true;
-
-                                } else {
-
-                                    $sufficient = false;
-                                }
-
-                                if (empty($item->product->type->max_per_order)) {
-
-                                    //  Unlimited additions allowed
-                                    $notExceed = true;
-
-                                } else if ($item->quantity < $item->product->type->max_per_order) {
-
-                                    //  Not exceeded the maximum per order, user can increment
-                                    $notExceed = true;
-
-                                } else {
-
-                                    $notExceed = false;
-                                }
-
-                                if ($sufficient && $notExceed) {
-
-                                    echo '<div class="col-xs-4">';
-                                        echo anchor(
-                                            $shop_url . 'basket/increment?variant_id=' . $item->variant->id,
-                                            '<span class="glyphicon glyphicon-plus-sign text-muted"></span>',
-                                            'class="pull-left"'
-                                        );
-                                    echo '</div>';
-                                }
-                            }
-
-                        ?>
-                        </div>
-                    </td>
-                    <td class="vertical-align-middle text-center">
-                    <?php
-
-                        $omitVariantTaxPricing = app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug);
-
-                        if (app_setting('price_exclude_tax', 'shop')) {
-
-                            echo '<span class="variant-unit-price-ex-tax-' . $item->variant->id . '">';
-                                echo $item->variant->price->price->user_formatted->value_ex_tax;
-                            echo '</span>';
-
-                            if (!$omitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
-
-                                echo '<br />';
-                                echo '<small class="text-muted">';
-                                    echo '<span class="variant-unit-price-inc-tax-' . $item->variant->id . '">';
-                                        echo $item->variant->price->price->user_formatted->value_inc_tax;
-                                    echo '</span>';
-                                    echo ' inc. tax';
-                                echo '</small>';
-                            }
-
-                        } else {
-
-                            echo '<span class="variant-unit-price-inc-tax-' . $item->variant->id . '">';
-                                echo $item->variant->price->price->user_formatted->value_inc_tax;
-                            echo '</span>';
-
-                            if (!$omitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
-
-                                echo '<br />';
-                                echo '<small class="text-muted">';
-                                    echo '<span class="variant-unit-price-ex-tax-' . $item->variant->id . '">';
-                                        echo $item->variant->price->price->user_formatted->value_ex_tax;
-                                    echo '</span>';
-                                    echo ' ex. tax';
-                                echo '</small>';
                             }
                         }
 
-                    ?>
-                    </td>
-                </tr>
-                <?php
-            }
+                        ?>
+                    </div>
+                </td>
+                <td class="vertical-align-middle text-center">
+                    <?php
+
+                    if ($bPriceExcludeTax) {
+
+                        echo '<span class="variant-unit-price-ex-tax-' . $item->variant->id . '">';
+                        echo $item->variant->price->price->user_formatted->value_ex_tax;
+                        echo '</span>';
+
+                        if (!$bOmitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
+
+                            ?>
+                            <br />
+                            <small class="text-muted">
+                                <span class="variant-unit-price-inc-tax-<?=$item->variant->id?>">
+                                    <?=$item->variant->price->price->user_formatted->value_inc_tax?>
+                                </span>
+                                 inc. <?=$item->product->tax_rate->rate*100?>% tax
+                            </small>
+                            <?php
+                        }
+
+                    } else {
+
+                        echo '<span class="variant-unit-price-inc-tax-' . $item->variant->id . '">';
+                        echo $item->variant->price->price->user_formatted->value_inc_tax;
+                        echo '</span>';
+
+                        if (!$bOmitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
+
+                            ?>
+                            <br />
+                            <small class="text-muted">
+                                <span class="variant-unit-price-ex-tax-<?=$item->variant->id?>">
+                                <?=$item->variant->price->price->user_formatted->value_ex_tax?>
+                                </span>
+                                 ex. <?=$item->product->tax_rate->rate*100?>% tax
+                            </small>
+                            <?php
+
+                        }
+                    }
+
+                ?>
+                </td>
+            </tr>
+            <?php
+        }
+
         ?>
         </tbody>
         <tfoot>
@@ -224,6 +245,25 @@
                     <?=$totals->user_formatted->item?>
                 </th>
             </tr>
+            <!-- Discount Total -->
+            <?php
+
+            if (!empty($totals->base->grand_discount)) {
+
+                ?>
+                <tr class="basket-total-discount success text-success">
+                    <th colspan="2" class="text-right">
+                        Discount
+                    </th>
+                    <th class="text-center value">
+                        -<?=$totals->user_formatted->grand_discount?>
+                    </th>
+                </tr>
+                <?php
+
+            }
+
+            ?>
             <!-- Shipping Total -->
             <?php
 
@@ -231,7 +271,7 @@
 
                 $rowContext = 'warning';
 
-            } else if ($shippingType === 'COLLECT') {
+            } elseif ($shippingType === 'COLLECT') {
 
                 $rowContext = 'info';
 
@@ -278,30 +318,42 @@
 
                             echo 'We will only partially deliver this order';
                             echo '<small>';
-                                echo 'Your order contains items which are collect only';
+                            echo 'Your order contains items which are collect only';
                             echo '</small>';
 
                             if ($address) {
 
-                                echo '<small>';
-                                    echo '<br /><strong>Collection from:</strong>';
-                                    echo '<br />' . implode('<br />', $address) . '<br />';
+                                ?>
+                                <small>
+                                    <br /><strong>Collection from:</strong>
+                                    <br /><?=implode('<br />', $address)?><br />
+                                    <?php
+
                                     echo anchor(
                                         $mapsUrl,
                                         '<b class="glyphicon glyphicon-map-marker"></b> Map',
                                         'class="btn btn-xs btn-default" target="_blank"'
                                     );
-                                echo '</small>';
+
+                                    ?>
+                                </small>
+                                <?php
                             }
 
-                            echo '<small>';
-                                echo '<br />';
+                            ?>
+                            <small>
+                                <br />
+                                <?php
+
                                 echo anchor(
                                     $shop_url . 'basket/set_as_collection',
                                     'Click here to collect your entire order',
                                     'class="btn btn-default btn-xs"'
-                                );
-                            echo '</small>';
+                                )
+
+                                ?>
+                            </small>
+                            <?php
 
                         } else {
 
@@ -309,27 +361,40 @@
 
                             if ($address) {
 
-                                echo '<small>';
-                                    echo '<br /><strong>Collection from:</strong>';
-                                    echo '<br />' . implode('<br />', $address) . '<br />';
+                                ?>
+                                <small>
+                                    <br /><strong>Collection from:</strong>
+                                    <br /><?=implode('<br />', $address)?>'<br />
+                                    <?php
+
                                     echo anchor(
                                         $mapsUrl,
                                         '<b class="glyphicon glyphicon-map-marker"></b> Map',
                                         'class="btn btn-xs btn-default" target="_blank"'
                                     );
-                                echo '</small>';
+
+                                    ?>
+                                </small>
+                                <?php
+
                             }
 
                             if (empty($readonly) && $basket->shipping->isDeliverable) {
 
-                                echo '<small>';
-                                    echo '<br />';
+                                ?>
+                                <small>
+                                    <br />
+                                    <?php
+
                                     echo anchor(
                                         $shop_url . 'basket/set_as_delivery',
                                         'Click here to have your order delivered',
                                         'class="btn btn-default btn-xs"'
                                     );
-                                echo '</small>';
+
+                                    ?>
+                                </small>
+                                <?php
                             }
                         }
 
@@ -358,46 +423,27 @@
             <!-- Tax Total -->
             <tr class="basket-total-tax">
                 <th colspan="2" class="text-right">
-                <?php
+                    <?php
 
-                if (app_setting('price_exclude_tax', 'shop')) {
+                    if ($bPriceExcludeTax) {
 
-                    echo 'Tax';
+                        echo 'Tax';
 
-                } else {
+                    } else {
 
-                    echo 'Tax <small class="text-muted">(Included)</small>';
-                }
+                        echo 'Tax <small class="text-muted">(Included)</small>';
+                    }
 
-                ?>
+                    ?>
                 </th>
                 <th class="text-center value">
-                <?php
+                    <?php
 
-                echo $totals->user_formatted->tax;
+                    echo $totals->user_formatted->tax;
 
-                ?>
+                    ?>
                 </th>
             </tr>
-            <!-- Discount Total -->
-            <?php
-
-            if (!empty($totals->base->grand_discount)) {
-
-                ?>
-                <tr class="basket-total-discount">
-                    <th colspan="2" class="text-right">
-                        Discount
-                    </th>
-                    <th class="text-center value">
-                        <?=$totals->user_formatted->grand_discount?>
-                    </th>
-                </tr>
-                <?php
-
-            }
-
-            ?>
             <!-- Grand Total -->
             <tr class="basket-total-grand">
                 <th colspan="2" class="text-right">

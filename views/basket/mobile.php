@@ -2,6 +2,9 @@
     <h1>Your Basket</h1>
     <?php
 
+    $bPriceExcludeTax       = app_setting('price_exclude_tax', 'shop');
+    $bOmitVariantTaxPricing = app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug);
+
     foreach ($items as $item) {
 
         ?>
@@ -77,15 +80,13 @@
                 <div>
                 <?php
 
-                $omitVariantTaxPricing = app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug);
-
-                if (app_setting('price_exclude_tax', 'shop')) {
+                if ($bPriceExcludeTax) {
 
                     echo '<strong class="variant-unit-price-ex-tax-' . $item->variant->id . '">';
                         echo $item->variant->price->price->user_formatted->value_ex_tax;
                     echo '</strong>';
 
-                    if (!$omitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
+                    if (!$bOmitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
 
                         echo '<br />';
                         echo '<small class="text-muted">';
@@ -102,7 +103,7 @@
                         echo $item->variant->price->price->user_formatted->value_inc_tax;
                     echo '</span>';
 
-                    if (!$omitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
+                    if (!$bOmitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
 
                         echo '<br />';
                         echo '<small class="text-muted">';
@@ -202,6 +203,26 @@
                 </div>
             </div>
         </div>
+        <?php
+
+        if (!empty($totals->base->grand_discount)) {
+
+            ?>
+            <div class="row padded-row success-row">
+                <div class="col-xs-12">
+                    <div class="pull-left">
+                        Discount
+                    </div>
+                    <div class="pull-right">
+                        <b>-<?=$totals->user_formatted->grand_discount?></b>
+                    </div>
+                </div>
+            </div>
+            <?php
+
+        }
+
+        ?>
         <div class="row padded-row">
             <div class="col-xs-12">
                 <div class="pull-left">
@@ -217,7 +238,7 @@
                 <div class="pull-left">
                     <?php
 
-                    if (app_setting('price_exclude_tax', 'shop')) {
+                    if ($bPriceExcludeTax) {
 
                         echo 'Tax';
 
@@ -229,7 +250,7 @@
                     ?>
                 </div>
                 <div class="pull-right">
-                    <b><?=$totals->user_formatted->tax;?></b>
+                    <b><?=$totals->user_formatted->tax?></b>
                 </div>
             </div>
         </div>
@@ -239,7 +260,7 @@
                     Total
                 </div>
                 <div class="pull-right">
-                    <b><?=$totals->user_formatted->grand;?></b>
+                    <b><?=$totals->user_formatted->grand?></b>
                 </div>
             </div>
         </div>
@@ -271,11 +292,15 @@
 
                 ?>
                 <p>
-                    <?=anchor(
+                    <?php
+
+                    echo anchor(
                         $shop_url . 'basket/set_as_collection',
                         'Tap here to collect your order',
                         'class="btn btn-block btn-default"'
-                    )?>
+                    );
+
+                    ?>
                 </p>
                 <?php
             }
@@ -291,28 +316,38 @@
 
             if ($address) {
 
-                echo '<p class="alert alert-info">';
-                    echo '<strong>';
-                    echo 'Collection from:';
+                ?>
+                <p class="alert alert-info">
+                    <strong>
+                    Collection from:
+                    <?php
+
                     echo anchor(
                         $mapsUrl,
                         '<b class="glyphicon glyphicon-map-marker"></b> Map',
                         'class="pull-right btn btn-xs btn-default" target="_blank"'
                     );
-                    echo '</strong>';
-                    echo '<br />' . implode('<br />', $address) . '<br />';
-                echo '</p>';
+
+                    ?>
+                    </strong>
+                    <br /><?=implode('<br />', $address)?><br />
+                </p>
+                <?php
             }
 
             if (empty($readonly)) {
 
                 ?>
                 <p>
-                    <?=anchor(
+                    <?php
+
+                    echo anchor(
                         $shop_url . 'basket/set_as_collection',
                         'Tap here to collect your entire order',
                         'class="btn btn-block btn-default"'
-                    )?>
+                    );
+
+                    ?>
                 </p>
                 <?php
             }
@@ -325,17 +360,23 @@
 
             if ($address) {
 
-                echo '<p class="alert alert-info">';
-                    echo '<strong>';
-                    echo 'Collection from:';
+                ?>
+                <p class="alert alert-info">
+                    <strong>
+                    Collection from:
+                    <?php
+
                     echo anchor(
                         $mapsUrl,
                         '<b class="glyphicon glyphicon-map-marker"></b> Map',
                         'class="pull-right btn btn-xs btn-default" target="_blank"'
                     );
-                    echo '</strong>';
-                    echo '<br />' . implode('<br />', $address) . '<br />';
-                echo '</p>';
+
+                    ?>
+                    </strong>
+                    <br /><?=implode('<br />', $address)?><br />
+                </p>
+                <?php
             }
 
             if (empty($readonly) && $basket->shipping->isDeliverable) {
