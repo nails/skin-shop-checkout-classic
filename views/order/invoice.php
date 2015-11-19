@@ -484,11 +484,11 @@
 
                             if (isset($for_user) && $for_user == 'ADMIN') {
 
-                                echo $item->price->base_formatted->value_total;
+                                echo $item->price->base_formatted->item_total;
 
                             } else {
 
-                                echo $item->price->user_formatted->value_total;
+                                echo $item->price->user_formatted->item_total;
 
                             }
 

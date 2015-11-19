@@ -15,7 +15,7 @@
 
         foreach ($items as $item) {
 
-            $bIsDiscounted = $item->variant->price->price->user->discount_item > 0;
+            $bIsDiscounted = $item->price->user->discount_item > 0;
 
             ?>
             <tr class="basket-item <?=$bIsDiscounted ? 'is-discounted' : ''?>">
@@ -187,16 +187,16 @@
                     if ($bPriceExcludeTax) {
 
                         echo '<span class="variant-unit-price-ex-tax-' . $item->variant->id . '">';
-                        echo $item->variant->price->price->user_formatted->value_ex_tax;
+                        echo $item->price->user_formatted->value_ex_tax;
                         echo '</span>';
 
-                        if (!$bOmitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
+                        if (!$bOmitVariantTaxPricing && $item->price->user->value_tax > 0) {
 
                             ?>
                             <br />
                             <small class="text-muted">
                                 <span class="variant-unit-price-inc-tax-<?=$item->variant->id?>">
-                                    <?=$item->variant->price->price->user_formatted->value_inc_tax?>
+                                    <?=$item->price->user_formatted->value_inc_tax?>
                                 </span>
                                  inc. <?=$item->product->tax_rate->rate*100?>% tax
                             </small>
@@ -206,16 +206,16 @@
                     } else {
 
                         echo '<span class="variant-unit-price-inc-tax-' . $item->variant->id . '">';
-                        echo $item->variant->price->price->user_formatted->value_inc_tax;
+                        echo $item->price->user_formatted->value_inc_tax;
                         echo '</span>';
 
-                        if (!$bOmitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
+                        if (!$bOmitVariantTaxPricing && $item->price->user->value_tax > 0) {
 
                             ?>
                             <br />
                             <small class="text-muted">
                                 <span class="variant-unit-price-ex-tax-<?=$item->variant->id?>">
-                                <?=$item->variant->price->price->user_formatted->value_ex_tax?>
+                                <?=$item->price->user_formatted->value_ex_tax?>
                                 </span>
                                  ex. <?=$item->product->tax_rate->rate*100?>% tax
                             </small>

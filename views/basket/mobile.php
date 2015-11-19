@@ -83,15 +83,15 @@
                 if ($bPriceExcludeTax) {
 
                     echo '<strong class="variant-unit-price-ex-tax-' . $item->variant->id . '">';
-                        echo $item->variant->price->price->user_formatted->value_ex_tax;
+                        echo $item->price->user_formatted->value_ex_tax;
                     echo '</strong>';
 
-                    if (!$bOmitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
+                    if (!$bOmitVariantTaxPricing && $item->price->user->value_tax > 0) {
 
                         echo '<br />';
                         echo '<small class="text-muted">';
                             echo '<span class="variant-unit-price-inc-tax-' . $item->variant->id . '">';
-                                echo $item->variant->price->price->user_formatted->value_inc_tax;
+                                echo $item->price->user_formatted->value_inc_tax;
                             echo '</span>';
                             echo ' inc. tax';
                         echo '</small>';
@@ -100,15 +100,15 @@
                 } else {
 
                     echo '<span class="variant-unit-price-inc-tax-' . $item->variant->id . '">';
-                        echo $item->variant->price->price->user_formatted->value_inc_tax;
+                        echo $item->price->user_formatted->value_inc_tax;
                     echo '</span>';
 
-                    if (!$bOmitVariantTaxPricing && $item->variant->price->price->user->value_tax > 0) {
+                    if (!$bOmitVariantTaxPricing && $item->price->user->value_tax > 0) {
 
                         echo '<br />';
                         echo '<small class="text-muted">';
                             echo '<span class="variant-unit-price-ex-tax-' . $item->variant->id . '">';
-                                echo $item->variant->price->price->user_formatted->value_ex_tax;
+                                echo $item->price->user_formatted->value_ex_tax;
                             echo '</span>';
                             echo ' ex. tax';
                         echo '</small>';
