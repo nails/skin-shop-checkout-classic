@@ -320,7 +320,7 @@
 
                         if (count($product->variations) > 1) {
 
-                            if (app_setting('browse_product_ribbon_mode', 'shop-' . $skin->slug) == 'corner') {
+                            if (appSetting('browse_product_ribbon_mode', 'shop-' . $skin->slug) == 'corner') {
 
                                 ?>
                                 <div class="ribbon corner">
@@ -351,7 +351,7 @@
                         <span class="badge">
                             <?php
 
-                            if (app_setting('price_exclude_tax', 'shop')) {
+                            if (appSetting('price_exclude_tax', 'shop')) {
 
                                 echo $product->price->user_formatted->price_string_ex_tax;
 

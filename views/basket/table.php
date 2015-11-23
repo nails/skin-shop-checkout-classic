@@ -285,7 +285,7 @@
                 <th colspan="2" class="text-right">
                     <?php
 
-                    if (app_setting('warehouse_collection_enabled', 'shop')) {
+                    if (appSetting('warehouse_collection_enabled', 'shop')) {
 
                         $address   = array();
                         $address[] = appSetting('warehouse_addr_addressee', 'shop');

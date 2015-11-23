@@ -222,13 +222,13 @@
                     $statusMessage = '';
 
                     $address   = array();
-                    $address[] = trim(app_setting('warehouse_addr_addressee', 'shop'));
-                    $address[] = trim(app_setting('warehouse_addr_line1', 'shop'));
-                    $address[] = trim(app_setting('warehouse_addr_line2', 'shop'));
-                    $address[] = trim(app_setting('warehouse_addr_town', 'shop'));
-                    $address[] = trim(app_setting('warehouse_addr_postcode', 'shop'));
-                    $address[] = trim(app_setting('warehouse_addr_state', 'shop'));
-                    $address[] = trim(app_setting('warehouse_addr_country', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_addressee', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_line1', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_line2', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_town', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_postcode', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_state', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_country', 'shop'));
 
                     $address = array_filter($address);
                     $address = implode(', ', $address);
@@ -588,7 +588,7 @@
             </table>
             <?php
 
-                if (app_setting('invoice_footer', 'shop')) {
+                if (appSetting('invoice_footer', 'shop')) {
 
                     echo '<p id="invoice-footer">';
                         echo appSetting('invoice_footer', 'shop');

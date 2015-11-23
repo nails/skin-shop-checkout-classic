@@ -3,7 +3,7 @@
         <div class="col-md-12">
         <?php
 
-            if (app_setting('maintenance_title', 'shop')) {
+            if (appSetting('maintenance_title', 'shop')) {
 
                 echo '<h1>' . appSetting('maintenance_title', 'shop') . '</h1>';
 
@@ -15,7 +15,7 @@
 
             }
 
-            if (app_setting('maintenance_body', 'shop')) {
+            if (appSetting('maintenance_body', 'shop')) {
 
                 echo appSetting('maintenance_body', 'shop');
 
