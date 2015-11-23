@@ -362,10 +362,10 @@
                                             <td>
                                             <?php
 
-                                                $invoiceCompany   = app_setting('invoice_company', 'shop');
-                                                $invoiceAddress   = app_setting('invoice_address', 'shop');
-                                                $invoiceVatNo     = app_setting('invoice_vat_no', 'shop');
-                                                $invoiceCompanyNo = app_setting('invoice_company_no', 'shop');
+                                                $invoiceCompany   = appSetting('invoice_company', 'shop');
+                                                $invoiceAddress   = appSetting('invoice_address', 'shop');
+                                                $invoiceVatNo     = appSetting('invoice_vat_no', 'shop');
+                                                $invoiceCompanyNo = appSetting('invoice_company_no', 'shop');
 
                                                 echo $invoiceCompany   ? '<strong>' . $invoiceCompany . '</strong>' : '<strong>' . APP_NAME . '</strong>';
                                                 echo $invoiceAddress   ? '<br />' . nl2br($invoiceAddress) . '<br />' : '';
@@ -591,7 +591,7 @@
                 if (app_setting('invoice_footer', 'shop')) {
 
                     echo '<p id="invoice-footer">';
-                        echo app_setting('invoice_footer', 'shop');
+                        echo appSetting('invoice_footer', 'shop');
                     echo '</p>';
                 }
 

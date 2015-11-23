@@ -5,7 +5,7 @@
 
             if (app_setting('maintenance_title', 'shop')) {
 
-                echo '<h1>' . app_setting('maintenance_title', 'shop') . '</h1>';
+                echo '<h1>' . appSetting('maintenance_title', 'shop') . '</h1>';
 
             } else {
 
@@ -17,7 +17,7 @@
 
             if (app_setting('maintenance_body', 'shop')) {
 
-                echo app_setting('maintenance_body', 'shop');
+                echo appSetting('maintenance_body', 'shop');
 
             } else {
 

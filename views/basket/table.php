@@ -10,8 +10,8 @@
         <tbody>
         <?php
 
-        $bPriceExcludeTax       = app_setting('price_exclude_tax', 'shop');
-        $bOmitVariantTaxPricing = app_setting('omit_variant_tax_pricing', 'shop-' . $skin->slug);
+        $bPriceExcludeTax       = appSetting('price_exclude_tax', 'shop');
+        $bOmitVariantTaxPricing = appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug);
 
         foreach ($items as $item) {
 
@@ -288,13 +288,13 @@
                     if (app_setting('warehouse_collection_enabled', 'shop')) {
 
                         $address   = array();
-                        $address[] = app_setting('warehouse_addr_addressee', 'shop');
-                        $address[] = app_setting('warehouse_addr_line1', 'shop');
-                        $address[] = app_setting('warehouse_addr_line2', 'shop');
-                        $address[] = app_setting('warehouse_addr_town', 'shop');
-                        $address[] = app_setting('warehouse_addr_postcode', 'shop');
-                        $address[] = app_setting('warehouse_addr_state', 'shop');
-                        $address[] = app_setting('warehouse_addr_country', 'shop');
+                        $address[] = appSetting('warehouse_addr_addressee', 'shop');
+                        $address[] = appSetting('warehouse_addr_line1', 'shop');
+                        $address[] = appSetting('warehouse_addr_line2', 'shop');
+                        $address[] = appSetting('warehouse_addr_town', 'shop');
+                        $address[] = appSetting('warehouse_addr_postcode', 'shop');
+                        $address[] = appSetting('warehouse_addr_state', 'shop');
+                        $address[] = appSetting('warehouse_addr_country', 'shop');
                         $address   = array_filter($address);
                         $mapsUrl   = 'http://maps.google.com/?q=' . urlencode(implode(', ', $address));
 

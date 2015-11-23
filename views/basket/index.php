@@ -25,7 +25,7 @@
 
     // --------------------------------------------------------------------------
 
-    $headerText = app_setting('basket_header', 'shop-' . $skin->slug);
+    $headerText = appSetting('basket_header', 'shop-' . $skin->slug);
 
     if (!empty($headerText)) {
 
@@ -264,7 +264,7 @@
     </div>
     <?php
 
-    $footerText = app_setting('basket_footer', 'shop-' . $skin->slug);
+    $footerText = appSetting('basket_footer', 'shop-' . $skin->slug);
 
     if (!empty($footerText)) {
 
