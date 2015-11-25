@@ -222,13 +222,13 @@
                     $statusMessage = '';
 
                     $address   = array();
-                    $address[] = trim(app_setting('warehouse_addr_addressee', 'shop'));
-                    $address[] = trim(app_setting('warehouse_addr_line1', 'shop'));
-                    $address[] = trim(app_setting('warehouse_addr_line2', 'shop'));
-                    $address[] = trim(app_setting('warehouse_addr_town', 'shop'));
-                    $address[] = trim(app_setting('warehouse_addr_postcode', 'shop'));
-                    $address[] = trim(app_setting('warehouse_addr_state', 'shop'));
-                    $address[] = trim(app_setting('warehouse_addr_country', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_addressee', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_line1', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_line2', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_town', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_postcode', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_state', 'shop'));
+                    $address[] = trim(appSetting('warehouse_addr_country', 'shop'));
 
                     $address = array_filter($address);
                     $address = implode(', ', $address);
@@ -362,10 +362,10 @@
                                             <td>
                                             <?php
 
-                                                $invoiceCompany   = app_setting('invoice_company', 'shop');
-                                                $invoiceAddress   = app_setting('invoice_address', 'shop');
-                                                $invoiceVatNo     = app_setting('invoice_vat_no', 'shop');
-                                                $invoiceCompanyNo = app_setting('invoice_company_no', 'shop');
+                                                $invoiceCompany   = appSetting('invoice_company', 'shop');
+                                                $invoiceAddress   = appSetting('invoice_address', 'shop');
+                                                $invoiceVatNo     = appSetting('invoice_vat_no', 'shop');
+                                                $invoiceCompanyNo = appSetting('invoice_company_no', 'shop');
 
                                                 echo $invoiceCompany   ? '<strong>' . $invoiceCompany . '</strong>' : '<strong>' . APP_NAME . '</strong>';
                                                 echo $invoiceAddress   ? '<br />' . nl2br($invoiceAddress) . '<br />' : '';
@@ -484,11 +484,11 @@
 
                             if (isset($for_user) && $for_user == 'ADMIN') {
 
-                                echo $item->price->base_formatted->value_total;
+                                echo $item->price->base_formatted->item_total;
 
                             } else {
 
-                                echo $item->price->user_formatted->value_total;
+                                echo $item->price->user_formatted->item_total;
 
                             }
 
@@ -588,10 +588,10 @@
             </table>
             <?php
 
-                if (app_setting('invoice_footer', 'shop')) {
+                if (appSetting('invoice_footer', 'shop')) {
 
                     echo '<p id="invoice-footer">';
-                        echo app_setting('invoice_footer', 'shop');
+                        echo appSetting('invoice_footer', 'shop');
                     echo '</p>';
                 }
 

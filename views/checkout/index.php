@@ -28,7 +28,7 @@
             </div>
             <?php
 
-            $headerText = app_setting('checkout_header', 'shop-' . $skin->slug);
+            $headerText = appSetting('checkout_header', 'shop-' . $skin->slug);
 
             if (!empty($headerText)) {
 
@@ -495,7 +495,7 @@
             </div>
             <?php
 
-            $footerText = app_setting('checkout_footer', 'shop-' . $skin->slug);
+            $footerText = appSetting('checkout_footer', 'shop-' . $skin->slug);
 
             if (!empty($footerText)) {
 
