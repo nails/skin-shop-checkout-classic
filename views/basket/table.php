@@ -364,7 +364,7 @@
                                 ?>
                                 <small>
                                     <br /><strong>Collection from:</strong>
-                                    <br /><?=implode('<br />', $address)?>'<br />
+                                    <br /><?=implode('<br />', $address)?><br />
                                     <?php
 
                                     echo anchor(

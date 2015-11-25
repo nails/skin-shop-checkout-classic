@@ -1,17 +1,17 @@
 <?php
 
-    /**
-     * Work out the number of steps there is for checkout. This is static
-     * just now but could/should be dynamic based on factors such as whether
-     * shipping details are required, number of enabled payment gateways etc.
-     */
+/**
+ * Work out the number of steps there is for checkout. This is static
+ * just now but could/should be dynamic based on factors such as whether
+ * shipping details are required, number of enabled payment gateways etc.
+ */
 
-    $numSteps = 0;
-    $numSteps++; // Contact & Delivery Details
-    $numSteps++; // Billing Details
-    $numSteps++; // Payment Gateway
+$numSteps = 0;
+$numSteps++; // Contact & Delivery Details
+$numSteps++; // Billing Details
+$numSteps++; // Payment Gateway
 
-    $curStep = 0;
+$curStep = 0;
 
 ?>
 <noscript>
@@ -44,32 +44,32 @@
             <div class="row">
             <?php
 
-                echo  '<div class="col-md-12">';
+            echo  '<div class="col-md-12">';
 
-                    $introText = cmsBlock('shop_checkout_intro');
+                $introText = cmsBlock('shop_checkout_intro');
 
-                    if (!empty($introText)) {
+                if (!empty($introText)) {
 
-                        echo $introText;
+                    echo $introText;
+
+                } else {
+
+                    echo '<p>Simply complete the forms below and then click or tap the "Place Order &amp; Pay" button.</p>';
+
+                    if (!$this->user_model->isLoggedIn()) {
+
+                        echo '<p>You are welcome to checkout as a guest, however we recommend creating an account so that you can track your order and have a quicker checkout experience next time.</p>';
 
                     } else {
 
-                        echo '<p>Simply complete the forms below and then click or tap the "Place Order &amp; Pay" button.</p>';
-
-                        if (!$this->user_model->isLoggedIn()) {
-
-                            echo '<p>You are welcome to checkout as a guest, however we recommend creating an account so that you can track your order and have a quicker checkout experience next time.</p>';
-
-                        } else {
-
-                            echo '<p>';
-                                echo 'You are currently logged in as: <strong>' . activeUser('first_name,last_name') . ' (' . activeUser('email') . ')</strong>. ';
-                                echo anchor('auth/logout', 'Not you?');
-                            echo '</p>';
-                        }
+                        echo '<p>';
+                        echo 'You are currently logged in as: <strong>' . activeUser('first_name,last_name') . ' (' . activeUser('email') . ')</strong>. ';
+                        echo anchor('auth/logout', 'Not you?');
+                        echo '</p>';
                     }
+                }
 
-                echo '</div>';
+            echo '</div>';
 
             ?>
             </div>
@@ -87,7 +87,7 @@
                 <hr id="progress-bar-hr" />
                 <?php
 
-                    $curStep++;
+                $curStep++;
 
                 ?>
                 <div class="panel panel-default" id="checkout-step-1">
@@ -99,90 +99,91 @@
                         </h3>
                     </div>
                     <div class="panel-body">
-                        <div class="col-md-6">
-                            <h4>Delivery address</h4>
-                            <hr>
-                            <div role="form">
-                            <?php
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Delivery address</h4>
+                                <hr>
+                                <div role="form">
+                                <?php
 
-                                $options       = array();
-                                $options[]     = array(
-                                    'key'      => 'delivery_address_line_1',
-                                    'label'    => 'Address Line 1',
-                                    'required' => true
-                               );
-                                $options[]     = array(
-                                    'key'      => 'delivery_address_line_2',
-                                    'label'    => 'Address Line 2',
-                                    'required' => false
-                               );
-                                $options[]     = array(
-                                    'key'      => 'delivery_address_town',
-                                    'label'    => 'City/Town',
-                                    'required' => true
-                               );
-                                $options[]     = array(
-                                    'key'      => 'delivery_address_state',
-                                    'label'    => 'Region/State',
-                                    'required' => false
-                               );
-                                $options[]     = array(
-                                    'key'      => 'delivery_address_postcode',
-                                    'label'    => 'Postal Code',
-                                    'required' => true
-                               );
-                                $options[]     = array(
-                                    'key'      => 'delivery_address_country',
-                                    'label'    => 'Country',
-                                    'required' => true,
-                                    'select'   => $countries_flat
-                               );
+                                    $options       = array();
+                                    $options[]     = array(
+                                        'key'      => 'delivery_address_line_1',
+                                        'label'    => 'Address Line 1',
+                                        'required' => true
+                                   );
+                                    $options[]     = array(
+                                        'key'      => 'delivery_address_line_2',
+                                        'label'    => 'Address Line 2',
+                                        'required' => false
+                                   );
+                                    $options[]     = array(
+                                        'key'      => 'delivery_address_town',
+                                        'label'    => 'City/Town',
+                                        'required' => true
+                                   );
+                                    $options[]     = array(
+                                        'key'      => 'delivery_address_state',
+                                        'label'    => 'Region/State',
+                                        'required' => false
+                                   );
+                                    $options[]     = array(
+                                        'key'      => 'delivery_address_postcode',
+                                        'label'    => 'Postal Code',
+                                        'required' => true
+                                   );
+                                    $options[]     = array(
+                                        'key'      => 'delivery_address_country',
+                                        'label'    => 'Country',
+                                        'required' => true,
+                                        'select'   => $countries_flat
+                                   );
 
-                                foreach ($options as $opt) {
+                                    foreach ($options as $opt) {
 
-                                    $error           = form_error($opt['key'], '<p class="help-block">', '</p>');
-                                    $has_error       = $error ? 'has-error' : '';
-                                    $has_feedback    = $error ? 'has-feedback' : '';
-                                    $required        = $opt['required'] ? '*' : '';
-                                    $feedback_hidden = $has_feedback ? '' : 'hidden';
-                                    $activeUser     = activeUser($opt['key']);
-                                    $activeUser     = is_string($activeUser) ? $activeUser : '';
-                                    $value           = set_value($opt['key'], $activeUser);
+                                        $error           = form_error($opt['key'], '<p class="help-block">', '</p>');
+                                        $has_error       = $error ? 'has-error' : '';
+                                        $has_feedback    = $error ? 'has-feedback' : '';
+                                        $required        = $opt['required'] ? '*' : '';
+                                        $feedback_hidden = $has_feedback ? '' : 'hidden';
+                                        $activeUser     = activeUser($opt['key']);
+                                        $activeUser     = is_string($activeUser) ? $activeUser : '';
+                                        $value           = set_value($opt['key'], $activeUser);
 
-                                    echo '<div class="form-group ' . $has_error . ' ' . $has_feedback . '">';
-                                        echo '<label class="control-label" for="' . $opt['key'] . '">';
-                                            echo $opt['label'];
-                                            echo $required;
-                                        echo '</label>';
+                                        echo '<div class="form-group ' . $has_error . ' ' . $has_feedback . '">';
+                                            echo '<label class="control-label" for="' . $opt['key'] . '">';
+                                                echo $opt['label'];
+                                                echo $required;
+                                            echo '</label>';
 
-                                        if (!empty($opt['select'])) {
+                                            if (!empty($opt['select'])) {
 
-                                            echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
-                                            echo '<option value="">Please Choose...</option>';
-                                            foreach ($opt['select'] as $value => $label) {
+                                                echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
+                                                echo '<option value="">Please Choose...</option>';
+                                                foreach ($opt['select'] as $value => $label) {
 
-                                                echo '<option value="' . $value . '">' . $label .'</option>';
+                                                    echo '<option value="' . $value . '">' . $label .'</option>';
+                                                }
+                                                echo '</select>';
+
+                                            } else {
+
+                                                echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $value . '">';
                                             }
-                                            echo '</select>';
 
-                                        } else {
+                                            echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $feedback_hidden . '"></span>';
+                                            echo $error;
+                                        echo '</div>';
+                                    }
 
-                                            echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $value . '">';
-                                        }
-
-                                        echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $feedback_hidden . '"></span>';
-                                        echo $error;
-                                    echo '</div>';
-                                }
-
-                            ?>
+                                ?>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h4>Contact information</h4>
-                            <hr>
-                            <div role="form">
-                            <?php
+                            <div class="col-md-6">
+                                <h4>Contact information</h4>
+                                <hr>
+                                <div role="form">
+                                <?php
 
                                 $options       = array();
                                 $options[]     = array(
@@ -230,7 +231,8 @@
                                     echo '</div>';
                                 }
 
-                            ?>
+                                ?>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -241,7 +243,7 @@
                 </div>
                 <?php
 
-                    $curStep++;
+                $curStep++;
 
                 ?>
                 <div class="panel panel-default" id="checkout-step-2">
@@ -253,19 +255,19 @@
                         </h3>
                     </div>
                     <div class="panel-body">
-                        <div class="col-md-12">
-                            <h4>Billing address</h4>
-                            <hr>
-                            <label>
-                                <input name="same_billing_address" type="checkbox" checked="checked" id="same-billing-address">
-                                My billing address is the same as my delivery address
-                            </label>
-
-                            <div class="row billing-address" id="billing-address">
-                                <div class="col-md-6">
-                                    <hr />
-                                    <div role="form">
-                                    <?php
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Billing address</h4>
+                                <hr>
+                                <label>
+                                    <input name="same_billing_address" type="checkbox" checked="checked" id="same-billing-address">
+                                    My billing address is the same as my delivery address
+                                </label>
+                                <div class="row billing-address" id="billing-address">
+                                    <div class="col-md-6">
+                                        <hr />
+                                        <div role="form">
+                                        <?php
 
                                         $options       = array();
                                         $options[]     = array(
@@ -337,7 +339,8 @@
                                             echo '</div>';
                                         }
 
-                                    ?>
+                                        ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -348,11 +351,10 @@
                         <button class="btn action-continue btn-primary btn-success pull-right">Continue</button>
                         <div class="clearfix"></div>
                     </div>
-
                 </div>
                 <?php
 
-                    $curStep++;
+                $curStep++;
 
                 ?>
                 <div class="panel panel-default" id="checkout-step-3">
@@ -364,18 +366,19 @@
                         </h3>
                     </div>
                     <div class="panel-body">
-                        <div class="col-md-12">
-                            <p>
-                                Please choose how you wish to pay.
-                            </p>
-                            <hr />
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <p id="payment-gateway-choose-error" class="alert alert-danger hidden">
-                                        Please choose how you'd like to pay.
-                                    </p>
-                                    <ul class="list-unstyled">
-                                    <?php
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    Please choose how you wish to pay.
+                                </p>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <p id="payment-gateway-choose-error" class="alert alert-danger hidden">
+                                            Please choose how you'd like to pay.
+                                        </p>
+                                        <ul class="list-unstyled">
+                                        <?php
 
                                         foreach ($payment_gateways as $gateway) {
 
@@ -389,21 +392,21 @@
                                                             <td class="pg-radio" rowspan="2">
                                                             <?php
 
-                                                                $checked = count($payment_gateways) == 1 ? true : set_radio('payment_gateway', $gateway->slug);
+                                                            $checked = count($payment_gateways) == 1 ? true : set_radio('payment_gateway', $gateway->slug);
 
-                                                                echo form_radio(
-                                                                    'payment_gateway',
-                                                                    $gateway->slug,
-                                                                    $checked,
-                                                                    'data-is-redirect="' . (int) $gateway->is_redirect . '"'
-                                                                );
+                                                            echo form_radio(
+                                                                'payment_gateway',
+                                                                $gateway->slug,
+                                                                $checked,
+                                                                'data-is-redirect="' . (int) $gateway->is_redirect . '"'
+                                                            );
 
                                                             ?>
                                                             </td>
                                                             <td class="pg-img">
                                                             <?php
 
-                                                                echo $gateway->img ? img(array('src' => cdnServe($gateway->img), 'class' => 'img-responsive')) : '';
+                                                            echo $gateway->img ? img(array('src' => cdnServe($gateway->img), 'class' => 'img-responsive')) : '';
 
                                                             ?>
                                                             </td>
@@ -420,11 +423,11 @@
                                             <?php
                                         }
 
-                                    ?>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-7">
-                                    <?php
+                                        ?>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <?php
 
                                         $chosen_gateway = set_value('payment_gateway');
 
@@ -444,45 +447,90 @@
                                             $active = '';
                                         }
 
-                                    ?>
-                                    <div id="card-form" class="clearfix <?=$active?>">
-                                        <p id="payment-card-error" class="alert alert-danger hidden">
-                                            Please verify all details are correct.
-                                        </p>
-                                        <?php
+                                        ?>
+                                        <div id="card-form" class="clearfix <?=$active?>">
+                                            <p id="payment-card-error" class="alert alert-danger hidden">
+                                                Please verify all details are correct.
+                                            </p>
+                                            <?php
 
                                             echo !empty($payment_error) ? '<p class="alert alert-danger">' . $payment_error . '</p>' : '';
 
-                                        ?>
-                                        <div class="credit-card-input no-js" id="skeuocard">
-                                            <label for="cc_type">Card Type</label>
-                                            <select name="cc_type">
-                                                <option value="">...</option>
-                                                <option value="visa">Visa</option>
-                                                <option value="discover">Discover</option>
-                                                <option value="mastercard">MasterCard</option>
-                                                <option value="maestro">Maestro</option>
-                                                <option value="jcb">JCB</option>
-                                                <option value="unionpay">China UnionPay</option>
-                                                <option value="amex">American Express</option>
-                                                <option value="dinersclubintl">Diners Club</option>
-                                            </select>
-                                            <label for="cc_number">Card Number</label>
-                                            <input type="text" name="cc_number" id="cc_number" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" size="19">
-                                            <label for="cc_exp_month">Expiration Month</label>
-                                            <input type="text" name="cc_exp_month" id="cc_exp_month" placeholder="00">
-                                            <label for="cc_exp_year">Expiration Year</label>
-                                            <input type="text" name="cc_exp_year" id="cc_exp_year" placeholder="00">
-                                            <label for="cc_name">Cardholder's Name</label>
-                                            <input type="text" name="cc_name" id="cc_name" placeholder="John Doe">
-                                            <label for="cc_cvc">Card Validation Code</label>
-                                            <input type="text" name="cc_cvc" id="cc_cvc" placeholder="123" maxlength="3" size="3">
+                                            ?>
+                                            <div class="credit-card-input no-js" id="skeuocard">
+                                                <label for="cc_type">Card Type</label>
+                                                <select name="cc_type">
+                                                    <option value="">...</option>
+                                                    <option value="visa">Visa</option>
+                                                    <option value="discover">Discover</option>
+                                                    <option value="mastercard">MasterCard</option>
+                                                    <option value="maestro">Maestro</option>
+                                                    <option value="jcb">JCB</option>
+                                                    <option value="unionpay">China UnionPay</option>
+                                                    <option value="amex">American Express</option>
+                                                    <option value="dinersclubintl">Diners Club</option>
+                                                </select>
+                                                <label for="cc_number">Card Number</label>
+                                                <input type="text" name="cc_number" id="cc_number" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" size="19">
+                                                <label for="cc_exp_month">Expiration Month</label>
+                                                <input type="text" name="cc_exp_month" id="cc_exp_month" placeholder="00">
+                                                <label for="cc_exp_year">Expiration Year</label>
+                                                <input type="text" name="cc_exp_year" id="cc_exp_year" placeholder="00">
+                                                <label for="cc_name">Cardholder's Name</label>
+                                                <input type="text" name="cc_name" id="cc_name" placeholder="John Doe">
+                                                <label for="cc_cvc">Card Validation Code</label>
+                                                <input type="text" name="cc_cvc" id="cc_cvc" placeholder="123" maxlength="3" size="3">
+                                            </div>
+                                            <div class="mask"></div>
                                         </div>
-                                        <div class="mask"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <?php
+
+                        if (!empty($shop_pages['terms']) || !empty($shop_pages['delivery'])) {
+
+                            ?>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default accept-terms small">
+                                        <div class="panel-body">
+                                            By placing your order you acknowledge that you have read and accept our
+                                            <?php
+
+                                            $aPages = array();
+
+                                            if (!empty($shop_pages['terms'])) {
+
+                                                $aPages[] = anchor(
+                                                    $shop_pages['terms']['url'],
+                                                    'Terms &amp; Conditions <b class="fa fa-external-link"></b>',
+                                                    'target="_blank"'
+                                                );
+                                            }
+
+                                            if (!empty($shop_pages['delivery'])) {
+
+                                                $aPages[] = anchor(
+                                                    $shop_pages['delivery']['url'],
+                                                    'Delivery &amp; Returns policy <b class="fa fa-external-link"></b>',
+                                                    'target="_blank"'
+                                                );
+                                            }
+
+                                            echo implode(' and ', $aPages);
+
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+
+                        }
+
+                        ?>
                     </div>
                     <div class="panel-footer">
                         <button class="btn action-back btn-primary btn-warning">Back</button>
