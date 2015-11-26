@@ -249,11 +249,10 @@
                     <div class="col-xs-12">
                         <?php
 
-                            $tableData                 = array();
-                            $tableData['items']        = $order->items;
-                            $tableData['totals']       = $order->totals;
-                            $tableData['shippingType'] = $order->delivery_type;
-                            $tableData['readonly']     = true;
+                            $tableData             = array();
+                            $tableData['items']    = $order->items;
+                            $tableData['totals']   = $order->totals;
+                            $tableData['readonly'] = true;
 
                             $this->load->view($skin->path . 'views/basket/table', $tableData);
 

@@ -17,10 +17,7 @@ _nails_skin_shop_checkout_classic = function() {
         breakpoint = this.bsCurrentBreakpoint();
 
         if ($('.nails-shop-skin-checkout-classic.basket').length) {
-            //  Mobile JS
-            if (breakpoint === 'xs' || breakpoint === 'sm') {
-                this._basket_init();
-            }
+            this._basket_init();
         }
 
         // --------------------------------------------------------------------------
@@ -39,13 +36,8 @@ _nails_skin_shop_checkout_classic = function() {
     // --------------------------------------------------------------------------
 
     this._basket_init = function() {
-        /*
-         * Switch pages depending on delivery option selected
-         * Options are standard delivery and collection
-        */
-        $('#selectDeliveryOption').on('change', function() {
-            var url = $(this).find(':selected').data('url');
-            window.location = url;
+        $('select[name=shipping_option]').on('change', function() {
+            $(this).closest('form').submit();
         });
     };
 

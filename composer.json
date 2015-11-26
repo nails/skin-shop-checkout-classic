@@ -25,7 +25,8 @@
         "nails" :
         {
             "type": "skin",
-            "subType": "shop-checkout"
+            "forModule": "nailsapp/module-shop",
+            "subType": "checkout"
         }
     }
 }
