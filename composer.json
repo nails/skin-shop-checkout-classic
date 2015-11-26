@@ -24,11 +24,11 @@
     {
         "nails" :
         {
+            "name": "Classic Checkout Skin",
             "type": "skin",
             "forModule": "nailsapp/module-shop",
             "subType": "checkout",
             "data": {
-                "name": "Classic Checkout Skin",
                 "assets": [
                     "bower_components/skeuocard/styles/skeuocard.css",
                     "css/styles.css",

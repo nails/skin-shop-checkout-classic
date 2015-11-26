@@ -16,19 +16,19 @@ _nails_skin_shop_checkout_classic = function() {
 
         breakpoint = this.bsCurrentBreakpoint();
 
-        if ($('.nails-shop-skin-checkout-classic.basket').length) {
+        if ($('.nails-skin-skin-checkout-classic.basket').length) {
             this._basket_init();
         }
 
         // --------------------------------------------------------------------------
 
-        if ($('.nails-shop-skin-checkout-classic.checkout').length) {
+        if ($('.nails-skin-skin-checkout-classic.checkout').length) {
             this._checkout_init();
         }
 
         // --------------------------------------------------------------------------
 
-        if ($('.nails-shop-skin-checkout-classic.processing').length) {
+        if ($('.nails-skin-skin-checkout-classic.processing').length) {
             this._processing_init();
         }
     };
