@@ -4,7 +4,7 @@
         <?php
 
         $bPriceExcludeTax       = appSetting('price_exclude_tax', 'shop');
-        $bOmitVariantTaxPricing = appSetting('omit_variant_tax_pricing', 'shop-' . $skin->slug);
+        $bOmitVariantTaxPricing = appSetting('omit_variant_tax_pricing', 'shop-' . $skin->name);
 
         foreach ($items as $item) {
 

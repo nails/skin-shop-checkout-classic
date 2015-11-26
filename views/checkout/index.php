@@ -17,7 +17,7 @@ $curStep = 0;
 <noscript>
     <style> .jsonly { display: none } </style>
 </noscript>
-<div class="nails-shop-skin-checkout-classic checkout">
+<div class="nails-skin-shop-checkout-classic checkout">
     <?=form_open(null, 'id="checkout-form"')?>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -28,7 +28,7 @@ $curStep = 0;
             </div>
             <?php
 
-            $headerText = appSetting('checkout_header', 'shop-' . $skin->slug);
+            $headerText = appSetting('checkout_header', 'shop-' . $skin->name);
 
             if (!empty($headerText)) {
 
@@ -543,7 +543,7 @@ $curStep = 0;
             </div>
             <?php
 
-            $footerText = appSetting('checkout_footer', 'shop-' . $skin->slug);
+            $footerText = appSetting('checkout_footer', 'shop-' . $skin->name);
 
             if (!empty($footerText)) {
 

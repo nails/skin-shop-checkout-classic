@@ -1,4 +1,4 @@
-<div class="nails-shop-skin-checkout-classic basket">
+<div class="nails-skin-shop-checkout-classic basket">
     <?php
 
     if (!empty($shippingDriverPromo->title) || !empty($shippingDriverPromo->body)) {
@@ -24,7 +24,7 @@
 
     // --------------------------------------------------------------------------
 
-    $headerText = appSetting('basket_header', 'shop-' . $skin->slug);
+    $headerText = appSetting('basket_header', 'shop-' . $skin->name);
 
     if (!empty($headerText)) {
 
@@ -264,7 +264,7 @@
 
     // --------------------------------------------------------------------------
 
-    $footerText = appSetting('basket_footer', 'shop-' . $skin->slug);
+    $footerText = appSetting('basket_footer', 'shop-' . $skin->name);
 
     if (!empty($footerText)) {
 
@@ -320,7 +320,7 @@
 
                         if (count($product->variations) > 1) {
 
-                            if (appSetting('browse_product_ribbon_mode', 'shop-' . $skin->slug) == 'corner') {
+                            if (appSetting('browse_product_ribbon_mode', 'shop-' . $skin->name) == 'corner') {
 
                                 ?>
                                 <div class="ribbon corner">

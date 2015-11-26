@@ -5,7 +5,7 @@
         if (!empty($order)) {
 
             ?>
-            <div class="nails-shop-skin-checkout-classic processing paid" id="processing-container" data-order-ref="<?=$order->ref?>">
+            <div class="nails-skin-shop-checkout-classic processing paid" id="processing-container" data-order-ref="<?=$order->ref?>">
                 <div class="alert alert-danger" id="processing-error" style="display: none;">
                     <strong>An error occurred.</strong>
                     <br /><span></span>
@@ -74,8 +74,8 @@
                         <div class="col-xs-12">
                         <?php
 
-                            $title = appSetting('thankyou_title', 'shop-' . $skin->slug);
-                            $text  = appSetting('thankyou_text', 'shop-' . $skin->slug);
+                            $title = appSetting('thankyou_title', 'shop-' . $skin->name);
+                            $text  = appSetting('thankyou_text', 'shop-' . $skin->name);
 
                             echo '<h4>';
                                 echo $title ? $title : '';
@@ -265,7 +265,7 @@
         } else {
 
             ?>
-            <div class="nails-shop-skin-checkout-classic processing-no-order">
+            <div class="nails-skin-shop-checkout-classic processing-no-order">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="panel panel-default">
