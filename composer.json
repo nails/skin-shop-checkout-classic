@@ -28,7 +28,7 @@
             "forModule": "nailsapp/module-shop",
             "subType": "checkout",
             "data": {
-                "Classic Checkout Skin",
+                "name": "Classic Checkout Skin",
                 "assets": [
                     "bower_components/skeuocard/styles/skeuocard.css",
                     "css/styles.css",
