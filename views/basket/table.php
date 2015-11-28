@@ -293,7 +293,6 @@
                             ?>
                             </select>
                         <?=form_close()?>
-                        <?php dump($basket->totals->base_formatted->shipping) ?>
                     </th>
                 </tr>
                 <!-- Tax Total -->
