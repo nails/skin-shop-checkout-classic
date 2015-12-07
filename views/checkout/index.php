@@ -93,92 +93,22 @@ $curStep = 0;
                 <div class="panel panel-default" id="checkout-step-1">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            Step <?=$curStep?> of <?=$numSteps?>: Contact &amp; Delivery Details
+                            Step <?=$curStep?> of <?=$numSteps?>: Contact
+                            <?php
+
+                            if ($basket->shipping->option !== 'COLLECTION' && $basket->shipping->isDeliverable) {
+
+                                echo '&amp; Delivery';
+                            }
+
+                            ?>
+                            Details
                             <b class="validate-ok glyphicon glyphicon-ok-sign pull-right text-success hidden"></b>
                             <b class="validate-fail glyphicon glyphicon-remove-sign pull-right text-danger hidden"></b>
                         </h3>
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-6">
-                                <h4>Delivery address</h4>
-                                <hr>
-                                <div role="form">
-                                <?php
-
-                                    $options       = array();
-                                    $options[]     = array(
-                                        'key'      => 'delivery_address_line_1',
-                                        'label'    => 'Address Line 1',
-                                        'required' => true
-                                   );
-                                    $options[]     = array(
-                                        'key'      => 'delivery_address_line_2',
-                                        'label'    => 'Address Line 2',
-                                        'required' => false
-                                   );
-                                    $options[]     = array(
-                                        'key'      => 'delivery_address_town',
-                                        'label'    => 'City/Town',
-                                        'required' => true
-                                   );
-                                    $options[]     = array(
-                                        'key'      => 'delivery_address_state',
-                                        'label'    => 'Region/State',
-                                        'required' => false
-                                   );
-                                    $options[]     = array(
-                                        'key'      => 'delivery_address_postcode',
-                                        'label'    => 'Postal Code',
-                                        'required' => true
-                                   );
-                                    $options[]     = array(
-                                        'key'      => 'delivery_address_country',
-                                        'label'    => 'Country',
-                                        'required' => true,
-                                        'select'   => $countries_flat
-                                   );
-
-                                    foreach ($options as $opt) {
-
-                                        $error           = form_error($opt['key'], '<p class="help-block">', '</p>');
-                                        $has_error       = $error ? 'has-error' : '';
-                                        $has_feedback    = $error ? 'has-feedback' : '';
-                                        $required        = $opt['required'] ? '*' : '';
-                                        $feedback_hidden = $has_feedback ? '' : 'hidden';
-                                        $activeUser     = activeUser($opt['key']);
-                                        $activeUser     = is_string($activeUser) ? $activeUser : '';
-                                        $value           = set_value($opt['key'], $activeUser);
-
-                                        echo '<div class="form-group ' . $has_error . ' ' . $has_feedback . '">';
-                                            echo '<label class="control-label" for="' . $opt['key'] . '">';
-                                                echo $opt['label'];
-                                                echo $required;
-                                            echo '</label>';
-
-                                            if (!empty($opt['select'])) {
-
-                                                echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
-                                                echo '<option value="">Please Choose...</option>';
-                                                foreach ($opt['select'] as $value => $label) {
-
-                                                    echo '<option value="' . $value . '">' . $label .'</option>';
-                                                }
-                                                echo '</select>';
-
-                                            } else {
-
-                                                echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $value . '">';
-                                            }
-
-                                            echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $feedback_hidden . '"></span>';
-                                            echo $error;
-                                        echo '</div>';
-                                    }
-
-                                ?>
-                                </div>
-                            </div>
                             <div class="col-md-6">
                                 <h4>Contact information</h4>
                                 <hr>
@@ -234,6 +164,95 @@ $curStep = 0;
                                 ?>
                                 </div>
                             </div>
+                            <?php
+
+                            if ($basket->shipping->option !== 'COLLECTION' && $basket->shipping->isDeliverable) {
+
+                                ?>
+                                <div class="col-md-6">
+                                    <h4>Delivery address</h4>
+                                    <hr>
+                                    <div role="form">
+                                    <?php
+
+                                        $options       = array();
+                                        $options[]     = array(
+                                            'key'      => 'delivery_address_line_1',
+                                            'label'    => 'Address Line 1',
+                                            'required' => true
+                                       );
+                                        $options[]     = array(
+                                            'key'      => 'delivery_address_line_2',
+                                            'label'    => 'Address Line 2',
+                                            'required' => false
+                                       );
+                                        $options[]     = array(
+                                            'key'      => 'delivery_address_town',
+                                            'label'    => 'City/Town',
+                                            'required' => true
+                                       );
+                                        $options[]     = array(
+                                            'key'      => 'delivery_address_state',
+                                            'label'    => 'Region/State',
+                                            'required' => false
+                                       );
+                                        $options[]     = array(
+                                            'key'      => 'delivery_address_postcode',
+                                            'label'    => 'Postal Code',
+                                            'required' => true
+                                       );
+                                        $options[]     = array(
+                                            'key'      => 'delivery_address_country',
+                                            'label'    => 'Country',
+                                            'required' => true,
+                                            'select'   => $countries_flat
+                                       );
+
+                                        foreach ($options as $opt) {
+
+                                            $error           = form_error($opt['key'], '<p class="help-block">', '</p>');
+                                            $has_error       = $error ? 'has-error' : '';
+                                            $has_feedback    = $error ? 'has-feedback' : '';
+                                            $required        = $opt['required'] ? '*' : '';
+                                            $feedback_hidden = $has_feedback ? '' : 'hidden';
+                                            $activeUser     = activeUser($opt['key']);
+                                            $activeUser     = is_string($activeUser) ? $activeUser : '';
+                                            $value           = set_value($opt['key'], $activeUser);
+
+                                            echo '<div class="form-group ' . $has_error . ' ' . $has_feedback . '">';
+                                                echo '<label class="control-label" for="' . $opt['key'] . '">';
+                                                    echo $opt['label'];
+                                                    echo $required;
+                                                echo '</label>';
+
+                                                if (!empty($opt['select'])) {
+
+                                                    echo '<select name="' . $opt['key'] . '" class="form-control select2" id="' . $opt['key'] . '">';
+                                                    echo '<option value="">Please Choose...</option>';
+                                                    foreach ($opt['select'] as $value => $label) {
+
+                                                        echo '<option value="' . $value . '">' . $label .'</option>';
+                                                    }
+                                                    echo '</select>';
+
+                                                } else {
+
+                                                    echo '<input name="' . $opt['key'] . '" type="text" class="form-control" id="' . $opt['key'] . '" value="' . $value . '">';
+                                                }
+
+                                                echo '<span class="glyphicon glyphicon-remove form-control-feedback ' . $feedback_hidden . '"></span>';
+                                                echo $error;
+                                            echo '</div>';
+                                        }
+
+                                    ?>
+                                    </div>
+                                </div>
+                                <?php
+
+                            }
+
+                            ?>
                         </div>
                     </div>
                     <div class="panel-footer hidden">
