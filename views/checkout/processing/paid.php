@@ -255,6 +255,7 @@
                             $tableData['readonly'] = true;
 
                             $this->load->view($skin->path . 'views/basket/table', $tableData);
+                            $this->load->view($skin->path . 'views/basket/mobile', $tableData);
 
                         ?>
                     </div>

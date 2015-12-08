@@ -263,12 +263,18 @@
 
                 ?>
                 <!-- Shipping Total -->
-                <tr class="basket-total-tax">
+                <tr class="basket-total-shipping">
                     <th colspan="2" class="text-right">
                         Shipping
                     </th>
-                    <th>
-                        <?=form_open('shop/basket/set_shipping')?>
+                    <th class="text-center value">
+                        <?php
+
+                        if (empty($readonly)) {
+
+                            echo form_open('shop/basket/set_shipping');
+
+                            ?>
                             <select name="shipping_option" class="form-control">
                             <?php
 
@@ -292,7 +298,44 @@
 
                             ?>
                             </select>
-                        <?=form_close()?>
+                            <?php
+
+                            if (in_array($basket->shipping->type, array('COLLECT', 'DELIVER_COLLECT'))) {
+
+                                $aAddress   = array();
+                                $aAddress[] = appSetting('warehouse_addr_addressee', 'shop');
+                                $aAddress[] = appSetting('warehouse_addr_line1', 'shop');
+                                $aAddress[] = appSetting('warehouse_addr_line2', 'shop');
+                                $aAddress[] = appSetting('warehouse_addr_town', 'shop');
+                                $aAddress[] = appSetting('warehouse_addr_postcode', 'shop');
+                                $aAddress[] = appSetting('warehouse_addr_state', 'shop');
+                                $aAddress[] = appSetting('warehouse_addr_country', 'shop');
+                                $aAddress   = array_filter($aAddress);
+
+                                if (!empty($aAddress)) {
+
+                                    $sMapUrl = 'https://www.google.com/maps/?q=' . urlencode(implode(', ', $aAddress));
+
+                                    ?>
+                                    <p class="small alert alert-info">
+                                        Collect from:
+                                        <br /><?=anchor($sMapUrl, implode(', ', $aAddress), 'target="_blank"')?>
+                                    </p>
+                                    <?php
+                                }
+                            }
+
+                            ?>
+                            <?php
+
+                            echo form_close();
+
+                        } else {
+
+                            echo $totals->user_formatted->shipping;
+                        }
+
+                        ?>
                     </th>
                 </tr>
                 <!-- Tax Total -->

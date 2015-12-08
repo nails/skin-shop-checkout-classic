@@ -312,81 +312,84 @@ _nails_skin_shop_checkout_classic = function() {
     this._checkout_validate_step_1 = function() {
         var _valid  = true;
         var _value  = '';
+        var shippingRequired = $('#checkout-step-1').data('shipping-required');
 
         // --------------------------------------------------------------------------
 
-        //  Address Line 1
-        _value = $('input[name=delivery_address_line_1]').val();
-        _value = $.trim(_value);
+        if (shippingRequired) {
 
-        //  Reset
-        $('input[name=delivery_address_line_1]').closest('.form-group').removeClass('has-error has-feedback');
-        $('input[name=delivery_address_line_1]').next('.help-block').remove();
-        $('input[name=delivery_address_line_1]').siblings('.form-control-feedback').addClass('hidden');
+            //  Address Line 1
+            _value = $('input[name=delivery_address_line_1]').val();
+            _value = $.trim(_value);
 
-        if (_value.replace(/\s/g, '').length === 0) {
-            _valid = false;
-            $('input[name=delivery_address_line_1]').closest('.form-group').addClass('has-error has-feedback');
+            //  Reset
+            $('input[name=delivery_address_line_1]').closest('.form-group').removeClass('has-error has-feedback');
+            $('input[name=delivery_address_line_1]').next('.help-block').remove();
+            $('input[name=delivery_address_line_1]').siblings('.form-control-feedback').addClass('hidden');
 
-            $('input[name=delivery_address_line_1]').after('<p class="help-block">This field is required.</p>');
-            $('input[name=delivery_address_line_1]').siblings('.form-control-feedback').removeClass('hidden');
+            if (_value.replace(/\s/g, '').length === 0) {
+                _valid = false;
+                $('input[name=delivery_address_line_1]').closest('.form-group').addClass('has-error has-feedback');
+
+                $('input[name=delivery_address_line_1]').after('<p class="help-block">This field is required.</p>');
+                $('input[name=delivery_address_line_1]').siblings('.form-control-feedback').removeClass('hidden');
+            }
+
+            // --------------------------------------------------------------------------
+
+            //  City
+            _value = $('input[name=delivery_address_town]').val();
+            _value = $.trim(_value);
+
+            //  Reset
+            $('input[name=delivery_address_town]').closest('.form-group').removeClass('has-error has-feedback');
+            $('input[name=delivery_address_town]').next('.help-block').remove();
+            $('input[name=delivery_address_town]').siblings('.form-control-feedback').addClass('hidden');
+
+            if (_value.replace(/\s/g, '').length === 0) {
+                _valid = false;
+                $('input[name=delivery_address_town]').closest('.form-group').addClass('has-error has-feedback');
+                $('input[name=delivery_address_town]').after('<p class="help-block">This field is required.</p>');
+                $('input[name=delivery_address_town]').siblings('.form-control-feedback').removeClass('hidden');
+            }
+
+            // --------------------------------------------------------------------------
+
+            //  Postcode
+            _value = $('input[name=delivery_address_postcode]').val();
+            _value = $.trim(_value);
+
+            //  Reset
+            $('input[name=delivery_address_postcode]').closest('.form-group').removeClass('has-error has-feedback');
+            $('input[name=delivery_address_postcode]').next('.help-block').remove();
+            $('input[name=delivery_address_postcode]').siblings('.form-control-feedback').addClass('hidden');
+
+            if (_value.replace(/\s/g, '').length === 0) {
+                _valid = false;
+                $('input[name=delivery_address_postcode]').closest('.form-group').addClass('has-error has-feedback');
+                $('input[name=delivery_address_postcode]').after('<p class="help-block">This field is required.</p>');
+                $('input[name=delivery_address_postcode]').siblings('.form-control-feedback').removeClass('hidden');
+            }
+
+            // --------------------------------------------------------------------------
+
+            //  Country
+            _value = $('select[name=delivery_address_country]').val();
+            _value = $.trim(_value);
+
+            //  Reset
+            $('select[name=delivery_address_country]').closest('.form-group').removeClass('has-error has-feedback');
+            $('select[name=delivery_address_country]').next('.help-block').remove();
+            $('select[name=delivery_address_country]').siblings('.form-control-feedback').addClass('hidden');
+
+            if (_value.replace(/\s/g, '').length === 0) {
+                _valid = false;
+                $('select[name=delivery_address_country]').closest('.form-group').addClass('has-error has-feedback');
+                $('select[name=delivery_address_country]').after('<p class="help-block">This field is required.</p>');
+                $('select[name=delivery_address_country]').siblings('.form-control-feedback').removeClass('hidden');
+            }
+
         }
-
-        // --------------------------------------------------------------------------
-
-        //  City
-        _value = $('input[name=delivery_address_town]').val();
-        _value = $.trim(_value);
-
-        //  Reset
-        $('input[name=delivery_address_town]').closest('.form-group').removeClass('has-error has-feedback');
-        $('input[name=delivery_address_town]').next('.help-block').remove();
-        $('input[name=delivery_address_town]').siblings('.form-control-feedback').addClass('hidden');
-
-        if (_value.replace(/\s/g, '').length === 0) {
-            _valid = false;
-            $('input[name=delivery_address_town]').closest('.form-group').addClass('has-error has-feedback');
-            $('input[name=delivery_address_town]').after('<p class="help-block">This field is required.</p>');
-            $('input[name=delivery_address_town]').siblings('.form-control-feedback').removeClass('hidden');
-        }
-
-        // --------------------------------------------------------------------------
-
-        //  Postcode
-        _value = $('input[name=delivery_address_postcode]').val();
-        _value = $.trim(_value);
-
-        //  Reset
-        $('input[name=delivery_address_postcode]').closest('.form-group').removeClass('has-error has-feedback');
-        $('input[name=delivery_address_postcode]').next('.help-block').remove();
-        $('input[name=delivery_address_postcode]').siblings('.form-control-feedback').addClass('hidden');
-
-        if (_value.replace(/\s/g, '').length === 0) {
-            _valid = false;
-            $('input[name=delivery_address_postcode]').closest('.form-group').addClass('has-error has-feedback');
-            $('input[name=delivery_address_postcode]').after('<p class="help-block">This field is required.</p>');
-            $('input[name=delivery_address_postcode]').siblings('.form-control-feedback').removeClass('hidden');
-        }
-
-        // --------------------------------------------------------------------------
-
-        //  Country
-        _value = $('select[name=delivery_address_country]').val();
-        _value = $.trim(_value);
-
-        //  Reset
-        $('select[name=delivery_address_country]').closest('.form-group').removeClass('has-error has-feedback');
-        $('select[name=delivery_address_country]').next('.help-block').remove();
-        $('select[name=delivery_address_country]').siblings('.form-control-feedback').addClass('hidden');
-
-        if (_value.replace(/\s/g, '').length === 0) {
-            _valid = false;
-            $('select[name=delivery_address_country]').closest('.form-group').addClass('has-error has-feedback');
-            $('select[name=delivery_address_country]').after('<p class="help-block">This field is required.</p>');
-            $('select[name=delivery_address_country]').siblings('.form-control-feedback').removeClass('hidden');
-        }
-
-        // --------------------------------------------------------------------------
 
         //  First name
         _value = $('input[name=first_name]').val();
@@ -474,8 +477,7 @@ _nails_skin_shop_checkout_classic = function() {
         if (_valid === true) {
             $('#checkout-step-1 .panel-heading .validate-ok').removeClass('hidden');
             $('#checkout-step-1 .panel-heading .validate-fail').addClass('hidden');
-        }
-        else {
+        } else {
             $('#checkout-step-1 .panel-heading .validate-ok').addClass('hidden');
             $('#checkout-step-1 .panel-heading .validate-fail').removeClass('hidden');
         }
@@ -494,10 +496,11 @@ _nails_skin_shop_checkout_classic = function() {
     this._checkout_validate_step_2 = function() {
         var _valid  = true;
         var _value  = '';
+        var shippingRequired = $('#checkout-step-1').data('shipping-required');
 
         // --------------------------------------------------------------------------
 
-        if ($('#same-billing-address').prop('checked') === false) {
+        if (!shippingRequired || $('#same-billing-address').prop('checked') === false) {
             //  Address Line 1
             _value = $('input[name=billing_address_line_1]').val();
             _value = $.trim(_value);

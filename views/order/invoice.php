@@ -45,9 +45,9 @@
 
             hr
             {
-                margin:10px 0;
+                margin:7px 0;
                 border: 0;
-                border-top:5px solid #CCC;
+                border-top:2px solid #CCC;
             }
 
             table.styled
@@ -60,7 +60,7 @@
             table.styled th,
             table.styled td
             {
-                padding:10px;
+                padding: 7px;
                 text-align: left;
                 border-right:1px dotted #CCC;
                 border-bottom:1px dotted #CCC;
@@ -150,18 +150,18 @@
 
             #invoice-footer
             {
-                padding-top:2em;
-                font-size:0.8em;
-                color:#555;
+                padding-top: 2em;
+                font-size: 0.8em;
+                color: #555;
             }
 
             .alert
             {
-                padding: 7px;
-                font-size:0.9em;
+                padding: 5px;
+                font-size: 0.9em;
                 margin: 0;
                 border: 1px solid transparent;
-                border-radius: 4px;
+                border-radius: 0px;
             }
 
             .alert.alert-success
@@ -233,7 +233,7 @@
                     $address = array_filter($address);
                     $address = implode(', ', $address);
 
-                    if ($order->delivery_type == 'COLLECT') {
+                    if ($order->delivery_option == 'COLLECTION') {
 
                         $statusSubject =  'This order is for collection';
 
@@ -289,7 +289,7 @@
                                         </tr>
                                         <tr>
                                             <td class="head">Dated</td>
-                                            <td><?=date ('jS M Y, H:i:s', strtotime($order->created))?></td>
+                                            <td><?=date('jS M Y, H:i:s', strtotime($order->created))?></td>
                                         </tr>
                                         <tr>
                                             <td class="head">Status</td>
@@ -300,9 +300,26 @@
                                             <td class="customer">
                                             <?php
 
-                                                echo '<strong>' . $order->user->first_name . ' ' . $order->user->last_name . '</strong>';
-                                                echo '<br />' . $order->user->email;
-                                                echo '<br />' . $order->user->telephone;
+                                            echo '<strong>' . $order->user->first_name . ' ' . $order->user->last_name . '</strong>';
+                                            echo '<br />' . $order->user->email;
+                                            echo '<br />' . $order->user->telephone;
+
+                                            ?>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="head">Ship By</td>
+                                            <td>
+                                            <?php
+
+                                            if (!empty($order->shipping_option['label'])) {
+
+                                                echo $order->shipping_option['label'];
+
+                                            } else {
+
+                                                echo $order->delivery_option;
+                                            }
 
                                             ?>
                                             </td>
@@ -406,21 +423,22 @@
                         <td class="barcode">
                         <?php
 
-                            if (!empty($item->sku)) {
+                        if (!empty($item->sku)) {
 
-                                //  @todo Get barcodes working
-                                //  echo img(array('src' => 'barcode/' . $item->sku, 'class' => 'barcode'));
-                                echo $item->sku;
+                            //  @todo Get barcodes working
+                            //  echo img(array('src' => 'barcode/' . $item->sku, 'class' => 'barcode'));
+                            echo $item->sku;
 
-                            } else {
+                        } else {
 
-                                ?>
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-barcode fa-stack-1x"></i>
-                                    <i class="fa fa-ban fa-stack-2x text-danger" style="opacity: 0.5"></i>
-                                </span>
-                                <?php
-                            }
+                            ?>
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-barcode fa-stack-1x"></i>
+                                <i class="fa fa-ban fa-stack-2x text-danger" style="opacity: 0.5"></i>
+                            </span>
+                            <?php
+                        }
+
                         ?>
                         </td>
                         <td class="quantity">
@@ -429,23 +447,25 @@
                         <td class="product">
                         <?php
 
-                            echo '<strong>' . $item->product_label . '</strong>';
+                        echo '<strong>' . $item->product_label . '</strong>';
+                        if ($item->variant_label != $item->product_label) {
                             echo '<br>' . $item->variant_label;
+                        }
 
-                            if (!empty($item->extra_data['to_order']->is_to_order)) {
+                        if (!empty($item->extra_data['to_order']->is_to_order)) {
 
-                                echo '<div class="alert alert-warning" style="margin-top:1em;">';
-                                    echo '<strong>Note:</strong> This item is to order. Lead time: ';
-                                    echo $item->extra_data['to_order']->lead_time;
-                                echo '</div>';
-                            }
+                            echo '<div class="alert alert-warning" style="margin-top:1em;">';
+                                echo '<strong>Note:</strong> This item is to order. Lead time: ';
+                                echo $item->extra_data['to_order']->lead_time;
+                            echo '</div>';
+                        }
 
-                            if ($item->ship_collection_only) {
+                        if ($item->ship_collection_only) {
 
-                                echo '<div class="alert alert-warning" style="margin-top:1em;">';
-                                    echo '<strong>Note:</strong> This item is collect only.';
-                                echo '</div>';
-                            }
+                            echo '<div class="alert alert-warning" style="margin-top:1em;">';
+                                echo '<strong>Note:</strong> This item is collect only.';
+                            echo '</div>';
+                        }
 
                         ?>
                         </td>
@@ -504,10 +524,16 @@
 
                 <tfoot>
                     <tr>
-                        <th class="total-text" colspan="5" style="text-align:right;">Sub Total</th>
+                        <th class="total-text" colspan="5" style="text-align:right;">
+                            Sub Total
+                            <br />Shipping
+                            <br />Tax
+                            <br />Total
+                        </th>
                         <th class="total-value">
                             <?php
 
+                            //  Sub Total
                             if (isset($for_user) && $for_user == 'ADMIN') {
 
                                 echo $order->totals->base_formatted->item;
@@ -517,14 +543,8 @@
                                 echo $order->totals->user_formatted->item;
                             }
 
-                            ?>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="total-text" colspan="5" style="text-align:right;">Shipping</th>
-                        <th class="total-value">
-                            <?php
-
+                            //  Shipping
+                            echo '<br />';
                             if (isset($for_user) && $for_user == 'ADMIN') {
 
                                 if ($order->totals->base->shipping) {
@@ -546,14 +566,8 @@
                                 }
                             }
 
-                            ?>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="total-text" colspan="5" style="text-align:right;">Tax</th>
-                        <th class="total-value">
-                            <?php
-
+                            //  Tax
+                            echo '<br />';
                             if (isset($for_user) && $for_user == 'ADMIN') {
 
                                 echo $order->totals->base_formatted->tax;
@@ -563,14 +577,8 @@
                                 echo $order->totals->user_formatted->tax;
                             }
 
-                            ?>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="total-text" colspan="5" style="text-align:right;">Total</th>
-                        <th class="total-value">
-                            <?php
-
+                            //  Grand
+                            echo '<br />';
                             if (isset($for_user) && $for_user == 'ADMIN') {
 
                                 echo $order->totals->base_formatted->grand;
@@ -588,12 +596,12 @@
             </table>
             <?php
 
-                if (appSetting('invoice_footer', 'shop')) {
+            if (appSetting('invoice_footer', 'shop')) {
 
-                    echo '<p id="invoice-footer">';
-                        echo appSetting('invoice_footer', 'shop');
-                    echo '</p>';
-                }
+                echo '<p id="invoice-footer">';
+                    echo appSetting('invoice_footer', 'shop');
+                echo '</p>';
+            }
 
             ?>
         </div>

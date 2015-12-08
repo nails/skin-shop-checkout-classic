@@ -90,13 +90,13 @@ $curStep = 0;
                 $curStep++;
 
                 ?>
-                <div class="panel panel-default" id="checkout-step-1">
+                <div class="panel panel-default" id="checkout-step-1" data-shipping-required="<?=$basket->shipping->isRequired?>">
                     <div class="panel-heading">
                         <h3 class="panel-title">
                             Step <?=$curStep?> of <?=$numSteps?>: Contact
                             <?php
 
-                            if ($basket->shipping->option !== 'COLLECTION' && $basket->shipping->isDeliverable) {
+                            if ($basket->shipping->isRequired) {
 
                                 echo '&amp; Delivery';
                             }
@@ -166,7 +166,7 @@ $curStep = 0;
                             </div>
                             <?php
 
-                            if ($basket->shipping->option !== 'COLLECTION' && $basket->shipping->isDeliverable) {
+                            if ($basket->shipping->isRequired) {
 
                                 ?>
                                 <div class="col-md-6">
@@ -256,6 +256,7 @@ $curStep = 0;
                         </div>
                     </div>
                     <div class="panel-footer hidden">
+                        <a href="<?=site_url($shop_url . 'basket')?>" class="btn btn-primary btn-danger">Cancel Checkout</a>
                         <button class="btn action-continue btn-primary btn-success pull-right">Continue</button>
                         <div class="clearfix"></div>
                     </div>
@@ -278,13 +279,31 @@ $curStep = 0;
                             <div class="col-md-12">
                                 <h4>Billing address</h4>
                                 <hr>
-                                <label>
-                                    <input name="same_billing_address" type="checkbox" checked="checked" id="same-billing-address">
-                                    My billing address is the same as my delivery address
-                                </label>
+                                <?php
+
+                                if ($basket->shipping->isRequired) {
+
+                                    ?>
+                                    <label>
+                                        <input name="same_billing_address" type="checkbox" checked="checked" id="same-billing-address">
+                                        My billing address is the same as my delivery address
+                                    </label>
+                                    <?php
+
+                                }
+
+                                ?>
                                 <div class="row billing-address" id="billing-address">
                                     <div class="col-md-6">
-                                        <hr />
+                                        <?php
+
+                                        if ($basket->shipping->isRequired) {
+
+                                            echo '<hr />';
+
+                                        }
+
+                                        ?>
                                         <div role="form">
                                         <?php
 

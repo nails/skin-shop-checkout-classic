@@ -1,7 +1,8 @@
 <div class="row">
     <div class="col-xs-12 visible-xs visible-sm">
-        <h1>Your Basket</h1>
         <?php
+
+        echo empty($readonly) ? '<h1>Your Basket</h1>' : '<hr /><p><strong>Your Order</strong></p>';
 
         $bPriceExcludeTax       = appSetting('price_exclude_tax', 'shop');
         $bOmitVariantTaxPricing = appSetting('omit_variant_tax_pricing', 'shop-' . $skin->name);
@@ -230,22 +231,81 @@
                         Shipping
                     </div>
                     <div class="pull-right">
-                        <select name="shipping_option">
                         <?php
 
-                        foreach ($shippingOptions as $oOption) {
+                        if (empty($readonly)) {
+
+                            echo form_open('shop/basket/set_shipping');
+
                             ?>
-                            <option value="<?=$oOption->slug?>">
-                                <?=$oOption->label?> - <?=$oOption->cost_formatted?>
-                            </option>
+                            <select name="shipping_option">
                             <?php
+
+                            foreach ($shippingOptions as $oOption) {
+
+                                /**
+                                 * If a shipping option is defined, use that one, if not fall back to the default.
+                                 */
+                                if (!empty($basket->shipping->option)) {
+                                    $sSelected = $oOption->slug == $basket->shipping->option ? 'selected' : '';
+                                } else {
+                                    $sSelected = $oOption->default ? 'selected' : '';
+                                }
+
+                                ?>
+                                <option value="<?=$oOption->slug?>" <?=$sSelected?>>
+                                    <?=$oOption->cost_formatted?> - <?=$oOption->label?>
+                                </option>
+                                <?php
+                            }
+
+                            ?>
+                            </select>
+                            <?php
+
+                            echo form_close();
+
+                        } else {
+
+                            echo $totals->user_formatted->shipping;
                         }
 
                         ?>
-                        </select>
                     </div>
                 </div>
             </div>
+            <?php
+
+            if (!empty($basket) && $basket->shipping->option === 'COLLECTION') {
+
+                $aAddress   = array();
+                $aAddress[] = appSetting('warehouse_addr_addressee', 'shop');
+                $aAddress[] = appSetting('warehouse_addr_line1', 'shop');
+                $aAddress[] = appSetting('warehouse_addr_line2', 'shop');
+                $aAddress[] = appSetting('warehouse_addr_town', 'shop');
+                $aAddress[] = appSetting('warehouse_addr_postcode', 'shop');
+                $aAddress[] = appSetting('warehouse_addr_state', 'shop');
+                $aAddress[] = appSetting('warehouse_addr_country', 'shop');
+                $aAddress   = array_filter($aAddress);
+
+                if (!empty($aAddress)) {
+
+                    $sMapUrl = 'https://www.google.com/maps/?q=' . urlencode(implode(', ', $aAddress));
+
+                    ?>
+                    <div class="row padded-row">
+                        <div class="col-xs-12">
+                            <p class="small alert alert-info">
+                                Collect from:
+                                <br /><?=anchor($sMapUrl, implode(', ', $aAddress), 'target="_blank"')?>
+                            </p>
+                        </div>
+                    </div>
+                    <?php
+                }
+            }
+
+            ?>
             <div class="row padded-row">
                 <div class="col-xs-12">
                     <div class="pull-left">
