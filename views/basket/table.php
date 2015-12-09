@@ -12,7 +12,7 @@
             <?php
 
             $bPriceExcludeTax       = appSetting('price_exclude_tax', 'shop');
-            $bOmitVariantTaxPricing = appSetting('omit_variant_tax_pricing', 'shop-' . $skin->name);
+            $bOmitVariantTaxPricing = shopSkinSetting('omit_variant_tax_pricing', 'checkout');
 
             foreach ($items as $item) {
 

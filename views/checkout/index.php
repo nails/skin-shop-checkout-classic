@@ -28,7 +28,7 @@ $curStep = 0;
             </div>
             <?php
 
-            $headerText = appSetting('checkout_header', 'shop-' . $skin->name);
+            $headerText = shopSkinSetting('checkout_header', 'checkout');
 
             if (!empty($headerText)) {
 
@@ -581,7 +581,7 @@ $curStep = 0;
             </div>
             <?php
 
-            $footerText = appSetting('checkout_footer', 'shop-' . $skin->name);
+            $footerText = shopSkinSetting('checkout_footer', 'checkout');
 
             if (!empty($footerText)) {
 

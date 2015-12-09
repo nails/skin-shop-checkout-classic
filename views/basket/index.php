@@ -24,7 +24,7 @@
 
     // --------------------------------------------------------------------------
 
-    $headerText = appSetting('basket_header', 'shop-' . $skin->name);
+    $headerText = shopSkinSetting('basket_header', 'checkout');
 
     if (!empty($headerText)) {
 
@@ -264,7 +264,7 @@
 
     // --------------------------------------------------------------------------
 
-    $footerText = appSetting('basket_footer', 'shop-' . $skin->name);
+    $footerText = shopSkinSetting('basket_footer', 'checkout');
 
     if (!empty($footerText)) {
 
@@ -320,7 +320,7 @@
 
                         if (count($product->variations) > 1) {
 
-                            if (appSetting('browse_product_ribbon_mode', 'shop-' . $skin->name) == 'corner') {
+                            if (shopSkinSetting('browse_product_ribbon_mode', 'checkout') == 'corner') {
 
                                 ?>
                                 <div class="ribbon corner">

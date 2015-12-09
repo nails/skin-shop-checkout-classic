@@ -5,7 +5,7 @@
         echo empty($readonly) ? '<h1>Your Basket</h1>' : '<hr /><p><strong>Your Order</strong></p>';
 
         $bPriceExcludeTax       = appSetting('price_exclude_tax', 'shop');
-        $bOmitVariantTaxPricing = appSetting('omit_variant_tax_pricing', 'shop-' . $skin->name);
+        $bOmitVariantTaxPricing = shopSkinSetting('omit_variant_tax_pricing', 'checkout');
 
         foreach ($items as $item) {
 

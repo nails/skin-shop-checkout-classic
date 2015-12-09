@@ -74,8 +74,8 @@
                         <div class="col-xs-12">
                         <?php
 
-                            $title = appSetting('thankyou_title', 'shop-' . $skin->name);
-                            $text  = appSetting('thankyou_text', 'shop-' . $skin->name);
+                            $title = shopSkinSetting('thankyou_title', 'checkout');
+                            $text  = shopSkinSetting('thankyou_text', 'checkout');
 
                             echo '<h4>';
                                 echo $title ? $title : '';
