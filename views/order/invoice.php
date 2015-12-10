@@ -543,6 +543,19 @@
                                 echo $order->totals->user_formatted->item;
                             }
 
+                            //  Discount
+                            if (!empty($order->totals->base->grand_discount)) {
+                                echo '<br />';
+                                if (isset($for_user) && $for_user == 'ADMIN') {
+
+                                    echo '-' . $order->totals->base_formatted->grand_discount;
+
+                                } else {
+
+                                    echo '-' . $order->totals->user_formatted->grand_discount;
+                                }
+                            }
+
                             //  Shipping
                             echo '<br />';
                             if (isset($for_user) && $for_user == 'ADMIN') {
@@ -560,6 +573,7 @@
                                 if ($order->totals->user->shipping) {
 
                                     echo $order->totals->user_formatted->shipping;
+
                                 } else {
 
                                     echo 'Free';
