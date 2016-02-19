@@ -3,9 +3,9 @@
         <div class="col-md-12">
         <?php
 
-            if (appSetting('maintenance_title', 'shop')) {
+            if (appSetting('maintenance_title', 'nailsapp/module-shop')) {
 
-                echo '<h1>' . appSetting('maintenance_title', 'shop') . '</h1>';
+                echo '<h1>' . appSetting('maintenance_title', 'nailsapp/module-shop') . '</h1>';
 
             } else {
 
@@ -15,9 +15,9 @@
 
             }
 
-            if (appSetting('maintenance_body', 'shop')) {
+            if (appSetting('maintenance_body', 'nailsapp/module-shop')) {
 
-                echo appSetting('maintenance_body', 'shop');
+                echo appSetting('maintenance_body', 'nailsapp/module-shop');
 
             } else {
 

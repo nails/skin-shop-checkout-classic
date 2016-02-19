@@ -351,7 +351,7 @@
                         <span class="badge">
                             <?php
 
-                            if (appSetting('price_exclude_tax', 'shop')) {
+                            if (appSetting('price_exclude_tax', 'nailsapp/module-shop')) {
 
                                 echo $product->price->user_formatted->price_string_ex_tax;
 

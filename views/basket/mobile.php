@@ -4,7 +4,7 @@
 
         echo empty($readonly) ? '<h1>Your Basket</h1>' : '<hr /><p><strong>Your Order</strong></p>';
 
-        $bPriceExcludeTax       = appSetting('price_exclude_tax', 'shop');
+        $bPriceExcludeTax       = appSetting('price_exclude_tax', 'nailsapp/module-shop');
         $bOmitVariantTaxPricing = shopSkinSetting('omit_variant_tax_pricing', 'checkout');
 
         foreach ($items as $item) {
@@ -279,13 +279,13 @@
             if (!empty($basket) && $basket->shipping->option === 'COLLECTION') {
 
                 $aAddress   = array();
-                $aAddress[] = appSetting('warehouse_addr_addressee', 'shop');
-                $aAddress[] = appSetting('warehouse_addr_line1', 'shop');
-                $aAddress[] = appSetting('warehouse_addr_line2', 'shop');
-                $aAddress[] = appSetting('warehouse_addr_town', 'shop');
-                $aAddress[] = appSetting('warehouse_addr_postcode', 'shop');
-                $aAddress[] = appSetting('warehouse_addr_state', 'shop');
-                $aAddress[] = appSetting('warehouse_addr_country', 'shop');
+                $aAddress[] = appSetting('warehouse_addr_addressee', 'nailsapp/module-shop');
+                $aAddress[] = appSetting('warehouse_addr_line1', 'nailsapp/module-shop');
+                $aAddress[] = appSetting('warehouse_addr_line2', 'nailsapp/module-shop');
+                $aAddress[] = appSetting('warehouse_addr_town', 'nailsapp/module-shop');
+                $aAddress[] = appSetting('warehouse_addr_postcode', 'nailsapp/module-shop');
+                $aAddress[] = appSetting('warehouse_addr_state', 'nailsapp/module-shop');
+                $aAddress[] = appSetting('warehouse_addr_country', 'nailsapp/module-shop');
                 $aAddress   = array_filter($aAddress);
 
                 if (!empty($aAddress)) {
