@@ -528,6 +528,14 @@
                             Sub Total
                             <br />Shipping
                             <br />Tax
+                            <?php
+
+                            if (!empty($order->totals->base->grand_discount)) {
+
+                                echo '<br />Discount - ' . $order->voucher->code;
+                            }
+
+                            ?>
                             <br />Total
                         </th>
                         <th class="total-value">
@@ -541,19 +549,6 @@
                             } else {
 
                                 echo $order->totals->user_formatted->item;
-                            }
-
-                            //  Discount
-                            if (!empty($order->totals->base->grand_discount)) {
-                                echo '<br />';
-                                if (isset($for_user) && $for_user == 'ADMIN') {
-
-                                    echo '-' . $order->totals->base_formatted->grand_discount;
-
-                                } else {
-
-                                    echo '-' . $order->totals->user_formatted->grand_discount;
-                                }
                             }
 
                             //  Shipping
@@ -589,6 +584,19 @@
                             } else {
 
                                 echo $order->totals->user_formatted->tax;
+                            }
+
+                            //  Discount
+                            if (!empty($order->totals->base->grand_discount)) {
+                                echo '<br />';
+                                if (isset($for_user) && $for_user == 'ADMIN') {
+
+                                    echo '-' . $order->totals->base_formatted->grand_discount;
+
+                                } else {
+
+                                    echo '-' . $order->totals->user_formatted->grand_discount;
+                                }
                             }
 
                             //  Grand
