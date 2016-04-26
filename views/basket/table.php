@@ -266,6 +266,18 @@
                 <tr class="basket-total-shipping">
                     <th colspan="2" class="text-right">
                         Shipping
+                        <?php
+
+                        $sDeliveryUrl  = appSetting('delivery_url', 'nailsapp/module-shop');
+                        $sDeliveryText = appSetting('delivery_text', 'nailsapp/module-shop');
+
+                        if (isset($sDeliveryUrl) && isset($sDeliveryText)) {
+
+                            echo '<small class="text-muted">(' . anchor($sDeliveryUrl, $sDeliveryText) . ')</small>';
+
+                        }
+
+                        ?>
                     </th>
                     <th class="text-center value">
                         <?php
