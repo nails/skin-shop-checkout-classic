@@ -369,7 +369,7 @@
                     <th class="text-center value">
                         <?php
 
-                        echo $totals->user_formatted->tax;
+                        echo $totals->user_formatted->tax_combined;
 
                         ?>
                     </th>
