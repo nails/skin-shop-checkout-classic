@@ -205,26 +205,6 @@
                     </div>
                 </div>
             </div>
-            <?php
-
-            if (!empty($totals->base->grand_discount)) {
-
-                ?>
-                <div class="row padded-row success-row">
-                    <div class="col-xs-12">
-                        <div class="pull-left">
-                            Discount
-                        </div>
-                        <div class="pull-right">
-                            <b>-<?=$totals->user_formatted->grand_discount?></b>
-                        </div>
-                    </div>
-                </div>
-                <?php
-
-            }
-
-            ?>
             <div class="row padded-row">
                 <div class="col-xs-12">
                     <div class="pull-left">
@@ -323,10 +303,30 @@
                         ?>
                     </div>
                     <div class="pull-right">
-                        <b><?=$totals->user_formatted->tax?></b>
+                        <b><?=$totals->user_formatted->tax_combined?></b>
                     </div>
                 </div>
             </div>
+            <?php
+
+            if (!empty($totals->base->grand_discount)) {
+
+                ?>
+                <div class="row padded-row success-row">
+                    <div class="col-xs-12">
+                        <div class="pull-left">
+                            Discount
+                        </div>
+                        <div class="pull-right">
+                            <b>-<?=$totals->user_formatted->grand_discount?></b>
+                        </div>
+                    </div>
+                </div>
+                <?php
+
+            }
+
+            ?>
             <div class="row padded-row shaded-row">
                 <div class="col-xs-12">
                     <div class="pull-left">
