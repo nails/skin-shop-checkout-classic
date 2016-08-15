@@ -243,25 +243,6 @@
                         <?=$totals->user_formatted->item?>
                     </th>
                 </tr>
-                <?php
-
-                if (!empty($totals->base->grand_discount)) {
-
-                    ?>
-                    <!-- Discount Total -->
-                    <tr class="basket-total-discount success text-success">
-                        <th colspan="2" class="text-right">
-                            Discount
-                        </th>
-                        <th class="text-center value">
-                            -<?=$totals->user_formatted->grand_discount?>
-                        </th>
-                    </tr>
-                    <?php
-
-                }
-
-                ?>
                 <!-- Shipping Total -->
                 <tr class="basket-total-shipping">
                     <th colspan="2" class="text-right">
@@ -369,11 +350,30 @@
                     <th class="text-center value">
                         <?php
 
-                        echo $totals->user_formatted->tax;
+                        echo $totals->user_formatted->tax_combined;
 
                         ?>
                     </th>
                 </tr>
+                <?php
+
+                if (!empty($totals->base->grand_discount)) {
+
+                    ?>
+                    <!-- Discount Total -->
+                    <tr class="basket-total-discount success text-success">
+                        <th colspan="2" class="text-right">
+                            Discount
+                        </th>
+                        <th class="text-center value">
+                            -<?=$totals->user_formatted->grand_discount?>
+                        </th>
+                    </tr>
+                    <?php
+
+                }
+
+                ?>
                 <!-- Grand Total -->
                 <tr class="basket-total-grand">
                     <th colspan="2" class="text-right">
