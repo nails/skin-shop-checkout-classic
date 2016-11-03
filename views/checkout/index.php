@@ -28,16 +28,29 @@ $curStep = 0;
             </div>
             <?php
 
-            $headerText = shopSkinSetting('checkout_header', 'checkout');
+            $sHeader = shopSkinSetting('checkout_header', 'checkout');
+            $aHeader = json_decode($sHeader);
+            if (!empty($aHeader)) {
 
-            if (!empty($headerText)) {
+                ?>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <?php
 
-                echo '<div class="row">';
-                    echo '<div class="col-md-12">';
-                        echo $headerText;
-                        echo '<hr/>';
-                    echo '</div>';
-                echo '</div>';
+                        if (function_exists('cmsAreaWithData')) {
+                            echo cmsAreaWithData($aHeader);
+                        } elseif (!\Nails\Environment::is('PRODUCTION')) {
+                            echo '<p class="alert alert-warning">';
+                            echo 'Checkout header unavailable - CMS Module not installed';
+                            echo '<br><small>This message will not appear on production.</small>';
+                            echo '</p>';
+                        }
+
+                        ?>
+                    </div>
+                </div>
+                <?php
+
             }
 
             ?>
@@ -581,15 +594,29 @@ $curStep = 0;
             </div>
             <?php
 
-            $footerText = shopSkinSetting('checkout_footer', 'checkout');
+            $sFooter = shopSkinSetting('checkout_footer', 'checkout');
+            $aFooter = json_decode($sFooter);
 
-            if (!empty($footerText)) {
+            if (!empty($aFooter)) {
 
-                echo '<div class="row">';
-                    echo '<div class="col-md-12">';
-                        echo $footerText;
-                    echo '</div>';
-                echo '</div>';
+                ?>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <?php
+
+                        if (function_exists('cmsAreaWithData')) {
+                            echo cmsAreaWithData($aFooter);
+                        } elseif (!\Nails\Environment::is('PRODUCTION')) {
+                            echo '<p class="alert alert-warning">';
+                            echo 'Checkout footer unavailable - CMS Module not installed';
+                            echo '<br><small>This message will not appear on production.</small>';
+                            echo '</p>';
+                        }
+
+                        ?>
+                    </div>
+                </div>
+                <?php
             }
 
             ?>

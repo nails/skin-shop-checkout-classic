@@ -57,36 +57,31 @@
                         "key": "thankyou_text",
                         "label": "\"Thanks for your Order\" text",
                         "tip": "This text is shown on the order processing page when an order is confirmed as paid.",
-                        "type": "wysiwyg",
-                        "class": "wysiwyg-basic"
+                        "type": "cms_widgets"
                     },
                     {
                         "key": "basket_header",
                         "label": "Basket Header Text",
                         "tip": "This text is shown at the head of the basket page.",
-                        "type": "wysiwyg",
-                        "class": "wysiwyg-basic"
+                        "type": "cms_widgets"
                     },
                     {
                         "key": "basket_footer",
                         "label": "Basket Footer Text",
                         "tip": "This text is shown at the foot of the basket page.",
-                        "type": "wysiwyg",
-                        "class": "wysiwyg-basic"
+                        "type": "cms_widgets"
                     },
                     {
                         "key": "checkout_header",
                         "label": "Checkout Header Text",
                         "tip": "This text is shown at the head of the checkout form.",
-                        "type": "wysiwyg",
-                        "class": "wysiwyg-basic"
+                        "type": "cms_widgets"
                     },
                     {
                         "key": "checkout_footer",
                         "label": "Checkout Footer Text",
                         "tip": "This text is shown at the foot of the checkout form.",
-                        "type": "wysiwyg",
-                        "class": "wysiwyg-basic"
+                        "type": "cms_widgets"
                     }
                 ]
             }

@@ -6,17 +6,17 @@
         ?>
         <div class="row">
             <div class="col-md-12">
-            <?php
+                <?php
 
-            $appliedClass = !empty($shippingDriverPromo->applied) ? ' shipping-driver-promo-applied' : '';
-            echo '<div class="shipping-driver-promo' . $appliedClass . ' ">';
+                $appliedClass = !empty($shippingDriverPromo->applied) ? ' shipping-driver-promo-applied' : '';
+                echo '<div class="shipping-driver-promo' . $appliedClass . ' ">';
 
-            echo !empty($shippingDriverPromo->title) ? '<h4>' . $shippingDriverPromo->title . '</h4>' : '';
-            echo !empty($shippingDriverPromo->body) ? '<p>' . $shippingDriverPromo->body . '</p>' : '';
+                echo !empty($shippingDriverPromo->title) ? '<h4>' . $shippingDriverPromo->title . '</h4>' : '';
+                echo !empty($shippingDriverPromo->body) ? '<p>' . $shippingDriverPromo->body . '</p>' : '';
 
-            echo '</div>';
+                echo '</div>';
 
-            ?>
+                ?>
             </div>
         </div>
         <?php
@@ -24,18 +24,29 @@
 
     // --------------------------------------------------------------------------
 
-    $headerText = shopSkinSetting('basket_header', 'checkout');
-
-    if (!empty($headerText)) {
+    $sHeader = shopSkinSetting('basket_header', 'checkout');
+    $aHeader = json_decode($sHeader);
+    if (!empty($aHeader)) {
 
         ?>
         <div class="row">
             <div class="col-xs-12">
-                <?=$headerText?>
-                <hr/>
+                <?php
+
+                if (function_exists('cmsAreaWithData')) {
+                    echo cmsAreaWithData($aHeader);
+                } elseif (!\Nails\Environment::is('PRODUCTION')) {
+                    echo '<p class="alert alert-warning">';
+                    echo 'Basket header unavailable - CMS Module not installed';
+                    echo '<br><small>This message will not appear on production.</small>';
+                    echo '</p>';
+                }
+
+                ?>
             </div>
         </div>
         <?php
+
     }
 
     // --------------------------------------------------------------------------
@@ -49,16 +60,16 @@
                     <strong>Some items in your basket have been automatically removed</strong>
                     <br />The items listed below have been removed from your basket because they are no longer available:
                     <ul>
-                    <?php
+                        <?php
 
-                    foreach ($basket->itemsRemoved as $item) {
+                        foreach ($basket->itemsRemoved as $item) {
 
-                        echo '<li>';
+                            echo '<li>';
                             echo $item;
-                        echo '</li>';
-                    }
+                            echo '</li>';
+                        }
 
-                    ?>
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -77,16 +88,16 @@
                     <strong>Some items in your basket have been automatically adjusted</strong>
                     <br />The quantity you can purchase for following items has been adjusted due to stock availability:
                     <ul>
-                    <?php
+                        <?php
 
-                    foreach ($basket->itemsAdjusted as $item) {
+                        foreach ($basket->itemsAdjusted as $item) {
 
-                        echo '<li>';
+                            echo '<li>';
                             echo $item;
-                        echo '</li>';
-                    }
+                            echo '</li>';
+                        }
 
-                    ?>
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -264,19 +275,32 @@
 
     // --------------------------------------------------------------------------
 
-    $footerText = shopSkinSetting('basket_footer', 'checkout');
+    $sFooter = shopSkinSetting('basket_footer', 'checkout');
+    $aFooter = json_decode($sFooter);
 
-    if (!empty($footerText)) {
+    if (!empty($aFooter)) {
 
         ?>
         <div class="row">
-            <div class="col-md-12">
-                <?=$footerText?>
-                <hr/>
+            <div class="col-xs-12">
+                <?php
+
+                if (function_exists('cmsAreaWithData')) {
+                    echo cmsAreaWithData($aFooter);
+                } elseif (!\Nails\Environment::is('PRODUCTION')) {
+                    echo '<p class="alert alert-warning">';
+                    echo 'Basket footer unavailable - CMS Module not installed';
+                    echo '<br><small>This message will not appear on production.</small>';
+                    echo '</p>';
+                }
+
+                ?>
             </div>
         </div>
         <?php
     }
+
+    // --------------------------------------------------------------------------
 
     if (!empty($recently_viewed)) {
 
