@@ -579,11 +579,11 @@
                             echo '<br />';
                             if (isset($for_user) && $for_user == 'ADMIN') {
 
-                                echo $order->totals->base_formatted->tax;
+                                echo $order->totals->base_formatted->tax_combined;
 
                             } else {
 
-                                echo $order->totals->user_formatted->tax;
+                                echo $order->totals->user_formatted->tax_combined;
                             }
 
                             //  Discount
