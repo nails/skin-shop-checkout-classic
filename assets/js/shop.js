@@ -92,8 +92,7 @@ _nails_skin_shop_checkout_classic = function() {
                 $('#checkout-step-1 .panel-footer').hide();
 
                 // Jump to next checkout step
-
-                $('html, body').scrollTop($('#checkout-step-2').offset().top);
+                $('html, body').scrollTop($('#progress-bar').offset().top - 10);
 
             } else {
 
@@ -119,8 +118,7 @@ _nails_skin_shop_checkout_classic = function() {
                 $('#checkout-step-2 .panel-footer').hide();
 
                 // Jump to next checkout step
-
-                $('html, body').scrollTop($('#checkout-step-3').offset().top);
+                $('html, body').scrollTop($('#progress-bar').offset().top - 10);
 
             } else {
 
@@ -142,7 +140,7 @@ _nails_skin_shop_checkout_classic = function() {
             $('#checkout-step-2 .panel-heading .validate-ok').addClass('hidden');
             $('#checkout-step-2 .panel-heading .validate-fail').addClass('hidden');
 
-            $('html, body').scrollTop($('#checkout-step-1').offset().top);
+            $('html, body').scrollTop($('#progress-bar').offset().top - 10);
 
             _this._checkout_set_progress(1);
 
@@ -165,6 +163,7 @@ _nails_skin_shop_checkout_classic = function() {
         //  Step 3
         $('#checkout-step-3 .panel-footer .action-continue').on('click', function() {
             if (_this._checkout_validate_step_3()) {
+                $('html, body').scrollTop($('#progress-bar').offset().top - 10);
                 $('#progress-bar .progress-bar')
                     .attr('data-originaltext', $('#progress-bar .progress-bar').text())
                     .text('Please wait while we get things started...')
@@ -264,7 +263,7 @@ _nails_skin_shop_checkout_classic = function() {
             $('#checkout-step-3 .panel-heading .validate-ok').addClass('hidden');
             $('#checkout-step-3 .panel-heading .validate-fail').addClass('hidden');
 
-            $('html, body').scrollTop($('#checkout-step-2').offset().top);
+            $('html, body').scrollTop($('#progress-bar').offset().top - 10);
 
             _this._checkout_set_progress(2);
 
