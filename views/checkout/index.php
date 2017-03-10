@@ -69,7 +69,7 @@ $curStep = 0;
 
                     echo '<p>Simply complete the forms below and then click or tap the "Place Order &amp; Pay" button.</p>';
 
-                    if (!$this->user_model->isLoggedIn()) {
+                    if (!isLoggedIn()) {
 
                         echo '<p>You are welcome to checkout as a guest, however we recommend creating an account so that you can track your order and have a quicker checkout experience next time.</p>';
 
