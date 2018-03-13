@@ -83,7 +83,14 @@
                         "tip": "This text is shown at the foot of the checkout form.",
                         "type": "cms_widgets"
                     }
-                ]
+                ],
+                "nailsapp/module-cdn": {
+                    "permitted-image-dimensions": [
+                        "100x100",
+                        "175x175",
+                        "360x360"
+                    ]
+                }
             }
         }
     }
