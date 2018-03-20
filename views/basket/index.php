@@ -114,8 +114,9 @@
         $tableData['totals']         = $basket->totals;
         $tableData['shippingOption'] = $basket->shipping->option;
 
-        $this->load->view($skin->path . 'views/basket/table', $tableData);
-        $this->load->view($skin->path . 'views/basket/mobile', $tableData);
+        $oView = \Nails\Factory::service('View');
+        $oView->load($skin->path . 'views/basket/table', $tableData);
+        $oView->load($skin->path . 'views/basket/mobile', $tableData);
 
         ?>
         <hr />

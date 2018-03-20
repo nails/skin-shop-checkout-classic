@@ -1,6 +1,7 @@
 <?php
 
-$this->load->view('structure/header');
+$oView = \Nails\Factory::service('View');
+$oView->load('structure/header');
 
 if (!empty($order)) {
 
@@ -266,8 +267,8 @@ if (!empty($order)) {
                 $tableData['totals']   = $order->totals;
                 $tableData['readonly'] = true;
 
-                $this->load->view($skin->path . 'views/basket/table', $tableData);
-                $this->load->view($skin->path . 'views/basket/mobile', $tableData);
+                $oView->load($skin->path . 'views/basket/table', $tableData);
+                $oView->load($skin->path . 'views/basket/mobile', $tableData);
 
                 ?>
             </div>
@@ -296,4 +297,4 @@ if (!empty($order)) {
 
 }
 
-$this->load->view('structure/footer');
+$oView->load('structure/footer');
